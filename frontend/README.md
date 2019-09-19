@@ -1,4 +1,26 @@
 # Frontend
 
-- Install dependencies: npm install
-- Run the application in a dev server: npm run start:dev
+## Prerequisites
+
+1. Download nodejs version 10x:
+   ```
+   https://nodejs.org/en/download/
+   ```
+2. Install yarn package manager for JavaScript:
+   ```
+   npm i -g yarn
+   ```
+
+## Installation
+
+1. Install project dependencies via yarn:
+   ```
+   yarn install
+   ```
+
+## Run
+
+1. for local development:
+   ```
+   yarn run start:dev
+   ```
