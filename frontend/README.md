@@ -24,3 +24,7 @@
    ```
    yarn run start:dev
    ```
+
+## Bootstrap Configuration
+
+Bootstrap variable configuration is under file "/src/assets/scss/variables.scss".

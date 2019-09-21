@@ -38,8 +38,12 @@ module.exports = {
         use: ['babel-loader', 'eslint-loader']
       },
       {
-        test: /(\.css)$/,
-        use: ['style-loader', 'css-loader']
+        test: /\.(scss|css|less)$/,
+        use: ['style-loader', 'css-loader', 'sass-loader']
+      },
+      {
+        test: /\.(png|svg|jpg|gif)$/,
+        use: ['file-loader']
       }
     ]
   }
