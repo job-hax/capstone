@@ -25,6 +25,6 @@
    yarn run start:dev
    ```
 
-## Bootstrap Configuration
+## Ant Design Theme Configuration
 
-Bootstrap variable configuration is under file "/src/assets/scss/variables.scss".
+Through webpack: https://ant.design/docs/react/customize-theme
