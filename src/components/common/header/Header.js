@@ -24,9 +24,12 @@ const SiteHeader = () => {
             </NavLink>
           </Menu.Item>
           <Menu.Item key="2">
-            <NavLink to="/jobs">Jobs</NavLink>
+            <NavLink to="/companies">Companies</NavLink>
           </Menu.Item>
           <Menu.Item key="3">
+            <NavLink to="/jobs">Jobs</NavLink>
+          </Menu.Item>
+          <Menu.Item key="4">
             <NavLink to="/login">Login</NavLink>
           </Menu.Item>
         </Menu>
