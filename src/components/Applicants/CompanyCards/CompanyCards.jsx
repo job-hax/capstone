@@ -1,7 +1,7 @@
 import React from "react";
 import classNames from "classnames";
 
-import Reviews from "../Reviews/Reviews.jsx.js";
+import Reviews from "../Reviews/Reviews.jsx";
 import defaultLogo from "../../../assets/icons/JobHax-logo-black.svg";
 import { axiosCaptcha } from "../../../utils/api/fetch_api";
 import { COMPANIES, REVIEWS } from "../../../utils/constants/endpoints.js";
