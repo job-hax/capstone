@@ -1,18 +1,14 @@
-import React from 'react';
-import { render } from 'react-dom';
-import { BrowserRouter as Router } from 'react-router-dom';
-import App from './components/App';
-import configureStore from './redux/configureStore';
-import { Provider as ReduxProvider } from 'react-redux';
-import './index.less';
+import React from "react";
+import ReactDOM from "react-dom";
+import { CookiesProvider } from "react-cookie";
 
-const store = configureStore();
+import App from "./components/App/App.jsx";
 
-render(
-  <ReduxProvider store={store}>
-    <Router>
-      <App />
-    </Router>
-  </ReduxProvider>,
-  document.getElementById('app')
+const rootElement = document.getElementById("root");
+
+ReactDOM.render(
+  <CookiesProvider>
+    <App />
+  </CookiesProvider>,
+  rootElement
 );
