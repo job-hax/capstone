@@ -213,6 +213,13 @@ class Dashboard extends Component {
               console.log("dashboard response.data data", response.data.data);
           }
         }
+        else{
+          this.setState({
+            isInitialRequest: false,
+            allApplications: [],
+            displayingList: []
+          });
+        }
       });
     }
   }
