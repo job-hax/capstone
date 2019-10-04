@@ -192,7 +192,6 @@ class SignUpPage extends Component {
         .init({
           apiKey: "AIzaSyBnF8loY6Vqhs4QWTM_fWCP93Xidbh1kYo",
           clientId: googleClientId,
-          scope: "email https://www.googleapis.com/auth/gmail.readonly",
           prompt: "select_account"
         })
         .then(() => {
