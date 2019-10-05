@@ -9,6 +9,7 @@ import Dashboard from "../Dashboard/Dashboard.jsx";
 import Metrics from "../Metrics/Metrics.jsx";
 import Applicants from "../Applicants/Applicants.jsx";
 import Jobs from "../Jobs/Jobs.jsx";
+import Positions from "../Positions/Positions.jsx";
 import Home from "../StaticPages/Home/Home.jsx";
 import AboutUs from "../StaticPages/AboutUs/AboutUs.jsx";
 import PrivacyPolicy from "../StaticPages/PrivacyPolicy/PrivacyPolicy.jsx";
@@ -113,7 +114,8 @@ class App extends Component {
       "/faqs",
       "/privacypolicy",
       "/aboutus",
-      "/mentors"
+      "/mentors",
+      "/positions"
     ];
   }
 
@@ -673,7 +675,6 @@ class App extends Component {
                 />
               )}
             />
-          
 
             <Route
               exact
@@ -691,6 +692,17 @@ class App extends Component {
               path="/jobs"
               render={() => (
                 <Jobs
+                  alert={this.showAlert}
+                  handleTokenExpiration={this.handleTokenExpiration}
+                  cookie={this.cookie}
+                />
+              )}
+            />
+            <Route
+              exact
+              path="/positions"
+              render={() => (
+                <Positions
                   alert={this.showAlert}
                   handleTokenExpiration={this.handleTokenExpiration}
                   cookie={this.cookie}
@@ -777,7 +789,7 @@ class App extends Component {
                   />
                 )}
               />
-             
+
               <Route
                 exact
                 path="/aboutus"
@@ -815,7 +827,7 @@ class App extends Component {
                   />
                 )}
               />
-            
+
               <Route exact path="/faqs" render={() => <FAQ />} />
               <Route
                 exact
