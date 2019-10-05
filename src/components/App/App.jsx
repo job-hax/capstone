@@ -9,6 +9,7 @@ import Dashboard from "../Dashboard/Dashboard.jsx";
 import Metrics from "../Metrics/Metrics.jsx";
 import Applicants from "../Applicants/Applicants.jsx";
 import Jobs from "../Jobs/Jobs.jsx";
+import Companies from "../Companies/Companies.jsx";
 import Home from "../StaticPages/Home/Home.jsx";
 import AboutUs from "../StaticPages/AboutUs/AboutUs.jsx";
 import PrivacyPolicy from "../StaticPages/PrivacyPolicy/PrivacyPolicy.jsx";
@@ -104,6 +105,7 @@ class App extends Component {
       "/metrics",
       "/applicants",
       "/jobs",
+      "/companies",
       "/alumni",
       "/alumni-search",
       "/action",
@@ -691,6 +693,17 @@ class App extends Component {
               path="/jobs"
               render={() => (
                 <Jobs
+                  alert={this.showAlert}
+                  handleTokenExpiration={this.handleTokenExpiration}
+                  cookie={this.cookie}
+                />
+              )}
+            />
+            <Route
+              exact
+              path="/companies"
+              render={() => (
+                <Companies
                   alert={this.showAlert}
                   handleTokenExpiration={this.handleTokenExpiration}
                   cookie={this.cookie}
