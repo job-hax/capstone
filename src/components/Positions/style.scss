@@ -1,33 +1,6 @@
 @import "../App/style.scss";
-@import url("https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css");
-@import url("https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css");
 
-
-.img-thumbnail{
-  width: 100px;
-}
-// .header-big-container {
-//   background-color:#242939;
-// }
-
-.user-avatar-xl {
-  width: 5rem;
-  height: 5rem;
-  font-size: 5rem;
-}
-
-.user-avatar {
-  position: relative;
-  margin-bottom: 0;
-  display: inline-block;
-  width: 2rem;
-  height: 2rem;
-  font-size: 2rem;
-  vertical-align: middle;
-  border-radius: 4rem;
-}
-
-.companies-big-container {
+.positions-big-container {
   color: $text_color;
   height: 100%;
   display: flex;
@@ -38,13 +11,10 @@
     padding-top: 20px;
   }
 
-  .companies-container {
+  .positions-container {
     width: 37.5%;
     min-width: 576px;
     max-width: 37.5%;
-    // box-shadow: 0 10px 25px #ddd;
-    padding: 10px;
-    border: 1px solid white;
 
     @media only screen and (max-device-width: 800px) and (-webkit-min-device-pixel-ratio: 2) {
       min-width: 90vw;
@@ -61,10 +31,10 @@
       }
     }
 
-    .companies-card-container {
+    .positions-card-container {
       width: 100%;
 
-      .companies-filter {
+      .positions-filter {
         margin-top: 24px;
         display: flex;
         align-items: center;
@@ -74,7 +44,7 @@
         }
       }
 
-      .companies-search-before-click {
+      .positions-search-before-click {
         .ant-input {
           text-align: center !important;
           border: none !important;

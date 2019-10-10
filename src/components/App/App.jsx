@@ -10,6 +10,9 @@ import Metrics from "../Metrics/Metrics.jsx";
 import Applicants from "../Applicants/Applicants.jsx";
 import Jobs from "../Jobs/Jobs.jsx";
 import Companies from "../Companies/Companies.jsx";
+import CreatePosition from "../CreatePosition/CreatePosition.jsx";
+import PositionApplicants from "../PositionApplicants/PositionApplicants.jsx";
+import Positions from "../Positions/Positions.jsx";
 import Home from "../StaticPages/Home/Home.jsx";
 import AboutUs from "../StaticPages/AboutUs/AboutUs.jsx";
 import PrivacyPolicy from "../StaticPages/PrivacyPolicy/PrivacyPolicy.jsx";
@@ -105,7 +108,6 @@ class App extends Component {
       "/metrics",
       "/applicants",
       "/jobs",
-      "/companies",
       "/alumni",
       "/alumni-search",
       "/action",
@@ -115,7 +117,10 @@ class App extends Component {
       "/faqs",
       "/privacypolicy",
       "/aboutus",
-      "/mentors"
+      "/mentors",
+      "/positions",
+      "/companies",
+      "/createjob"
     ];
   }
 
@@ -675,7 +680,6 @@ class App extends Component {
                 />
               )}
             />
-          
 
             <Route
               exact
@@ -704,6 +708,39 @@ class App extends Component {
               path="/companies"
               render={() => (
                 <Companies
+                  alert={this.showAlert}
+                  handleTokenExpiration={this.handleTokenExpiration}
+                  cookie={this.cookie}
+                />
+              )}
+            />
+            <Route
+              exact
+              path="/createjob"
+              render={() => (
+                <CreatePosition
+                  alert={this.showAlert}
+                  handleTokenExpiration={this.handleTokenExpiration}
+                  cookie={this.cookie}
+                />
+              )}
+            />
+            <Route
+              exact
+              path="/positionapplicants"
+              render={() => (
+                <PositionApplicants
+                  alert={this.showAlert}
+                  handleTokenExpiration={this.handleTokenExpiration}
+                  cookie={this.cookie}
+                />
+              )}
+            />
+            <Route
+              exact
+              path="/positions"
+              render={() => (
+                <Positions
                   alert={this.showAlert}
                   handleTokenExpiration={this.handleTokenExpiration}
                   cookie={this.cookie}
@@ -790,7 +827,7 @@ class App extends Component {
                   />
                 )}
               />
-             
+
               <Route
                 exact
                 path="/aboutus"
@@ -828,7 +865,6 @@ class App extends Component {
                   />
                 )}
               />
-            
               <Route exact path="/faqs" render={() => <FAQ />} />
               <Route
                 exact
@@ -856,5 +892,4 @@ class App extends Component {
     }
   }
 }
-
 export default withCookies(App);
