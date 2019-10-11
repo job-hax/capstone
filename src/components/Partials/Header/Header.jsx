@@ -193,8 +193,6 @@ class Header extends Component {
               <Menu.Item key="/metrics">Metrics</Menu.Item>
               <Menu.Item key="/applicants">Applicants</Menu.Item>
               <Menu.SubMenu title="Company">
-                <Menu.Item key="/companies">Create Profile</Menu.Item>
-                <Menu.Item key="/createjob">Create Job Posting</Menu.Item>
                 <Menu.Item key="/positionapplicants">View Applicants</Menu.Item>
               </Menu.SubMenu>
               <Menu.Item key="/jobs">Jobs</Menu.Item>

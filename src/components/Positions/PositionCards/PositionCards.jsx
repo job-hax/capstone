@@ -43,8 +43,14 @@ class PositionCards extends Component {
           <div className="small-text">Posted at: {position.date}</div>
         </div>
         <div className="position-card-button">
-          <Button type="primary" onClick={this.showModal}>
+          <Button type="primary" onClick={this.showModal} className="btn-view-edit">
             LEARN MORE
+          </Button>
+          <Button type="primary" className="btn-view-edit">
+            EDIT
+          </Button>
+          <Button type="primary" className="btn-delete">
+            DELETE
           </Button>
         </div>
         <Modal

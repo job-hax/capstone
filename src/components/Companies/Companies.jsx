@@ -3,11 +3,38 @@ import { Pagination, Input, Switch, Icon, Select } from "antd";
 import Footer from "../Partials/Footer/Footer.jsx";
 
 import "./style.scss";
+import { axiosCaptcha } from "../../utils/api/fetch_api.js";
 
 const { Search } = Input;
 const { Option } = Select;
 
 class CreateProfile extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      companyName: "",
+      address:"",
+    }
+
+    this.handleInputChange=this.handleInputChange.bind(this);
+  }
+
+  handleInputChange(event, state_name){
+    event.preventDefault();
+    console.log("event",event, `value`, event.target.value, )
+    this.setState({[state_name]: event.target.value})
+  }
+
+  handleSubmit(){
+    let body = {};
+    body.address = this.state.address;
+    body.companyName = this.state.companyName;
+    console.log("body", body)
+    axiosCaptcha(url, config).then((response) =>{
+      
+    })
+  }
+
   render() {
     return (
       <div>
@@ -15,6 +42,10 @@ class CreateProfile extends Component {
           <div className="companies-container">
             <div className="title">
               <h2>Create / Edit Company</h2>
+                    <Input 
+                    placeholder="Enter Company Name"
+                    value={this.state.companyName}
+                    onChange={(event) => this.handleInputChange(event, "companyName")} ></Input>
             </div>
             <form>
               <div class="form-row">
@@ -42,6 +73,10 @@ class CreateProfile extends Component {
               </div>
               <div class="form-group">
                 <label for="inputAddress">Address</label>
+                    <Input 
+                    placeholder="Enter Adress Here"
+                    value={this.state.address}
+                    onChange={(event) => this.handleInputChange(event, "address")} ></Input>
                 <input type="text" class="form-control" id="inputAddress" placeholder="1234 Main St"></input>
               </div>
               <div class="form-group">
@@ -67,7 +102,7 @@ class CreateProfile extends Component {
                 </div>
               </div>
 
-              <button type="submit" class="ant-btn ant-btn-primary">Save</button>
+              <button type="submit" class="ant-btn ant-btn-primary" onClick={() => this.handleSubmit()}>Save</button>
             </form>
           </div>
         </div>

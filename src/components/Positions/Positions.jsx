@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Pagination, Input, Switch, Icon, Select } from "antd";
+import { Pagination, Input, Switch, Icon, Select, Modal } from "antd";
 import PositionCards from "./PositionCards/PositionCards.jsx";
 import Footer from "../Partials/Footer/Footer.jsx";
 
@@ -11,6 +11,14 @@ const { Option } = Select;
 class Positions extends Component {
   constructor(props) {
     super(props);
+
+    this.state = {
+      modalVisible: false
+    };
+
+    this.showModal = this.showModal.bind(this);
+    this.handleOk = this.handleOk.bind(this);
+    this.handleCancel = this.handleCancel.bind(this);
 
     this.state = {
       isWaitingResponse: false,
@@ -70,6 +78,18 @@ class Positions extends Component {
     ));
   }
 
+  showModal() {
+    this.setState({ ...this.state, modalVisible: true });
+  }
+
+  handleOk() {
+    this.setState({ ...this.state, modalVisible: false });
+  }
+
+  handleCancel() {
+    this.setState({ ...this.state, modalVisible: false });
+  }
+
   render() {
     return (
       <div>
@@ -101,6 +121,71 @@ class Positions extends Component {
                   <Option value="mv">Part Time</Option>
                   <Option value="sj">Contractor</Option>
                 </Select>
+
+                <button type="submit" class="ant-btn ant-btn-primary" onClick={this.showModal}>Create Position</button>
+
+                <Modal
+                  title="Create Position"
+                  visible={this.state.modalVisible}
+                  onOk={this.handleOk}
+                  onCancel={this.handleCancel}
+                >
+                  <div class="form-row">
+                    <div class="form-group col-md-6">
+                      <label for="txtPositionTitle">Position Title</label>
+                      <input type="text" class="form-control" id="txtPositionTitle" placeholder="Enter Position Title"></input>
+                    </div>
+
+                  </div>
+                  <div class="form-group">
+                    <label for="txtPositionCategory">Category</label>
+                    <select id="ddlCategory" class="form-control">
+                      <option selected>Choose...</option>
+                      <option>--Select--</option>
+                      <option>Engineering</option>
+                      <option>Dev Ops</option>
+                    </select>
+                  </div><div class="form-group">
+                    <label for="txtPositionStatus">Position Status</label>
+                    <select id="ddlStatus" class="form-control">
+                      <option selected>Choose...</option>
+                      <option>--Select--</option>
+                      <option>Open</option>
+                      <option>Hold</option>
+                      <option>Closed</option>
+                    </select>
+                  </div>
+                  <div class="form-group">
+                    <label for="inputAbout">Job Description</label>
+                    <textarea rows="4" cols="50" class="form-control" id="inputAbout" placeholder="Describe about the job">
+                    </textarea>
+                  </div>
+                  <div class="form-row">
+                    <div class="form-group col-md-4">
+                      <label for="inputCity">City</label>
+                      <input type="text" class="form-control" id="inputCity"></input>
+                    </div>
+                    <div class="form-group col-md-4">
+                      <label for="inputState">State</label>
+                      <select id="inputState" class="form-control">
+                        <option selected>Choose...</option>
+                        <option>...</option>
+                      </select>
+                    </div>
+                    <div class="form-group col-md-4">
+                      <label for="inputZip">Country</label>
+                      <select id="inputState" class="form-control">
+                        <option selected>Choose...</option>
+                        <option>...</option>
+                      </select>
+                    </div>
+                  </div>
+
+                  {/* <button type="submit" class="ant-btn ant-btn-primary">Save</button>
+                          <button type="submit" class="vbtn">Delete</button> */}
+
+
+                </Modal>
               </div>
               {this.generatePositions()}
             </div>
