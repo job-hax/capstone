@@ -393,42 +393,38 @@ class JobDetails extends React.Component {
     );
   }
 
-  generateRatings() {
-    let ratingTotal = 0;
-    let countTotal = 0;
-    this.props.card.company_object.ratings.forEach(
-      rating => (
-        (ratingTotal += Number(rating.id) * Number(rating.count)),
-        (countTotal += Number(rating.count))
-      )
-    );
-    const averageRating =
-      ratingTotal == 0 ? 0 : Math.round((ratingTotal / countTotal) * 10) / 10;
+  generatePositionDetail() {
     return (
       <div className="info">
-        <label> Ratings </label>
-        <div style={{ margin: "10px 4px 0px 0px" }}>
-          <CompanyStats
-            stats={false}
-            ratings={true}
-            company={this.props.card.company_object}
-          />
-        </div>
-        <div style={{ fontSize: "20px", marginTop: 6 }}>
-          {countTotal != 0 && averageRating}
+        <label>
+          <div>Detail</div>
+        </label>
+        <div className="text">
+          <ul style={{ paddingLeft: "16px" }}>
+            <li>
+              BS degree in Computer Science, similar technical field of study or
+              equivalent practical experience.
+            </li>
+            <li>
+              Software development experience in one or more general purpose
+              programming languages.
+            </li>
+            <li>
+              Experience working with two or more from the following: web
+              application development, Unix/Linux environments, mobile
+              application development, distributed and parallel systems, machine
+              learning, information retrieval, natural language processing,
+              networking, developing large software systems, and/or security
+              software development.
+            </li>
+            <li>
+              Working proficiency and communication skills in verbal and written
+              English.
+            </li>
+          </ul>
         </div>
       </div>
     );
-  }
-
-  generateTimeline() {
-    const points = this.props.card.timeline.map(point => (
-      <Timeline.Item key={point.id}>
-        {point.name} {makeTimeBeautiful(point.time, "dateandtime")}
-      </Timeline.Item>
-    ));
-
-    return <Timeline mode="alternate">{points}</Timeline>;
   }
 
   generateAllInfo() {
@@ -438,8 +434,7 @@ class JobDetails extends React.Component {
         {this.generatePositionsInfo()}
         {this.generateApplyDateInfo()}
         {this.generateApplicationSourcesInfo()}
-        {this.generateRatings()}
-        {/*this.generateTimeline()*/}
+        {this.generatePositionDetail()}
       </div>
     );
   }

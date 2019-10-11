@@ -8,7 +8,6 @@ import Header from "../Partials/Header/Header.jsx";
 import Dashboard from "../Dashboard/Dashboard.jsx";
 import Metrics from "../Metrics/Metrics.jsx";
 import Applicants from "../Applicants/Applicants.jsx";
-import Jobs from "../Jobs/Jobs.jsx";
 import Positions from "../Positions/Positions.jsx";
 import Home from "../StaticPages/Home/Home.jsx";
 import AboutUs from "../StaticPages/AboutUs/AboutUs.jsx";
@@ -104,7 +103,6 @@ class App extends Component {
       "/dashboard",
       "/metrics",
       "/applicants",
-      "/jobs",
       "/alumni",
       "/alumni-search",
       "/action",
@@ -681,17 +679,6 @@ class App extends Component {
               path="/applicants"
               render={() => (
                 <Applicants
-                  alert={this.showAlert}
-                  handleTokenExpiration={this.handleTokenExpiration}
-                  cookie={this.cookie}
-                />
-              )}
-            />
-            <Route
-              exact
-              path="/jobs"
-              render={() => (
-                <Jobs
                   alert={this.showAlert}
                   handleTokenExpiration={this.handleTokenExpiration}
                   cookie={this.cookie}
