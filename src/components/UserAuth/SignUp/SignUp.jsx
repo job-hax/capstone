@@ -37,9 +37,6 @@ class SignUpPage extends Component {
       redirect: null,
       companyAutoCompleteData: [],
       positionAutoCompleteData: [],
-      collegeAutoCompleteData: [],
-      collegeList: [],
-      majorAutoCompleteData: [],
       countryList: [],
       stateOrProvinceList: [],
       mustInputEmphasis: false,
@@ -55,11 +52,6 @@ class SignUpPage extends Component {
         this.props.signupType === "alumni" ? USER_TYPES["alumni"] : null,
       first_name: "",
       last_name: "",
-      college_id: null,
-      college: "",
-      major: "",
-      grad_year: null,
-      alumniEmployment: true,
       company: "",
       job_title: "",
       country: "",
@@ -98,8 +90,6 @@ class SignUpPage extends Component {
     this.handleGoogleSignUp = this.handleGoogleSignUp.bind(this);
     this.linkedInOAuthRequest = this.linkedInOAuthRequest.bind(this);
     this.onAlumniEmploymentSwitch = this.onAlumniEmploymentSwitch.bind(this);
-    this.handleGradYearSelection = this.handleGradYearSelection.bind(this);
-    this.generateGradYearDropdown = this.generateGradYearDropdown.bind(this);
     this.checkMustInputs = this.checkMustInputs.bind(this);
     this.setCountryOrStateList = this.setCountryOrStateList.bind(this);
     this.generateUrlForGetData = this.generateUrlForGetData.bind(this);
@@ -275,15 +265,6 @@ class SignUpPage extends Component {
     if (this.state.user_type != null) {
       config.body.user_type = this.state.user_type;
     }
-    if (this.state.college_id != null) {
-      config.body.college_id = this.state.college_id;
-    }
-    if (this.state.major != "") {
-      config.body.major = this.state.major.trim();
-    }
-    if (this.state.grad_year != null) {
-      config.body.grad_year = this.state.grad_year;
-    }
     if (this.state.company != "") {
       config.body.company = this.state.company.trim();
     }
@@ -424,15 +405,6 @@ class SignUpPage extends Component {
       <Form onSubmit={() => this.handleSignUpFormNext(event)}>
         <div style={{ margin: "0px 0 16px 0" }}>
           <div className="social-buttons-container">
-            {/*<div>
-              <div className="social-buttons-google">
-                <img
-                  style={{ marginLeft: 48 }}
-                  onClick={this.handleGoogleSignUp}
-                  src="../../../src/assets/icons/btn_google_signin_light_normal_web@2x.png"
-                />
-              </div>
-            </div>*/}
             <div>
               <Button
                 type="primary"
@@ -598,14 +570,6 @@ class SignUpPage extends Component {
       <div>
         <div>
           <div className="social-buttons-container">
-            {/*<div>
-              <button className="social-buttons-google">
-                <img
-                  onClick={this.handleGoogleSignUp}
-                  src="../../../src/assets/icons/btn_google_signin_light_normal_web@2x.png"
-                />
-              </button>
-            </div>*/}
             <div>
               <Button
                 type="primary"
@@ -618,16 +582,6 @@ class SignUpPage extends Component {
               </Button>
             </div>
           </div>
-
-          {/*<div className="email-button-container">
-            <div
-              onClick={() => this.setState({ isEmailSignUpRequested: true })}
-              className="email-button"
-            >
-              <Icon type="mail" />
-              Sign Up with E-mail
-            </div>
-          </div>*/}
           <div
             className="separator"
             style={{ width: "224px", margin: "12px 24px 0px 24px" }}
@@ -723,56 +677,6 @@ class SignUpPage extends Component {
     );
   }
 
-  generateLevelAccountType() {
-    return (
-      <div>
-        <div className="level-title">
-          Are you affiliated with a College/University?
-        </div>
-        <div>
-          <div className="level-body">
-            Improve your Job search experience in a seamless & intuitive way.
-          </div>
-          <div>
-            <Button
-              type="primary"
-              onClick={() =>
-                this.setState({
-                  level: "linkedin",
-                  user_type: USER_TYPES["public"]
-                })
-              }
-              style={this.nextButtonStyle}
-            >
-              Public Sign Up
-            </Button>
-          </div>
-        </div>
-        <div className="separator" />
-        <div>
-          <div className="level-body">
-            Connect & engage with your University to launch your career!
-          </div>
-          <div>
-            <Button
-              type="primary"
-              onClick={() =>
-                this.setState({
-                  level: "student",
-                  user_type: USER_TYPES["student"]
-                })
-              }
-              style={this.nextButtonStyle}
-            >
-              University Portal
-            </Button>
-          </div>
-        </div>
-        <div>{this.generateBackButton("basicInfo")}</div>
-      </div>
-    );
-  }
-
   universityChoices(snippet, type, title, level) {
     return (
       <div>
@@ -792,100 +696,41 @@ class SignUpPage extends Component {
     );
   }
 
-  generateLevelUniversity() {
+  generateLevelEmployer() {
     return (
       <div>
-        <div className="level-title">
-          What kind of account do you want to create?
-        </div>
-        <div>
-          {this.universityChoices(
-            "Organize, track, & get assistance throughout your job search process.",
-            "student",
-            "Student",
-            "student"
-          )}
-        </div>
-        <div>
-          {this.universityChoices(
-            "Use your experience to guide students towards their career goals.",
-            "alumni",
-            "Alumni",
-            "alumni"
-          )}
-        </div>
-        <div>
-          {this.universityChoices(
-            "Connect with your cohort to providetargeted assistance & track progress.",
-            "career_services",
-            "Career Services",
-            "career_services"
-          )}
-        </div>
-        <div>{this.generateBackButton("user_type")}</div>
-      </div>
-    );
-  }
-
-  generateLevelStudent() {
-    return (
-      <div>
-        <div className="level-title">Connect with your College</div>
-        <div className="level-body">Please enter your College:</div>
+        <div className="level-title">Connect with your Company</div>
+        <div className="level-body">Please enter your Company:</div>
         <div>
           <AutoComplete
             style={this.currentStyle(this.state.college, "")}
-            dataSource={this.state.collegeAutoCompleteData}
-            onSearch={value => this.handleAutoCompleteSearch(value, "colleges")}
-            placeholder="ex. Stanford University"
-            value={this.state.college && this.state.college}
-            onSelect={value => this.setState({ college: value })}
+            dataSource={this.state.companyAutoCompleteData}
+            style={this.narrowInputStyle}
+            onSearch={this.handleCompanySearch}
+            placeholder="ex. Google"
+            value={this.state.company && this.state.company}
+            onSelect={value => this.setState({ company: value })}
           />
         </div>
-        <div className="level-body">Please enter your Major:</div>
+        <div className="level-body">Please enter your Position:</div>
         <div>
           <AutoComplete
-            style={this.currentStyle(this.state.major, "")}
-            dataSource={this.state.majorAutoCompleteData}
-            onSearch={value => this.handleAutoCompleteSearch(value, "majors")}
-            placeholder="ex. Computer Science"
-            value={this.state.major && this.state.major}
-            onSelect={value => this.setState({ major: value })}
+            style={this.narrowInputStyle}
+            dataSource={this.state.positionAutoCompleteData}
+            onSearch={value =>
+              this.handleAutoCompleteSearch(value, "positions")
+            }
+            placeholder="ex. Human Resource Manager"
+            value={this.state.job_title && this.state.job_title}
+            onSelect={value => this.setState({ job_title: value })}
           />
-        </div>
-        <div
-          className="level-body"
-          style={{
-            display: "flex",
-            justifyContent: "space-between",
-            width: "240px",
-            margin: "0 0 8px 12px"
-          }}
-        >
-          <div>Expected Graduation Year:</div>
-          {this.state.mustInputEmphasis === true &&
-            this.state.grad_year === null && (
-              <div style={{ color: "red" }}>*</div>
-            )}
-          <Dropdown
-            overlay={() => this.generateGradYearDropdown(50, 1)}
-            placement="bottomCenter"
-          >
-            <a
-              className="ant-dropdown-link"
-              style={{ color: "rgba(100, 100, 100, 0.9)" }}
-            >
-              {this.state.grad_year != null ? this.state.grad_year : "Select"}{" "}
-              <Icon type="down" />
-            </a>
-          </Dropdown>
         </div>
         <div style={{ marginTop: 8 }}>
           <Button
             type="primary"
             onClick={() =>
               this.checkMustInputs(
-                [this.state.college, this.state.major, this.state.grad_year],
+                [this.state.company, this.state.job_title],
                 "linkedin"
               )
             }
@@ -922,8 +767,7 @@ class SignUpPage extends Component {
   }
 
   generateLevelBasicInfo() {
-    const nextLevel =
-      this.props.signupType === "alumni" ? "alumni" : "user_type";
+    const nextLevel = "employer";
     const mustInputsList =
       this.state.stateOrProvinceList.length > 0
         ? [
@@ -1096,17 +940,9 @@ class SignUpPage extends Component {
   }
 
   generateUrlForGetData(value, type) {
-    if (type === "majors") {
-      this.setState({ major: value });
-      let newUrl = AUTOCOMPLETE(type) + "?q=" + value;
-      return newUrl;
-    } else if (type === "positions") {
+    if (type === "positions") {
       let newUrl = AUTOCOMPLETE(type) + "?q=" + value + "&count=5";
       this.setState({ job_title: value });
-      return newUrl;
-    } else if (type === "colleges") {
-      let newUrl = AUTOCOMPLETE(type) + "?q=" + value;
-      this.setState({ college: value });
       return newUrl;
     } else if (type === "countries") {
       let newUrl = AUTOCOMPLETE(type);
@@ -1124,30 +960,11 @@ class SignUpPage extends Component {
       if (response.statusText === "OK") {
         if (response.data.success) {
           let bufferList = [];
-          if (type === "majors") {
-            response.data.data.forEach(element =>
-              bufferList.push(element.name)
-            );
-            this.setState({ majorAutoCompleteData: bufferList });
-          } else if (type === "positions") {
+          if (type === "positions") {
             response.data.data.forEach(element =>
               bufferList.push(element.job_title)
             );
             this.setState({ positionAutoCompleteData: bufferList });
-          } else if (type === "colleges") {
-            response.data.data.forEach(element =>
-              bufferList.push(`${element.alpha_two_code} - ${element.name}`)
-            );
-            this.setState({
-              collegeAutoCompleteData: bufferList
-            });
-            if (response.data.data.length > 0) {
-              let collegeList = response.data.data;
-              this.setState({
-                collegeList: collegeList,
-                college_id: collegeList[0].id
-              });
-            }
           } else if (type === "countries") {
             let countriesList = response.data.data;
             this.setState({ countryList: countriesList });
@@ -1158,152 +975,6 @@ class SignUpPage extends Component {
         }
       }
     });
-  }
-
-  generateAlumniEmploymentForm() {
-    return (
-      <div>
-        <div>
-          <AutoComplete
-            dataSource={this.state.companyAutoCompleteData}
-            style={this.narrowInputStyle}
-            onSearch={this.handleCompanySearch}
-            placeholder="Company Name"
-            value={this.state.company && this.state.company}
-            onSelect={value => this.setState({ company: value })}
-          />
-        </div>
-        <div>
-          <AutoComplete
-            style={this.narrowInputStyle}
-            dataSource={this.state.positionAutoCompleteData}
-            onSearch={value =>
-              this.handleAutoCompleteSearch(value, "positions")
-            }
-            placeholder="Job Title"
-            value={this.state.job_title && this.state.job_title}
-            onSelect={value => this.setState({ job_title: value })}
-          />
-        </div>
-      </div>
-    );
-  }
-
-  generateGradYears(amount, direction) {
-    let yearList = [];
-    for (let i = 0; i <= amount - 1; i++) {
-      yearList.push(new Date().getFullYear() + i * direction);
-    }
-    return yearList.map(year => <Menu.Item key={year}>{year}</Menu.Item>);
-  }
-
-  handleGradYearSelection(event) {
-    let year = event.item.props.children;
-    this.setState({ grad_year: year });
-  }
-
-  generateGradYearDropdown(amount, direction) {
-    return (
-      <Menu
-        onClick={this.handleGradYearSelection}
-        style={{
-          width: "68px",
-          maxHeight: "260px",
-          textAlign: "center",
-          overflowX: "hidden"
-        }}
-      >
-        {this.generateGradYears(amount, direction)}
-      </Menu>
-    );
-  }
-
-  generateLevelAlumni() {
-    return (
-      <div>
-        <div className="level-title">Connect with your College</div>
-        <div className="level-body">Please enter your College:</div>
-        <div>
-          <AutoComplete
-            style={this.currentStyle(this.state.college, "")}
-            dataSource={this.state.collegeAutoCompleteData}
-            onSearch={value => this.handleAutoCompleteSearch(value, "colleges")}
-            placeholder="ex. Stanford University"
-            value={this.state.college && this.state.college}
-            onSelect={value => this.setState({ college: value })}
-          />
-        </div>
-        <div className="level-body">Please enter your Major:</div>
-        <div>
-          <AutoComplete
-            style={this.currentStyle(this.state.major, "")}
-            dataSource={this.state.majorAutoCompleteData}
-            onSearch={value => this.handleAutoCompleteSearch(value, "majors")}
-            placeholder="ex. Computer Science"
-            value={this.state.major && this.state.major}
-            onSelect={value => this.setState({ major: value })}
-          />
-        </div>
-        <div
-          className="level-body"
-          style={{
-            display: "flex",
-            justifyContent: "space-between",
-            width: "240px",
-            margin: "0 0 8px 12px"
-          }}
-        >
-          <div>Graduation Year:</div>
-          {this.state.mustInputEmphasis === true &&
-            this.state.grad_year === null && (
-              <div style={{ color: "red" }}>*</div>
-            )}
-          <Dropdown
-            overlay={() => this.generateGradYearDropdown(50, -1)}
-            placement="bottomCenter"
-          >
-            <a
-              className="ant-dropdown-link"
-              style={{ color: "rgba(100, 100, 100, 0.9)" }}
-            >
-              {this.state.grad_year != null ? this.state.grad_year : "Select"}{" "}
-              <Icon type="down" />
-            </a>
-          </Dropdown>
-        </div>
-        <div
-          className="level-body"
-          style={{
-            display: "flex",
-            justifyContent: "space-between",
-            width: "240px",
-            margin: "0 0 0 12px"
-          }}
-        >
-          Currently Employed?
-          <Switch
-            defaultChecked={this.state.alumniEmployment}
-            onChange={this.onAlumniEmploymentSwitch}
-          />
-        </div>
-        {this.state.alumniEmployment && this.generateAlumniEmploymentForm()}
-        <div style={{ marginTop: 8 }}>
-          <Button
-            type="primary"
-            onClick={() =>
-              this.checkMustInputs(
-                [this.state.college, this.state.major, this.state.grad_year],
-                "linkedin"
-              )
-            }
-            style={this.nextButtonStyle}
-          >
-            Next
-          </Button>
-        </div>
-        <div>{this.generateBackButton("basicInfo")}</div>
-      </div>
-    );
   }
 
   linkedInOAuthRequest() {
@@ -1376,16 +1047,8 @@ class SignUpPage extends Component {
         return this.generateLevelIntro();
       case "basicInfo":
         return this.generateLevelBasicInfo();
-      case "user_type":
-        return this.generateLevelAccountType();
-      case "university":
-        return this.generateLevelUniversity();
-      case "student":
-        return this.generateLevelStudent();
-      case "alumni":
-        return this.generateLevelAlumni();
-      case "careerServices":
-        return <Redirect to="signin" />;
+      case "employer":
+        return this.generateLevelEmployer();
       case "linkedin":
         return this.generateLevelLinkedIn();
       case "submit":
