@@ -8,10 +8,6 @@ import Header from "../Partials/Header/Header.jsx";
 import Dashboard from "../Dashboard/Dashboard.jsx";
 import Metrics from "../Metrics/Metrics.jsx";
 import Applicants from "../Applicants/Applicants.jsx";
-import Jobs from "../Jobs/Jobs.jsx";
-import Companies from "../Companies/Companies.jsx";
-import CreatePosition from "../CreatePosition/CreatePosition.jsx";
-import PositionApplicants from "../PositionApplicants/PositionApplicants.jsx";
 import Positions from "../Positions/Positions.jsx";
 import Home from "../StaticPages/Home/Home.jsx";
 import AboutUs from "../StaticPages/AboutUs/AboutUs.jsx";
@@ -40,7 +36,6 @@ import {
 import {
   apiRoot,
   USERS,
-  GET_POLL,
   NOTIFICATIONS
 } from "../../utils/constants/endpoints.js";
 
@@ -60,15 +55,12 @@ class App extends Component {
       isAuthenticationChecking: true,
       isInitialRequest: "beforeRequest",
       isGapiReady: false,
-      isPollChecking: true,
-      isPollShowing: false,
       isAlertShowing: false,
       isNotificationsShowing: false,
       isAppReRenderRequested: false,
       alertType: "",
       alertMessage: "",
       profilePhotoUrl: "",
-      pollData: [],
       notificationsList: [],
       syncResponseTimestamp: null,
       user: {},
@@ -82,7 +74,6 @@ class App extends Component {
     };
     this.notificationsList = [];
     this.handleSignOut = this.handleSignOut.bind(this);
-    this.toggleIsPollShowing = this.toggleIsPollShowing.bind(this);
     this.checkNotifications = this.checkNotifications.bind(this);
     this.toggleNotificationsDisplay = this.toggleNotificationsDisplay.bind(
       this
@@ -107,7 +98,6 @@ class App extends Component {
       "/dashboard",
       "/metrics",
       "/applicants",
-      "/jobs",
       "/alumni",
       "/alumni-search",
       "/action",
@@ -184,19 +174,6 @@ class App extends Component {
         isInitialRequest: false
       });
       let config = { method: "GET" };
-      axiosCaptcha(GET_POLL, config).then(response => {
-        if (response.statusText === "OK") {
-          if (response.data.success) {
-            this.pollData = response.data.data;
-            this.setState({ pollData: this.pollData, isPollChecking: false });
-            this.state.pollData.map(
-              poll =>
-                poll.is_published === true &&
-                this.setState({ isPollShowing: true })
-            );
-          }
-        }
-      });
       axiosCaptcha(USERS("profile/?basic=true"), config).then(response => {
         IS_CONSOLE_LOG_OPEN && console.log("photo first");
         if (response.statusText === "OK") {
@@ -392,15 +369,10 @@ class App extends Component {
     this.setState({
       token: "",
       active: false,
-      pollData: [],
       notificationsList: [],
       profileData: [],
       logout: false
     });
-  }
-
-  toggleIsPollShowing() {
-    this.setState({ isPollShowing: !this.state.isPollShowing });
   }
 
   toggleNotificationsDisplay(open) {
@@ -475,7 +447,6 @@ class App extends Component {
           this.setState({
             token: "",
             active: false,
-            pollData: [],
             notificationsList: [],
             profileData: [],
             logout: false
@@ -595,15 +566,6 @@ class App extends Component {
               passStatesToApp={this.passStatesToApp}
               isUserLoggedIn={isUserLoggedIn}
             />
-            {this.state.isPollShowing && (
-              <PollBox
-                data={this.pollData}
-                togglePollDisplay={this.toggleIsPollShowing}
-                alert={this.showAlert}
-                cookie={this.cookie}
-                handleTokenExpiration={this.handleTokenExpiration}
-              />
-            )}
             {this.state.isAlertShowing && <div>{this.generateAlert()}</div>}
             <Route
               exact
@@ -686,50 +648,6 @@ class App extends Component {
               path="/applicants"
               render={() => (
                 <Applicants
-                  alert={this.showAlert}
-                  handleTokenExpiration={this.handleTokenExpiration}
-                  cookie={this.cookie}
-                />
-              )}
-            />
-            <Route
-              exact
-              path="/jobs"
-              render={() => (
-                <Jobs
-                  alert={this.showAlert}
-                  handleTokenExpiration={this.handleTokenExpiration}
-                  cookie={this.cookie}
-                />
-              )}
-            />
-            <Route
-              exact
-              path="/companies"
-              render={() => (
-                <Companies
-                  alert={this.showAlert}
-                  handleTokenExpiration={this.handleTokenExpiration}
-                  cookie={this.cookie}
-                />
-              )}
-            />
-            <Route
-              exact
-              path="/createjob"
-              render={() => (
-                <CreatePosition
-                  alert={this.showAlert}
-                  handleTokenExpiration={this.handleTokenExpiration}
-                  cookie={this.cookie}
-                />
-              )}
-            />
-            <Route
-              exact
-              path="/positionapplicants"
-              render={() => (
-                <PositionApplicants
                   alert={this.showAlert}
                   handleTokenExpiration={this.handleTokenExpiration}
                   cookie={this.cookie}
