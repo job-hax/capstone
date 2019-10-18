@@ -95,8 +95,8 @@ class JobReviews extends React.Component {
       console.log("jobreviews render", this.state.reviewsList);
     const { card } = this.props;
     const buttonText = this.props.card.company_object.review_id
-      ? "Update Your Review"
-      : "Add a Review";
+      ? "Update Your Feedback"
+      : "Add a Feedback";
     const iconType = this.props.card.company_object.review_id ? "edit" : "plus";
     return (
       <div style={{ height: "510px", overflow: "hidden" }}>
@@ -112,8 +112,8 @@ class JobReviews extends React.Component {
               <div>
                 {this.state.reviewsList.length == 0 && (
                   <div className="no-data" style={{ paddingTop: 80 }}>
-                    No reviews entered for {card.position.job_title} position at{" "}
-                    {card.company_object.company}
+                    No feedbacks entered for {card.position.job_title} position
+                    at {card.company_object.company}
                   </div>
                 )}
                 {this.state.isReviewsDisplaying === true && (
