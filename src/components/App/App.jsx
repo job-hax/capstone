@@ -119,6 +119,7 @@ class App extends Component {
       "/aboutus",
       "/mentors",
       "/positions",
+      "/profile",
       "/companies",
       "/createjob"
     ];
