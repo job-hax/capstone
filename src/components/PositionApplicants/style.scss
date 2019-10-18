@@ -1,0 +1,92 @@
+
+@import "../App/style.scss";
+
+@import url('https://colorlib.com/polygon/cooladmin/css/theme.css');
+
+
+.imgAvatar{
+    border-radius: 50%;
+    width: 60px;
+    border: 3px solid grey;
+}
+
+.table-data3 thead tr th:last-child{
+    border-radius: 0px !important;
+}
+
+.table-data3 thead tr th:first-child{
+    border-radius: 0px !important;
+}
+
+.table-head-tite{
+color: white;
+}
+
+.table-responsive{
+    box-shadow: 0 .15rem 1.75rem 0 rgba(58,59,69,.15)!important;
+}
+
+.table-data3 tbody tr{
+    height: 75px !important;
+}
+
+.table-data3 tbody td {
+    vertical-align: middle !important;
+    background-color: #eeeeee;
+    color: black;
+}
+
+.btn-group-lg>.btn, .btn-lg{
+    font-size: 13px !important;
+}
+
+.table-earning thead th {
+    padding: 22px 10px !important;
+}
+
+.table-earning tbody td{
+    padding: 15px 10px !important;
+}
+
+.table-earning thead tr th:first-child {
+    border-top-left-radius: 10px;
+}
+
+.table-earning thead tr th:last-child {
+    border-top-right-radius: 10px;
+}
+
+.fa-download{
+    font-size: 25px !important;
+    color: steelblue !important;
+}
+
+// .divTable{
+// 	display: table;
+// 	width: 100%;
+// }
+// .divTableRow {
+// 	display: table-row;
+// }
+// .divTableHeading {
+// 	background-color: #EEE;
+// 	display: table-header-group;
+// }
+// .divTableCell, .divTableHead {
+// 	border: 1px solid #999999;
+// 	display: table-cell;
+// 	padding: 3px 10px;
+// }
+// .divTableHeading {
+// 	background-color: #EEE;
+// 	display: table-header-group;
+// 	font-weight: bold;
+// }
+// .divTableFoot {
+// 	background-color: #EEE;
+// 	display: table-footer-group;
+// 	font-weight: bold;
+// }
+// .divTableBody {
+// 	display: table-row-group;
+// }

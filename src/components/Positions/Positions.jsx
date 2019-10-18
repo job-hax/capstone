@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Pagination, Input, Switch, Icon, Select } from "antd";
+import { Pagination, Input, Switch, Icon, Select, Modal } from "antd";
 import PositionCards from "./PositionCards/PositionCards.jsx";
 import Footer from "../Partials/Footer/Footer.jsx";
 
@@ -7,10 +7,21 @@ import "./style.scss";
 
 const { Search } = Input;
 const { Option } = Select;
+const { TextArea } = Input;
+const inputWidth =
+  window.screen.availWidth < 350 ? window.screen.availWidth - 182 : 168;
 
 class Positions extends Component {
   constructor(props) {
     super(props);
+
+    this.state = {
+      modalVisible: false
+    };
+
+    this.showModal = this.showModal.bind(this);
+    this.handleOk = this.handleOk.bind(this);
+    this.handleCancel = this.handleCancel.bind(this);
 
     this.state = {
       isWaitingResponse: false,
@@ -70,6 +81,18 @@ class Positions extends Component {
     ));
   }
 
+  showModal() {
+    this.setState({ ...this.state, modalVisible: true });
+  }
+
+  handleOk() {
+    this.setState({ ...this.state, modalVisible: false });
+  }
+
+  handleCancel() {
+    this.setState({ ...this.state, modalVisible: false });
+  }
+
   render() {
     return (
       <div>
@@ -101,6 +124,65 @@ class Positions extends Component {
                   <Option value="mv">Part Time</Option>
                   <Option value="sj">Contractor</Option>
                 </Select>
+
+                <button type="submit" class="ant-btn ant-btn-primary" onClick={this.showModal}>Create Position</button>
+
+                <Modal
+                  title="Create Position"
+                  visible={this.state.modalVisible}
+                  onOk={this.handleOk}
+                  onCancel={this.handleCancel}
+                >
+                  <div class="form-group">
+                    <div className="info-content-body-item-label">Position Title</div>
+                    <Input placeholder="Enter Position Title" />
+                  </div>
+                  <div class="form-group">
+                    <div className="info-content-body-item-label">Category</div>
+                    <Select defaultValue="">
+                      <Option value="">Category</Option>
+                      <Option value="eng">Engineering</Option>
+                      <Option value="dops">Dev Ops</Option>
+                    </Select>
+
+                  </div><div class="form-group">
+                    <div className="info-content-body-item-label">Status</div>
+                    <Select defaultValue="">
+                      <Option value="">Position Status</Option>
+                      <Option value="o">Open</Option>
+                      <Option value="h">Hold</Option>
+                      <Option value="c">Closed</Option>
+                    </Select>
+                  </div>
+                  <div class="form-group">
+                    <div className="info-content-body-item-label">Job Description</div>
+                    <TextArea rows={4} />
+                  </div>
+                  <div class="form-group">
+                    <div className="info-content-body-item-label">City</div>
+                    <Input style={{
+                      width: inputWidth
+                    }} placeholder="City" />
+                  </div>
+                  <div class="form-group">
+                    <div className="info-content-body-item-label">State</div>
+                    <Select defaultValue="">
+                      <Option value="">State</Option>
+                      <Option value="o">CA, USA</Option>
+                      <Option value="h">TX, USA</Option>
+                    </Select>
+                  </div>
+                  <div class="form-group">
+                    <div className="info-content-body-item-label">Country</div>
+                    <Select defaultValue="">
+                      <Option value="">Country</Option>
+                      <Option value="o">USA</Option>
+                      <Option value="h">Australia</Option>
+                    </Select>
+                  </div>
+                  {/* <button type="submit" class="ant-btn ant-btn-primary">Save</button>
+                          <button type="submit" class="vbtn">Delete</button> */}
+                </Modal>
               </div>
               {this.generatePositions()}
             </div>
@@ -109,7 +191,7 @@ class Positions extends Component {
         <div className="bottom-fixed-footer">
           <Footer />
         </div>
-      </div>
+      </div >
     );
   }
 }

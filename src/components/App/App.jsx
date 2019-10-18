@@ -108,7 +108,10 @@ class App extends Component {
       "/privacypolicy",
       "/aboutus",
       "/mentors",
-      "/positions"
+      "/positions",
+      "/profile",
+      "/companies",
+      "/createjob"
     ];
   }
 
@@ -781,7 +784,6 @@ class App extends Component {
                   />
                 )}
               />
-
               <Route exact path="/faqs" render={() => <FAQ />} />
               <Route
                 exact
@@ -809,5 +811,4 @@ class App extends Component {
     }
   }
 }
-
 export default withCookies(App);
