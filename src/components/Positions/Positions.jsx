@@ -7,6 +7,9 @@ import "./style.scss";
 
 const { Search } = Input;
 const { Option } = Select;
+const { TextArea } = Input;
+const inputWidth =
+  window.screen.availWidth < 350 ? window.screen.availWidth - 182 : 168;
 
 class Positions extends Component {
   constructor(props) {
@@ -130,61 +133,55 @@ class Positions extends Component {
                   onOk={this.handleOk}
                   onCancel={this.handleCancel}
                 >
-                  <div class="form-row">
-                    <div class="form-group col-md-6">
-                      <label for="txtPositionTitle">Position Title</label>
-                      <input type="text" class="form-control" id="txtPositionTitle" placeholder="Enter Position Title"></input>
-                    </div>
-
+                  <div class="form-group">
+                    <div className="info-content-body-item-label">Position Title</div>
+                    <Input placeholder="Enter Position Title" />
                   </div>
                   <div class="form-group">
-                    <label for="txtPositionCategory">Category</label>
-                    <select id="ddlCategory" class="form-control">
-                      <option selected>Choose...</option>
-                      <option>--Select--</option>
-                      <option>Engineering</option>
-                      <option>Dev Ops</option>
-                    </select>
+                    <div className="info-content-body-item-label">Category</div>
+                    <Select defaultValue="">
+                      <Option value="">Category</Option>
+                      <Option value="eng">Engineering</Option>
+                      <Option value="dops">Dev Ops</Option>
+                    </Select>
+
                   </div><div class="form-group">
-                    <label for="txtPositionStatus">Position Status</label>
-                    <select id="ddlStatus" class="form-control">
-                      <option selected>Choose...</option>
-                      <option>--Select--</option>
-                      <option>Open</option>
-                      <option>Hold</option>
-                      <option>Closed</option>
-                    </select>
+                    <div className="info-content-body-item-label">Status</div>
+                    <Select defaultValue="">
+                      <Option value="">Position Status</Option>
+                      <Option value="o">Open</Option>
+                      <Option value="h">Hold</Option>
+                      <Option value="c">Closed</Option>
+                    </Select>
                   </div>
                   <div class="form-group">
-                    <label for="inputAbout">Job Description</label>
-                    <textarea rows="4" cols="50" class="form-control" id="inputAbout" placeholder="Describe about the job">
-                    </textarea>
+                    <div className="info-content-body-item-label">Job Description</div>
+                    <TextArea rows={4} />
                   </div>
-                  <div class="form-row">
-                    <div class="form-group col-md-4">
-                      <label for="inputCity">City</label>
-                      <input type="text" class="form-control" id="inputCity"></input>
-                    </div>
-                    <div class="form-group col-md-4">
-                      <label for="inputState">State</label>
-                      <select id="inputState" class="form-control">
-                        <option selected>Choose...</option>
-                        <option>...</option>
-                      </select>
-                    </div>
-                    <div class="form-group col-md-4">
-                      <label for="inputZip">Country</label>
-                      <select id="inputState" class="form-control">
-                        <option selected>Choose...</option>
-                        <option>...</option>
-                      </select>
-                    </div>
+                  <div class="form-group">
+                    <div className="info-content-body-item-label">City</div>
+                    <Input style={{
+                      width: inputWidth
+                    }} placeholder="City" />
                   </div>
-
+                  <div class="form-group">
+                    <div className="info-content-body-item-label">State</div>
+                    <Select defaultValue="">
+                      <Option value="">State</Option>
+                      <Option value="o">CA, USA</Option>
+                      <Option value="h">TX, USA</Option>
+                    </Select>
+                  </div>
+                  <div class="form-group">
+                    <div className="info-content-body-item-label">Country</div>
+                    <Select defaultValue="">
+                      <Option value="">Country</Option>
+                      <Option value="o">USA</Option>
+                      <Option value="h">Australia</Option>
+                    </Select>
+                  </div>
                   {/* <button type="submit" class="ant-btn ant-btn-primary">Save</button>
                           <button type="submit" class="vbtn">Delete</button> */}
-
-
                 </Modal>
               </div>
               {this.generatePositions()}
@@ -194,7 +191,7 @@ class Positions extends Component {
         <div className="bottom-fixed-footer">
           <Footer />
         </div>
-      </div>
+      </div >
     );
   }
 }
