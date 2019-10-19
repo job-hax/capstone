@@ -29,7 +29,7 @@ class BodyComponents extends React.Component {
             alert={this.props.alert}
           />
         );
-      case "Reviews":
+      case "Feedbacks":
         return (
           <JobReviews
             card={this.props.card}

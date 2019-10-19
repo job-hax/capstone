@@ -34,8 +34,21 @@
 
   .position-card-button {
     width: 120px;
-    display: flex;
+    display: block;
     align-items: center;
     justify-content: center;
+  }
+
+  .btn-view-edit{
+    margin-bottom:10px;
+    border:1px solid steelblue;
+    background-color: #ffffff;
+    color:black !important;
+    width:120px;
+  }
+  .btn-delete{
+    margin-bottom:10px;
+    background-color: #d9534f;
+    width:120px;
   }
 }
