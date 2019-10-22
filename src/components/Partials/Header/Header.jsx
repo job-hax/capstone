@@ -193,6 +193,7 @@ class Header extends Component {
               <Menu.Item key="/metrics">Metrics</Menu.Item>
               <Menu.Item key="/applicants">Applicants</Menu.Item>
               <Menu.Item key="/positions">Positions</Menu.Item>
+              <Menu.Item key="/applicant">*Applicants</Menu.Item>
             </SubMenu>
             {/* <SubMenu
               title={

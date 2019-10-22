@@ -1,92 +1,116 @@
-
 @import "../App/style.scss";
 
-@import url('https://colorlib.com/polygon/cooladmin/css/theme.css');
+.applicants-big-container {
+  color: $text_color;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  padding-top: 60px;
 
+  @media only screen and (max-device-width: 800px) and (-webkit-min-device-pixel-ratio: 2) {
+    padding-top: 20px;
+  }
 
-.imgAvatar{
-    border-radius: 50%;
-    width: 60px;
-    border: 3px solid grey;
+  .applicants-container {
+    width: 37.5%;
+    min-width: 576px;
+    max-width: 37.5%;
+
+    @media only screen and (max-device-width: 800px) and (-webkit-min-device-pixel-ratio: 2) {
+      min-width: 90vw;
+    }
+
+    .title {
+      text-align: center;
+      margin-bottom: 30px;
+
+      h2 {
+        font-size: 36px;
+        margin-bottom: 0;
+        font-weight: bold;
+      }
+    }
+
+    .applicants-card-container {
+      width: 100%;
+
+      .applicants-filter {
+        margin-top: 24px;
+        display: flex;
+        align-items: center;
+
+        .ant-select {
+          margin: 0 8px;
+        }
+      }
+
+      .applicants-search-before-click {
+        .ant-input {
+          text-align: center !important;
+          border: none !important;
+          background-color: $line_color !important;
+          border-radius: 20px !important;
+          height: 40px !important;
+          margin-bottom: 15px !important;
+        }
+
+        .ant-input-affix-wrapper .ant-input-suffix {
+          right: calc(50% + 34px) !important;
+          color: $gray_text_color !important;
+          top: 20px !important;
+          font-size: 120%;
+        }
+
+        .ant-input-search-icon {
+          color: $gray_text_color;
+          max-height: 14px;
+          max-width: 14px;
+          border-radius: 2px;
+          overflow: hidden;
+        }
+
+        .ant-input::placeholder {
+          color: $gray_text_color;
+        }
+      }
+
+      .position-search {
+        .ant-input {
+          border: none !important;
+          background-color: $line_color !important;
+          border-radius: 20px !important;
+          height: 40px !important;
+          margin-bottom: 15px !important;
+          box-shadow: 0 0 2px 1px #aaaaaa6b;
+          text-align: left !important;
+          color: $text_color !important;
+        }
+
+        .ant-input-affix-wrapper .ant-input-suffix {
+          right: 12px !important;
+          color: $gray_text_color !important;
+          top: 20px !important;
+          font-size: 120%;
+        }
+
+        .ant-input-search-icon {
+          color: $gray_text_color;
+          max-height: 14px;
+          max-width: 14px;
+          border-radius: 2px;
+          overflow: hidden;
+        }
+
+        .ant-input::placeholder {
+          color: $gray_text_color;
+        }
+      }
+    }
+  }
 }
 
-.table-data3 thead tr th:last-child{
-    border-radius: 0px !important;
+.bottom-fixed-footer {
+  position: fixed;
+  bottom: 0%;
+  width: 100%;
 }
-
-.table-data3 thead tr th:first-child{
-    border-radius: 0px !important;
-}
-
-.table-head-tite{
-color: white;
-}
-
-.table-responsive{
-    box-shadow: 0 .15rem 1.75rem 0 rgba(58,59,69,.15)!important;
-}
-
-.table-data3 tbody tr{
-    height: 75px !important;
-}
-
-.table-data3 tbody td {
-    vertical-align: middle !important;
-    background-color: #eeeeee;
-    color: black;
-}
-
-.btn-group-lg>.btn, .btn-lg{
-    font-size: 13px !important;
-}
-
-.table-earning thead th {
-    padding: 22px 10px !important;
-}
-
-.table-earning tbody td{
-    padding: 15px 10px !important;
-}
-
-.table-earning thead tr th:first-child {
-    border-top-left-radius: 10px;
-}
-
-.table-earning thead tr th:last-child {
-    border-top-right-radius: 10px;
-}
-
-.fa-download{
-    font-size: 25px !important;
-    color: steelblue !important;
-}
-
-// .divTable{
-// 	display: table;
-// 	width: 100%;
-// }
-// .divTableRow {
-// 	display: table-row;
-// }
-// .divTableHeading {
-// 	background-color: #EEE;
-// 	display: table-header-group;
-// }
-// .divTableCell, .divTableHead {
-// 	border: 1px solid #999999;
-// 	display: table-cell;
-// 	padding: 3px 10px;
-// }
-// .divTableHeading {
-// 	background-color: #EEE;
-// 	display: table-header-group;
-// 	font-weight: bold;
-// }
-// .divTableFoot {
-// 	background-color: #EEE;
-// 	display: table-footer-group;
-// 	font-weight: bold;
-// }
-// .divTableBody {
-// 	display: table-row-group;
-// }
