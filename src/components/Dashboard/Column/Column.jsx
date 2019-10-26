@@ -169,9 +169,6 @@ class Column extends Component {
     return (
       <div className={columnHeaderContainerClass}>
         <div className="column-header">
-          {/*<div className="column-header column-icon">
-            <img src={this.props.icon} />
-            </div>*/}
           <div className={columnHeaderTitleClass}>
             {title}
             {ongoingsAmount > MIN_CARD_NUMBER_IN_COLUMN && (

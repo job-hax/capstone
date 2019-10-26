@@ -41,6 +41,7 @@ class Dashboard extends Component {
         this.props.cookie("get", "is_demo_user") != ("" || null)
           ? this.props.cookie("get", "is_demo_user")
           : false,
+      user_company: "",
       allApplications: [],
       toApply: [],
       applied: [],
@@ -115,6 +116,16 @@ class Dashboard extends Component {
           }
         }
       );
+      axiosCaptcha(USERS("profile"), { method: "GET" }).then(response => {
+        if (response.statusText === "OK") {
+          if (response.data.success) {
+            this.data = response.data.data;
+            this.setState({
+              user_company: this.data.company.company
+            });
+          }
+        }
+      });
     }
   }
 
@@ -212,8 +223,7 @@ class Dashboard extends Component {
             IS_CONSOLE_LOG_OPEN &&
               console.log("dashboard response.data data", response.data.data);
           }
-        }
-        else{
+        } else {
           this.setState({
             isInitialRequest: false,
             allApplications: [],
@@ -362,7 +372,7 @@ class Dashboard extends Component {
     });
   }
 
-  async addNewApplication({ name, title, columnName }) {
+  async addNewApplication({ first_name, last_name, title, columnName }) {
     const statuses = {
       applied: {
         id: 1,
@@ -390,13 +400,16 @@ class Dashboard extends Component {
     config.body = {
       job_title: title,
       status_id: statuses[columnName].id,
-      company: name,
+      first_name: first_name,
+      last_name: last_name,
+      company: this.state.user_company,
       application_date: generateCurrentDate(),
       source: "N/A"
     };
     let jobCardFirstInstance = {
       id: -1,
-      app_source: { value: "N/A" },
+      first_name: first_name,
+      last_name: last_name,
       application_status: { id: statuses[columnName].id },
       company_object: { company: name },
       is_rejected: false,
