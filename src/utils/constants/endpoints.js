@@ -4,19 +4,20 @@ export const apiRoot = "https://backend.jobhax.com"; //"https://backend.jobhax.c
 export const USERS = type => `${apiRoot}/api/users/${type}/`;
 
 //JOB_APPS REQUESTS//
-export const JOB_APPS = `${apiRoot}/api/jobapps/`;
+export const JOB_APPS = `${apiRoot}/api/positionapps/`;
 
-export const GET_SOURCES = `${apiRoot}/api/jobapps/sources/`;
+export const GET_SOURCES = `${apiRoot}/api/positionapps/sources/`;
 
-export const GET_STATUSES = `${apiRoot}/api/jobapps/statuses/`;
+export const GET_STATUSES = `${apiRoot}/api/positionapps/statuses/`;
 
 export const CONTACTS = jobappId =>
-  `${apiRoot}/api/jobapps/${jobappId}/contacts/`;
+  `${apiRoot}/api/positionapps/${jobappId}/contacts/`;
 
 export const GET_NEW_JOBAPPS = timestamp =>
-  `${apiRoot}/api/jobapps/?timestamp=${timestamp}`;
+  `${apiRoot}/api/positionapps/?timestamp=${timestamp}`;
 
-export const NOTES = jobappId => `${apiRoot}/api/jobapps/${jobappId}/notes/`;
+export const NOTES = jobappId =>
+  `${apiRoot}/api/positionapps/${jobappId}/notes/`;
 
 //METRICS REQUESTS//
 export const METRICS = type => `${apiRoot}/api/metrics/${type}`;
