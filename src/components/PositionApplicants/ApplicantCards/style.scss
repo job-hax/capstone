@@ -1,0 +1,54 @@
+@import "../../App/style.scss";
+
+.applicant-card {
+  margin: 24px 0;
+  border-radius: 8px;
+  background-color: #eeeeee;
+  padding: 16px;
+  display: flex;
+
+  .applicant-card-img {
+    width: 120px;
+    img {
+      width: 50%;
+    }
+  }
+
+  .applicant-card-detail {
+    width: calc(100% - 240px);
+    // padding: 8px;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+
+    .all-caps {
+      text-transform: uppercase;
+      font-weight: 600;
+    }
+
+    .small-text {
+      font-size: 12px;
+      color: $gray_text_color;
+    }
+  }
+
+  .applicant-card-button {
+    width: 120px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .btn-view-edit{
+    margin-bottom:10px;
+    border:1px solid steelblue;
+    background-color: #ffffff;
+    color:black !important;
+    width:120px;
+  }
+  .btn-delete{
+    margin-bottom:10px;
+    background-color: #d9534f;
+    width:120px;
+  }
+}
