@@ -22,19 +22,13 @@ class JobDetails extends React.Component {
       isCompanyEditing: false,
       isPositionsEditing: false,
       isApplyDateEditing: false,
-      isApplicationSourcesEditing: false,
       companyName:
         this.props.card.company_object &&
         this.props.card.company_object.company,
       jobTitle: this.props.card.position && this.props.card.position.job_title,
       apply_date: makeTimeBeautiful(this.props.card.apply_date, "date"),
-      source:
-        this.props.card.app_source === null
-          ? "N/A"
-          : this.props.card.app_source.value,
       autoCompleteCompanyData: [],
-      autoCompletePositionsData: [],
-      sourcesList: []
+      autoCompletePositionsData: []
     };
 
     this.body = { jobapp_id: this.props.card.id };
@@ -42,14 +36,10 @@ class JobDetails extends React.Component {
     this.handlePositionsSearch = this.handlePositionsSearch.bind(this);
     this.handleCompanySearch = this.handleCompanySearch.bind(this);
     this.handleApplyDate = this.handleApplyDate.bind(this);
-    this.handleApplicationSources = this.handleApplicationSources.bind(this);
     this.toggleAll = this.toggleAll.bind(this);
     this.toggleCompanyEdit = this.toggleCompanyEdit.bind(this);
     this.togglePositionsEdit = this.togglePositionsEdit.bind(this);
     this.toggleApplyDateEdit = this.toggleApplyDateEdit.bind(this);
-    this.toggleApplicationSourcesEdit = this.toggleApplicationSourcesEdit.bind(
-      this
-    );
     this.setWrapperRef = this.setWrapperRef.bind(this);
     this.handleClickOutside = this.handleClickOutside.bind(this);
 
@@ -57,7 +47,7 @@ class JobDetails extends React.Component {
   }
 
   componentDidMount() {
-    this.getApplicationSources();
+    // this.getApplicationSources();
   }
 
   async submitChanges() {
@@ -81,7 +71,6 @@ class JobDetails extends React.Component {
     } else {
       this.body["company"] = this.state.companyName.trim();
     }
-    this.body["source"] = this.state.source;
     let config = { method: "PATCH" };
     config.body = this.body;
     const response = await axiosCaptcha(JOB_APPS, config);
@@ -90,8 +79,7 @@ class JobDetails extends React.Component {
         this.props.updateCard(
           response.data.data.company_object,
           response.data.data.position,
-          response.data.data.apply_date,
-          response.data.data.app_source
+          response.data.data.apply_date
         );
         this.props.updateHeader();
       } else {
@@ -139,8 +127,7 @@ class JobDetails extends React.Component {
     this.setState({
       isCompanyEditing: false,
       isPositionsEditing: false,
-      isApplyDateEditing: false,
-      isApplicationSourcesEditing: false
+      isApplyDateEditing: false
     });
     this.submitChanges();
   }
@@ -150,8 +137,7 @@ class JobDetails extends React.Component {
     this.setState({
       isCompanyEditing: true,
       isPositionsEditing: false,
-      isApplyDateEditing: false,
-      isApplicationSourcesEditing: false
+      isApplyDateEditing: false
     });
   }
 
@@ -217,8 +203,7 @@ class JobDetails extends React.Component {
     this.setState({
       isPositionsEditing: true,
       isCompanyEditing: false,
-      isApplyDateEditing: false,
-      isApplicationSourcesEditing: false
+      isApplyDateEditing: false
     });
   }
 
@@ -280,8 +265,7 @@ class JobDetails extends React.Component {
     this.setState({
       isCompanyEditing: false,
       isPositionsEditing: false,
-      isApplyDateEditing: true,
-      isApplicationSourcesEditing: false
+      isApplyDateEditing: true
     });
   }
 
@@ -318,76 +302,6 @@ class JobDetails extends React.Component {
           </div>
         ) : (
           <div className={infoClass}>{apply_date}</div>
-        )}
-      </div>
-    );
-  }
-
-  //Application Source Info
-  toggleApplicationSourcesEdit() {
-    this.setState({
-      isApplicationSourcesEditing: true,
-      isCompanyEditing: false,
-      isPositionsEditing: false,
-      isApplyDateEditing: false
-    });
-  }
-
-  getApplicationSources() {
-    let config = { method: "GET" };
-    axiosCaptcha(GET_SOURCES, config).then(response => {
-      if (response.statusText === "OK") {
-        if (response.data.success) {
-          IS_CONSOLE_LOG_OPEN && console.log(response.data);
-          this.setState({
-            sourcesList: response.data.data
-          });
-        }
-      }
-    });
-  }
-
-  handleApplicationSources(event) {
-    this.setState({ source: event.target.textContent });
-  }
-
-  generateApplicationSourcesInfo() {
-    const { source, sourcesList, isApplicationSourcesEditing } = this.state;
-    const infoClass =
-      this.props.card.editable == true ? "text-editable" : "text";
-    return (
-      <div className="info">
-        <label>
-          <div>{"Source"}</div>
-        </label>
-        {isApplicationSourcesEditing == true ? (
-          <Select
-            name="source"
-            value={source}
-            onChange={() => this.handleApplicationSources(event)}
-            style={this.inputStyle}
-          >
-            {sourcesList.map(each => (
-              <Option
-                id={each.id}
-                type="dropdown"
-                title="source"
-                key={each.id}
-                value={each.value}
-              >
-                {each.value}
-              </Option>
-            ))}
-          </Select>
-        ) : this.props.card.editable == true ? (
-          <div
-            className={infoClass}
-            onClick={this.toggleApplicationSourcesEdit}
-          >
-            {source}
-          </div>
-        ) : (
-          <div className={infoClass}>{source}</div>
         )}
       </div>
     );
@@ -433,7 +347,6 @@ class JobDetails extends React.Component {
         {this.generateCompanyInfo()}
         {this.generatePositionsInfo()}
         {this.generateApplyDateInfo()}
-        {this.generateApplicationSourcesInfo()}
         {this.generatePositionDetail()}
       </div>
     );

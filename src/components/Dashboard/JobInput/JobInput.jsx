@@ -1,6 +1,6 @@
 import React, { PureComponent } from "react";
 import classNames from "classnames";
-import { AutoComplete, Select, Icon, Menu, Button } from "antd";
+import { AutoComplete, Input, Select, Icon, Menu, Button } from "antd";
 
 import { IS_CONSOLE_LOG_OPEN } from "../../../utils/constants/constants";
 import { axiosCaptcha } from "../../../utils/api/fetch_api";
@@ -12,69 +12,25 @@ class JobInput extends PureComponent {
   constructor(props) {
     super(props);
     this.state = {
-      companyName: "",
+      first_name: "",
+      last_name: "",
       jobTitle: "",
-      autoCompleteCompanyData: [],
       autoCompletePositionsData: []
     };
     this.handlePositionsSearch = this.handlePositionsSearch.bind(this);
     this.handleAddNewApplication = this.handleAddNewApplication.bind(this);
     this.cancelJobInputEdit = this.cancelJobInputEdit.bind(this);
-    this.handleSearch = this.handleSearch.bind(this);
+    this.handleInputChange = this.handleInputChange.bind(this);
   }
 
-  handleSearch(value) {
-    this.setState({ companyName: value });
-    let url =
-      "https://autocomplete.clearbit.com/v1/companies/suggest?query=" + value;
-    let config = {
-      method: "GET",
-      mode: "cors",
-      cache: "no-cache",
-      headers: {
-        "Content-Type": "application/json"
-      }
-    };
-    axiosCaptcha(url, config).then(response => {
-      if (response.statusText === "OK") {
-        IS_CONSOLE_LOG_OPEN && console.log(response);
-        let bufferList = [];
-        response.data.forEach(company => bufferList.push(company.name));
-        {
-          /*<Select.Option
-              key={Math.random()}
-              value={company.name}
-              style={{ display: "flex", justifyContent: "left" }}
-              onClick={this.onCompanySelect}
-            >
-              <div>
-                <div
-                  style={{
-                    height: "20px",
-                    minWidth: "20px",
-                    maxWidth: "20px",
-                    marginRight: "16px",
-                    overflow: "hidden"
-                  }}
-                >
-                  <img
-                    src={company.logo}
-                    style={{ height: "20px", width: "auto" }}
-                  />
-                </div>
-                <div style={{ maxWidth: "140px", overflow: "hidden" }}>
-                  {company.name.length >= 18
-                    ? company.name.substring(0, 17) + "..."
-                    : company.name}
-                </div>
-              </div>
-          </Select.Option>*/
-        }
-        this.setState({
-          autoCompleteCompanyData: bufferList
-        });
-      }
-    });
+  handleInputChange(event, type) {
+    event.preventDefault();
+    if (type === "first_name") {
+      this.setState({ first_name: event.target.value });
+    }
+    if (type === "last_name") {
+      this.setState({ last_name: event.target.value });
+    }
   }
 
   async handlePositionsSearch(value) {
@@ -104,13 +60,15 @@ class JobInput extends PureComponent {
     this.props
       .addNewApplication({
         columnName,
-        name: this.state.companyName,
+        first_name: this.state.first_name,
+        last_name: this.state.last_name,
         title: this.state.jobTitle
       })
       .then(({ ok }) => {
         if (ok) {
           this.setState({
-            companyName: "",
+            first_name: "",
+            last_name: "",
             jobTitle: ""
           });
         }
@@ -120,28 +78,30 @@ class JobInput extends PureComponent {
   cancelJobInputEdit() {
     this.props.toggleJobInput();
     this.setState({
-      companyName: "",
+      first_name: "",
+      last_name: "",
       jobTitle: ""
     });
   }
 
   render() {
     const { showInput, toggleJobInput } = this.props;
-    const { companyName, jobTitle } = this.state;
+    const { first_name, last_name, jobTitle } = this.state;
     return (
       <div>
         <form
           className="column-addJob-form"
           onSubmit={this.handleAddNewApplication}
         >
-          <AutoComplete
-            dataSource={this.state.autoCompleteCompanyData}
-            style={{ marginTop: "4px" }}
-            className="input-addJob"
-            onSearch={this.handleSearch}
-            placeholder="Applicant Name"
-            value={companyName}
-            onSelect={value => this.setState({ companyName: value })}
+          <Input
+            placeholder="First Name"
+            value={this.state.first_name}
+            onChange={event => this.handleInputChange(event, "first_name")}
+          />
+          <Input
+            placeholder="Last Name"
+            value={this.state.last_name}
+            onChange={event => this.handleInputChange(event, "last_name")}
           />
           <AutoComplete
             dataSource={this.state.autoCompletePositionsData}
@@ -163,7 +123,9 @@ class JobInput extends PureComponent {
             <Button
               type="primary"
               disabled={
-                companyName.trim().length < 1 || jobTitle.trim().length < 1
+                first_name.trim().length < 1 ||
+                last_name.trim().length < 1 ||
+                jobTitle.trim().length < 1
               }
               onClick={this.handleAddNewApplication}
             >

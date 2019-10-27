@@ -42,14 +42,7 @@ class ModalHeader extends React.Component {
             <div className="header-text">
               {card.company_object && (
                 <div className="header-text company-name">
-                  Sako M
-
-                  {/* {
-                    card.company_object.company
-                      .split(",")[0]
-                      .split("-")[0]
-                      .split("(")[0]
-                  } */}
+                  {card.first_name + " " + card.last_name}
                 </div>
               )}
               {card.position && (

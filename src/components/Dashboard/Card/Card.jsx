@@ -141,6 +141,8 @@ class Card extends PureComponent {
   renderCard() {
     const {
       card: {
+        first_name,
+        last_name,
         company_object,
         position,
         is_rejected,
@@ -204,7 +206,7 @@ class Card extends PureComponent {
         </div>
         <div className="card-company-info">
           <div id="company" className="card-company-name">
-            {company_object.company}
+            {first_name + " " + last_name}
           </div>
           {position && (
             <div id="jobTitle" className="card-job-position">
