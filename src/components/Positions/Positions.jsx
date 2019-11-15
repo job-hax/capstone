@@ -2,6 +2,13 @@ import React, { Component } from "react";
 import { Pagination, Input, Switch, Icon, Select, Modal } from "antd";
 import PositionCards from "./PositionCards/PositionCards.jsx";
 import Footer from "../Partials/Footer/Footer.jsx";
+import { axiosCaptcha } from "../../utils/api/fetch_api";
+import { IS_CONSOLE_LOG_OPEN } from "../../utils/constants/constants.js";
+import {
+  COMPANY_POSITIONS,
+  GET_COMPANY_POSITIONS,
+  USERS
+} from "../../utils/constants/endpoints.js";
 
 import "./style.scss";
 
@@ -22,46 +29,15 @@ class Positions extends Component {
     this.showModal = this.showModal.bind(this);
     this.handleOk = this.handleOk.bind(this);
     this.handleCancel = this.handleCancel.bind(this);
+    this.deletePosition = this.deletePosition.bind(this);
 
     this.state = {
       isWaitingResponse: false,
       isInitialRequest: "beforeRequest",
       isNewPageRequested: false,
       isDetailsRequested: false,
-      positions: [
-        {
-          company: "google",
-          position: "Software Engineer",
-          location: "Sunnyvale, CA, USA",
-          department: "Engineering",
-          type: "Full Time",
-          date: "10/01/2019"
-        },
-        {
-          company: "google",
-          position: "DevOp",
-          location: "Sunnyvale, CA, USA",
-          department: "Engineering",
-          type: "Full Time",
-          date: "10/01/2019"
-        },
-        {
-          company: "google",
-          position: "Software Engineer",
-          location: "Sunnyvale, CA, USA",
-          department: "Engineering",
-          type: "Full Time",
-          date: "10/01/2019"
-        },
-        {
-          company: "google",
-          position: "Software Engineer",
-          location: "Sunnyvale, CA, USA",
-          department: "Engineering",
-          type: "Full Time",
-          date: "10/01/2019"
-        }
-      ],
+      company_id: null,
+      positions: [],
       pageNo: 1,
       pageSize: 10,
       q: "",
@@ -70,11 +46,55 @@ class Positions extends Component {
     };
   }
 
+  async componentDidMount() {
+    axiosCaptcha(USERS("profile"), { method: "GET" }).then(response => {
+      if (response.statusText === "OK") {
+        if (response.data.success) {
+          this.data = response.data.data;
+          this.setState({
+            company_id: this.data.company.id
+          });
+
+          this.getPositions();
+        }
+      }
+    });
+  }
+
+  getPositions() {
+    axiosCaptcha(GET_COMPANY_POSITIONS(this.state.company_id), {
+      method: "GET"
+    }).then(response => {
+      if (response.statusText === "OK") {
+        if (response.data.success) {
+          this.data = response.data.data;
+          this.setState({
+            positions: this.data
+          });
+        }
+      }
+    });
+  }
+
+  deletePosition(id) {
+    axiosCaptcha(COMPANY_POSITIONS, {
+      method: "DELETE",
+      body: { position_id: id }
+    }).then(response => {
+      if (response.statusText === "OK") {
+        if (response.data.success) {
+          this.getPositions();
+        }
+      }
+    });
+  }
+
   generatePositions() {
     return this.state.positions.map(position => (
       <div key={position.id}>
         <PositionCards
           position={position}
+          deletePosition={this.deletePosition}
           handleTokenExpiration={this.props.handleTokenExpiration}
         />
       </div>
@@ -125,7 +145,13 @@ class Positions extends Component {
                   <Option value="sj">Contractor</Option>
                 </Select>
 
-                <button type="submit" class="ant-btn ant-btn-primary" onClick={this.showModal}>Create Position</button>
+                <button
+                  type="submit"
+                  class="ant-btn ant-btn-primary"
+                  onClick={this.showModal}
+                >
+                  Create Position
+                </button>
 
                 <Modal
                   title="Create Position"
@@ -134,7 +160,9 @@ class Positions extends Component {
                   onCancel={this.handleCancel}
                 >
                   <div class="form-group">
-                    <div className="info-content-body-item-label">Position Title</div>
+                    <div className="info-content-body-item-label">
+                      Position Title
+                    </div>
                     <Input placeholder="Enter Position Title" />
                   </div>
                   <div class="form-group">
@@ -144,8 +172,8 @@ class Positions extends Component {
                       <Option value="eng">Engineering</Option>
                       <Option value="dops">Dev Ops</Option>
                     </Select>
-
-                  </div><div class="form-group">
+                  </div>
+                  <div class="form-group">
                     <div className="info-content-body-item-label">Status</div>
                     <Select defaultValue="">
                       <Option value="">Position Status</Option>
@@ -155,14 +183,19 @@ class Positions extends Component {
                     </Select>
                   </div>
                   <div class="form-group">
-                    <div className="info-content-body-item-label">Job Description</div>
+                    <div className="info-content-body-item-label">
+                      Job Description
+                    </div>
                     <TextArea rows={4} />
                   </div>
                   <div class="form-group">
                     <div className="info-content-body-item-label">City</div>
-                    <Input style={{
-                      width: inputWidth
-                    }} placeholder="City" />
+                    <Input
+                      style={{
+                        width: inputWidth
+                      }}
+                      placeholder="City"
+                    />
                   </div>
                   <div class="form-group">
                     <div className="info-content-body-item-label">State</div>
@@ -191,7 +224,7 @@ class Positions extends Component {
         <div className="bottom-fixed-footer">
           <Footer />
         </div>
-      </div >
+      </div>
     );
   }
 }
