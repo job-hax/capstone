@@ -21,6 +21,15 @@ class PositionCards extends Component {
     this.props.deletePosition(this.props.position.id);
   }
 
+  formateDate(str) {
+    let date = new Date(str);
+    return date.toLocaleDateString("en-US", {
+      hour: "numeric",
+      minute: "numeric",
+      hour12: true
+    });
+  }
+
   showModal() {
     this.setState({ ...this.state, modalVisible: true });
   }
@@ -45,7 +54,9 @@ class PositionCards extends Component {
           <div className="small-text all-caps">
             {position.city} - {position.department} - {position.job_type}
           </div>
-          <div className="small-text">Posted at: {position.created_date}</div>
+          <div className="small-text">
+            Posted at: {this.formateDate(position.created_date)}
+          </div>
         </div>
         <div className="position-card-button">
           <Button
@@ -72,6 +83,11 @@ class PositionCards extends Component {
           onOk={this.handleOk}
           onCancel={this.handleCancel}
         >
+          <p className="small-text all-caps">
+            {position.city} - {position.department} - {position.job_type}
+            <br />
+            Posted at: {this.formateDate(position.created_date)}
+          </p>
           <h4>RESPONSIBILITES:</h4>
           <p>{position.responsibilities}</p>
           <h4>REQUIREMENTS:</h4>
