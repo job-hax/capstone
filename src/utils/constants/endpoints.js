@@ -38,11 +38,6 @@ export const EMPLOYMENT_AUTHORIZATIONS = `${apiRoot}/api/reviews/employmentAutho
 //AUTOCOMPLETE REQUEST//
 export const AUTOCOMPLETE = type => `${apiRoot}/api/${type}/`;
 
-//POLL REQUESTS//
-export const GET_POLL = `${apiRoot}/api/polls/`;
-
-export const VOTE_POLL = pollId => `${apiRoot}/api/polls/${pollId}/vote/`;
-
 //NOTIFICATIONS REQUESTS//
 export const NOTIFICATIONS = `${apiRoot}/api/notifications/`;
 
@@ -52,3 +47,7 @@ export const FAQS = `${apiRoot}/api/faqs/`;
 export const AGREEMENTS = `${apiRoot}/api/agreements/`;
 
 export const FEEDBACKS = `${apiRoot}/api/feedbacks/`;
+
+// COMPANY POSITIONS //
+export const COMPANY_POSITIONS = `${apiRoot}/api/positions/company`;
+export const GET_COMPANY_POSITIONS = id => `${COMPANY_POSITIONS}?id=${id}`;
