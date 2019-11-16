@@ -14,6 +14,20 @@ class PositionCards extends Component {
     this.showModal = this.showModal.bind(this);
     this.handleOk = this.handleOk.bind(this);
     this.handleCancel = this.handleCancel.bind(this);
+    this.handleDeletePosition = this.handleDeletePosition.bind(this);
+  }
+
+  handleDeletePosition() {
+    this.props.deletePosition(this.props.position.id);
+  }
+
+  formateDate(str) {
+    let date = new Date(str);
+    return date.toLocaleDateString("en-US", {
+      hour: "numeric",
+      minute: "numeric",
+      hour12: true
+    });
   }
 
   showModal() {
@@ -36,52 +50,48 @@ class PositionCards extends Component {
           <img src="https://logo.clearbit.com/testout.com"></img>
         </div>
         <div className="position-card-detail">
-          <h3>{position.position}</h3>
+          <h3>{position.job.job_title}</h3>
           <div className="small-text all-caps">
-            {position.location} - {position.department} - {position.type}
+            {position.city} - {position.department} - {position.job_type}
           </div>
-          <div className="small-text">Posted at: {position.date}</div>
+          <div className="small-text">
+            Posted at: {this.formateDate(position.created_date)}
+          </div>
         </div>
         <div className="position-card-button">
-          <Button type="primary" onClick={this.showModal} className="btn-view-edit">
+          <Button
+            type="primary"
+            onClick={this.showModal}
+            className="btn-view-edit"
+          >
             LEARN MORE
           </Button>
           <Button type="primary" className="btn-view-edit">
             EDIT
           </Button>
-          <Button type="primary" className="btn-delete">
+          <Button
+            type="primary"
+            className="btn-delete"
+            onClick={this.handleDeletePosition}
+          >
             DELETE
           </Button>
         </div>
         <Modal
-          title="Software Engineer"
+          title={position.job.job_title}
           visible={this.state.modalVisible}
           onOk={this.handleOk}
           onCancel={this.handleCancel}
         >
-          <p>Minimum qualifications:</p>
-          <ul>
-            <li>
-              BS degree in Computer Science, similar technical field of study or
-              equivalent practical experience.
-            </li>
-            <li>
-              Software development experience in one or more general purpose
-              programming languages.
-            </li>
-            <li>
-              Experience working with two or more from the following: web
-              application development, Unix/Linux environments, mobile
-              application development, distributed and parallel systems, machine
-              learning, information retrieval, natural language processing,
-              networking, developing large software systems, and/or security
-              software development.
-            </li>
-            <li>
-              Working proficiency and communication skills in verbal and written
-              English.
-            </li>
-          </ul>
+          <p className="small-text all-caps">
+            {position.city} - {position.department} - {position.job_type}
+            <br />
+            Posted at: {this.formateDate(position.created_date)}
+          </p>
+          <h4>RESPONSIBILITES:</h4>
+          <p>{position.responsibilities}</p>
+          <h4>REQUIREMENTS:</h4>
+          <p>{position.requirements}</p>
         </Modal>
       </div>
     );
