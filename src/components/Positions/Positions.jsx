@@ -38,12 +38,15 @@ class Positions extends Component {
     this.deletePosition = this.deletePosition.bind(this);
     this.handlePageChange = this.handlePageChange.bind(this);
     this.handlePositionsSearch = this.handlePositionsSearch.bind(this);
+    this.handleJobTitleSearch = this.handleJobTitleSearch.bind(this);
+    this.editPosition = this.editPosition.bind(this);
 
     this.state = {
       isWaitingResponse: false,
       isInitialRequest: "beforeRequest",
       isNewPageRequested: false,
       isDetailsRequested: false,
+      isQueryRequested: false,
       company_id: null,
       positions: {
         data: [],
@@ -56,6 +59,7 @@ class Positions extends Component {
       searchClicked: false,
       modalVisible: false,
       autoCompletePositionsData: [],
+      position_id: "",
       job_title: null,
       responsibilities: "",
       requirements: "",
@@ -91,21 +95,20 @@ class Positions extends Component {
         this.setState({ isNewPageRequested: false });
       }
       if (this.state.isQueryRequested === true) {
-        this.getData("queryRequest");
+        this.getPositions("queryRequest");
         this.setState({ isQueryRequested: false });
       }
     }
   }
 
   getPositions(requestType) {
-    axiosCaptcha(
-      GET_COMPANY_POSITIONS(
-        `${this.state.company_id}&page_size=${this.state.pageSize}&page=${this.state.pageNo}`
-      ),
-      {
-        method: "GET"
-      }
-    ).then(response => {
+    let requestURL = `${this.state.company_id}&page_size=${this.state.pageSize}&page=${this.state.pageNo}`;
+    if (this.state.q.length !== 0) {
+      requestURL = `${requestURL}&q=${this.state.q}`;
+    }
+    axiosCaptcha(GET_COMPANY_POSITIONS(requestURL), {
+      method: "GET"
+    }).then(response => {
       if (response.statusText === "OK") {
         if (response.data.success) {
           this.data = response.data;
@@ -142,6 +145,10 @@ class Positions extends Component {
     });
   }
 
+  handleJobTitleSearch(value) {
+    this.setState({ ...this.state, q: value, isQueryRequested: true });
+  }
+
   deletePosition(id) {
     axiosCaptcha(COMPANY_POSITIONS, {
       method: "DELETE",
@@ -152,6 +159,22 @@ class Positions extends Component {
           this.getPositions("newPageRequest");
         }
       }
+    });
+  }
+
+  editPosition(position) {
+    this.setState({
+      ...this.state,
+      position_id: position.id,
+      job_title: position.job.job_title,
+      department: position.department,
+      job_type: position.job_type,
+      responsibilities: position.responsibilities,
+      requirements: position.requirements,
+      city: position.city,
+      state_id: position.state_id,
+      country_id: position.country_id,
+      modalVisible: true
     });
   }
 
@@ -186,6 +209,7 @@ class Positions extends Component {
         <PositionCards
           position={position}
           deletePosition={this.deletePosition}
+          editPosition={this.editPosition}
           handleTokenExpiration={this.props.handleTokenExpiration}
         />
       </div>
@@ -197,7 +221,8 @@ class Positions extends Component {
   }
 
   handleOk() {
-    const post_body = {
+    let config = {};
+    let post_body = {
       job_title: this.state.job_title,
       department: this.state.department,
       job_type: this.state.job_type,
@@ -208,10 +233,17 @@ class Positions extends Component {
       country_id: this.state.country_id,
       company_id: this.state.company_id
     };
-    axiosCaptcha(COMPANY_POSITIONS, {
-      method: "POST",
-      body: post_body
-    }).then(response => {
+
+    if (this.state.position_id) {
+      post_body.position_id = this.state.position_id;
+      config.method = "PATCH";
+      config.body = post_body;
+    } else {
+      config.method = "POST";
+      config.body = post_body;
+    }
+
+    axiosCaptcha(COMPANY_POSITIONS, config).then(response => {
       if (response.statusText === "OK") {
         if (response.data.success) {
           this.setState({
@@ -233,7 +265,19 @@ class Positions extends Component {
   }
 
   handleCancel() {
-    this.setState({ ...this.state, modalVisible: false });
+    this.setState({
+      ...this.state,
+      modalVisible: false,
+      position_id: "",
+      job_title: null,
+      responsibilities: "",
+      requirements: "",
+      city: "",
+      state_id: "",
+      country_id: "",
+      department: "",
+      job_type: ""
+    });
   }
 
   render() {
@@ -252,9 +296,12 @@ class Positions extends Component {
               <div className="title">
                 <h2>Positions</h2>
               </div>
-
               <div className="positions-card-container">
-                <Search placeholder="search" />
+                <Search
+                  placeholder="search"
+                  onSearch={this.handleJobTitleSearch}
+                  enterButton
+                />
                 <div className="positions-filter">
                   <div>Filter by:</div>
                   <Select defaultValue="">

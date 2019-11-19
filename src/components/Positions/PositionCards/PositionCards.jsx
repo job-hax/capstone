@@ -15,10 +15,15 @@ class PositionCards extends Component {
     this.handleOk = this.handleOk.bind(this);
     this.handleCancel = this.handleCancel.bind(this);
     this.handleDeletePosition = this.handleDeletePosition.bind(this);
+    this.handleEditPosition = this.handleEditPosition.bind(this);
   }
 
   handleDeletePosition() {
     this.props.deletePosition(this.props.position.id);
+  }
+
+  handleEditPosition() {
+    this.props.editPosition(this.props.position);
   }
 
   formateDate(str) {
@@ -66,7 +71,11 @@ class PositionCards extends Component {
           >
             LEARN MORE
           </Button>
-          <Button type="primary" className="btn-view-edit">
+          <Button
+            type="primary"
+            className="btn-view-edit"
+            onClick={this.handleEditPosition}
+          >
             EDIT
           </Button>
           <Button
