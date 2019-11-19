@@ -55,6 +55,8 @@ class ApplicantCards extends Component {
           <Select defaultValue="">
                   <Option value="">Action</Option>
                   <Option value="sf">Edit</Option>
+                  <Option value="dr">Download Resume</Option>
+                  <Option value="da">Download Application</Option>
                   <Option value="mv">Archive</Option>
                   <Option value="sj">Reject</Option>
                 </Select>

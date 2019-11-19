@@ -78,6 +78,18 @@ class ProfilePage extends React.Component {
     this.handleStudentMailChange = this.handleStudentMailChange.bind(this);
     this.handleEmailChange = this.handleEmailChange.bind(this);
     this.handlePhoneNumberChange = this.handlePhoneNumberChange.bind(this);
+
+    this.handleCompanyNameChange=this.handleCompanyNameChange.bind(this);
+    this.handleCompanyWebsiteChange=this.handleCompanyWebsiteChange.bind(this);
+    this.handleAboutCompany=this.handleAboutCompany.bind(this);
+    this.handleNoOfEmployees=this.handleNoOfEmployees.bind(this);
+    this.handleCompanyPhone=this.handleCompanyPhone.bind(this);
+    this.handleCompanyFax=this.handleCompanyFax.bind(this);
+    this.handleCompanyAddress=this.handleCompanyAddress.bind(this);
+
+
+
+
     this.handleProfilePhotoUpdate = this.handleProfilePhotoUpdate.bind(this);
     this.handleGoogleOAuth = this.handleGoogleOAuth.bind(this);
     this.handleLinkedInOAuth = this.handleLinkedInOAuth.bind(this);
@@ -363,6 +375,38 @@ class ProfilePage extends React.Component {
     this.setState({ employmentStatus: event.item.props.value });
     this.body["emp_status_id"] = Number(event.key);
   }
+
+  // company information
+
+  handleCompanyNameChange(event) {
+    this.body["companyName"] = event.target.value;
+  }
+
+  handleCompanyWebsiteChange(event) {
+    this.body["aboutCompany"] = event.target.value;
+  }
+
+  handleAboutCompany(event) {
+    this.body["companyWebsite"] = event.target.value;
+  }
+
+  handleNoOfEmployees(event) {
+    this.body["noOfEmployees"] = event.target.value;
+  }
+
+  handleCompanyPhone(event) {
+    this.body["companyPhone"] = event.target.value;
+  }
+
+  handleCompanyFax(event) {
+    this.body["companyFax"] = event.target.value;
+  }
+
+  handleCompanyAddress(event) {
+    this.body["companyAddress"] = event.target.value;
+  }
+
+  //end of company information
 
   handleDatePickerChange(event) {
     this.setState({ selectedDateShowing: event });
@@ -1149,6 +1193,24 @@ class ProfilePage extends React.Component {
                           </div>
                         </div>
                         <div className="info-content-body-item">
+                          <div className="info-content-body-item-label">Profile's public visibility:</div>
+                          <div className="info-content-body-item-text">
+                            <RadioGroup
+                              name="profilevisibility"
+                              style={{ margin: "-6px 0px 4px 5px" }}
+                              value={this.state.gender != null && this.state.gender}
+                              onChange={this.handleGenderClick}
+                            >
+                              <RadioButton id="on" value="N">
+                                On
+                        </RadioButton>
+                              <RadioButton id="off" value="F">
+                                Off
+                        </RadioButton>
+                            </RadioGroup>
+                          </div>
+                        </div>
+                        <div className="info-content-body-item">
                           <Tooltip
                             placement="bottom"
                             title="Share my email with Alumni, Students and Career Services of my University."
@@ -1269,23 +1331,17 @@ class ProfilePage extends React.Component {
                   </div>
                 </div>
               </div>
-              <div className="profile-page-main">
+              <div className="profile-page-main" style={{ margin: "0px 90px 0px 0px !important" }}>
                 <div className="profile-info">
                   <div className="info-header">
                     <div className="info-type-icon">
                       <img id="infoTypeIcon" />
                     </div>
-                    <div className="info-type-name">E Compnay Profile</div>
+                    <div className="info-type-name">Compnay Profile</div>
                   </div>
                   <div className="info-content-container">
                     <div className="info-content-title">Basic Information</div>
                     <div className="info-content-body">
-
-
-
-
-
-
                       <div className="info-content-body-item">
                         <div className="info-content-body-item-label">
                           Company Name:
@@ -1296,7 +1352,7 @@ class ProfilePage extends React.Component {
                               width: inputWidth,
                               margin: "-6px 0px 4px 5px"
                             }}
-                            onChange={this.handleEmailChange}
+                            onChange={this.handleCompanyNameChange}
                             placeholder="Enter Company Name"
                           />
                         </div>
@@ -1311,7 +1367,7 @@ class ProfilePage extends React.Component {
                               width: inputWidth,
                               margin: "-6px 0px 4px 5px"
                             }}
-                            onChange={this.handleEmailChange}
+                            onChange={this.handleCompanyWebsiteChange}
                             placeholder="Enter compnay website"
                           />
                         </div>
@@ -1326,7 +1382,7 @@ class ProfilePage extends React.Component {
                               // width: inputWidth,
                               margin: "-6px 0px 4px 5px"
                             }}
-                            onChange={this.handleEmailChange}
+                            onChange={this.handleAboutCompany}
                             placeholder="Describe about the compnay"
                           />
                         </div>
@@ -1341,12 +1397,8 @@ class ProfilePage extends React.Component {
                               width: inputWidth,
                               margin: "-6px 0px 4px 5px"
                             }}
-                            onChange={this.handleEmailChange}
-                            placeholder={
-                              this.state.data != null && this.state.data.email
-                                ? this.state.data.email
-                                : "email"
-                            }
+                            onChange={this.handleNoOfEmployees}
+                            placeholder="No Of Employees"
                           />
                         </div>
                       </div>
@@ -1373,7 +1425,7 @@ class ProfilePage extends React.Component {
                             preferredCountries={["us"]}
                             value={this.state.data.phone_number}
                             flagsImagePath={require("../../assets/icons/flags.png")}
-                            onChange={this.handlePhoneNumberChange}
+                            onChange={this.handleCompanyPhone}
                           />
                         </div>
                       </div>
@@ -1387,7 +1439,7 @@ class ProfilePage extends React.Component {
                               width: inputWidth,
                               margin: "-6px 0px 4px 5px"
                             }}
-                            onChange={this.handleEmailChange}
+                            onChange={this.handleCompanyFax}
                             placeholder="Enter Fax#"
                           />
                         </div>
@@ -1402,7 +1454,7 @@ class ProfilePage extends React.Component {
                               width: inputWidth,
                               margin: "-6px 0px 4px 5px"
                             }}
-                            onChange={this.handleEmailChange}
+                            onChange={this.handleCompanyAddress}
                             placeholder="Enter office address"
                           />
                         </div>
@@ -1497,12 +1549,13 @@ class ProfilePage extends React.Component {
               </div>
             </div>
           </TabPane>
-          <TabPane tab={<span> <Icon type="book" /> Acedemic Information </span>} key="4">Academic Information</TabPane>
+          <TabPane tab={<span> <Icon type="book" /> Academic Information </span>} key="4">Academic Information</TabPane>
 
         </Tabs>
       </div >
     );
   }
+
 
   render() {
     const notificationsBoxHeight = this.state.isProfileSettingsOpen
