@@ -71,7 +71,7 @@ module.exports = {
     }),
     new webpack.optimize.ModuleConcatenationPlugin(),
     new webpack.NoEmitOnErrorsPlugin(),
-    new BundleAnalyzerPlugin()
+   // new BundleAnalyzerPlugin( analyzerPort: 9999 )
   ],
   optimization: {
     minimize: true,
@@ -104,7 +104,9 @@ module.exports = {
   },
   devServer: {
     host: "localhost",
-    allowedHosts: [".jobhax.com", "backend.jobhax.com"],
+    port: 8081,
+    disableHostCheck: true,
+    allowedHosts: [".jobhax.com","jobposting-be.jobhax.com", "backend.jobhax.com"],
     compress: true,
     historyApiFallback: true
     //headers: { "content-encoding": "br" }
