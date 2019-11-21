@@ -6,7 +6,9 @@ import {
   Switch,
   Icon,
   Select,
-  Modal
+  Modal,
+  Dropdown,
+  Menu
 } from "antd";
 import Spinner from "../Partials/Spinner/Spinner.jsx";
 import PositionCards from "./PositionCards/PositionCards.jsx";
@@ -40,6 +42,9 @@ class Positions extends Component {
     this.handlePositionsSearch = this.handlePositionsSearch.bind(this);
     this.handleJobTitleSearch = this.handleJobTitleSearch.bind(this);
     this.editPosition = this.editPosition.bind(this);
+    this.setCountryOrStateList = this.setCountryOrStateList.bind(this);
+    this.generateUrlForGetData = this.generateUrlForGetData.bind(this);
+    this.handleFilterChagne = this.handleFilterChagne.bind(this);
 
     this.state = {
       isWaitingResponse: false,
@@ -47,6 +52,8 @@ class Positions extends Component {
       isNewPageRequested: false,
       isDetailsRequested: false,
       isQueryRequested: false,
+      countryList: [],
+      stateOrProvinceList: [],
       company_id: null,
       positions: {
         data: [],
@@ -55,6 +62,8 @@ class Positions extends Component {
       pageNo: 1,
       pageSize: 10,
       q: "",
+      fitlerDepartment: "",
+      filterType: "",
       mine: true,
       searchClicked: false,
       modalVisible: false,
@@ -64,7 +73,9 @@ class Positions extends Component {
       responsibilities: "",
       requirements: "",
       city: "",
+      stateOrProvince: "",
       state_id: "",
+      country: "",
       country_id: "",
       department: "",
       job_type: ""
@@ -105,6 +116,12 @@ class Positions extends Component {
     let requestURL = `${this.state.company_id}&page_size=${this.state.pageSize}&page=${this.state.pageNo}`;
     if (this.state.q.length !== 0) {
       requestURL = `${requestURL}&q=${this.state.q}`;
+    }
+    if (this.state.fitlerDepartment.length !== 0) {
+      requestURL = `${requestURL}&department=${this.state.fitlerDepartment}`;
+    }
+    if (this.state.filterType.length !== 0) {
+      requestURL = `${requestURL}&type=${this.state.filterType}`;
     }
     axiosCaptcha(GET_COMPANY_POSITIONS(requestURL), {
       method: "GET"
@@ -149,6 +166,23 @@ class Positions extends Component {
     this.setState({ ...this.state, q: value, isQueryRequested: true });
   }
 
+  handleFilterChagne(type, value) {
+    if (type === "department") {
+      this.setState({
+        ...this.state,
+        fitlerDepartment: value,
+        isQueryRequested: true
+      });
+    }
+    if (type === "type") {
+      this.setState({
+        ...this.state,
+        filterType: value,
+        isQueryRequested: true
+      });
+    }
+  }
+
   deletePosition(id) {
     axiosCaptcha(COMPANY_POSITIONS, {
       method: "DELETE",
@@ -172,8 +206,10 @@ class Positions extends Component {
       responsibilities: position.responsibilities,
       requirements: position.requirements,
       city: position.city,
-      state_id: position.state_id,
-      country_id: position.country_id,
+      stateOrProvince: position.state.name,
+      state_id: position.state.id,
+      country: position.country.name,
+      country_id: position.country.id,
       modalVisible: true
     });
   }
@@ -216,6 +252,66 @@ class Positions extends Component {
     ));
   }
 
+  setCountryOrStateList(event, state_type, id_type) {
+    if (
+      state_type == "country" &&
+      this.state.country != "" &&
+      this.state.country != event.item.props.children
+    ) {
+      let emptyList = [];
+      this.setState({
+        stateOrProvince: "",
+        state_id: null,
+        stateOrProvinceList: emptyList
+      });
+    }
+    this.setState({
+      [state_type]: event.item.props.children,
+      [id_type]: parseInt(event.key)
+    });
+    if (state_type == "country") {
+      this.handleAutoCompleteSearch(parseInt(event.key), "stateOrProvince");
+    }
+  }
+
+  generateUrlForGetData(value, type) {
+    if (type === "positions") {
+      let newUrl = AUTOCOMPLETE(type) + "?q=" + value + "&count=5";
+      this.setState({ job_title: value });
+      return newUrl;
+    } else if (type === "countries") {
+      let newUrl = AUTOCOMPLETE(type);
+      return newUrl;
+    } else if (type === "stateOrProvince") {
+      let newUrl = AUTOCOMPLETE("countries") + value + "/states/";
+      return newUrl;
+    }
+  }
+
+  async handleAutoCompleteSearch(value, type) {
+    let config = { method: "GET" };
+    let newUrl = await this.generateUrlForGetData(value, type);
+    axiosCaptcha(newUrl, config).then(response => {
+      if (response.statusText === "OK") {
+        if (response.data.success) {
+          let bufferList = [];
+          if (type === "positions") {
+            response.data.data.forEach(element =>
+              bufferList.push(element.job_title)
+            );
+            this.setState({ positionAutoCompleteData: bufferList });
+          } else if (type === "countries") {
+            let countriesList = response.data.data;
+            this.setState({ countryList: countriesList });
+          } else if (type === "stateOrProvince") {
+            let statesList = response.data.data;
+            this.setState({ stateOrProvinceList: statesList });
+          }
+        }
+      }
+    });
+  }
+
   showModal() {
     this.setState({ ...this.state, modalVisible: true });
   }
@@ -254,7 +350,9 @@ class Positions extends Component {
             requirements: "",
             city: "",
             state_id: "",
+            stateOrProvince: "",
             country_id: "",
+            country: "",
             department: "",
             job_type: ""
           });
@@ -274,7 +372,9 @@ class Positions extends Component {
       requirements: "",
       city: "",
       state_id: "",
+      stateOrProvince: "",
       country_id: "",
+      country: "",
       department: "",
       job_type: ""
     });
@@ -289,6 +389,23 @@ class Positions extends Component {
       return <Spinner message={"Preparing page " + this.state.pageNo} />;
     if (this.state.isInitialRequest === false) {
       const { job_title } = this.state;
+      const menu = (state_type, id_type, data_list) => (
+        <Menu
+          onClick={event =>
+            this.setCountryOrStateList(event, state_type, id_type)
+          }
+          style={{
+            width: "240px",
+            maxHeight: "260px",
+            textAlign: "center",
+            overflowX: "hidden"
+          }}
+        >
+          {data_list.map(data => (
+            <Menu.Item key={data.id}>{data.name}</Menu.Item>
+          ))}
+        </Menu>
+      );
       return (
         <div>
           <div className="positions-big-container">
@@ -304,19 +421,23 @@ class Positions extends Component {
                 />
                 <div className="positions-filter">
                   <div>Filter by:</div>
-                  <Select defaultValue="">
-                    <Option value="">Location</Option>
-                    <Option value="sf">San Francisco</Option>
-                    <Option value="mv">Mountain View</Option>
-                    <Option value="sj">San Jose</Option>
-                  </Select>
-                  <Select defaultValue="">
+                  <Select
+                    defaultValue=""
+                    onChange={value =>
+                      this.handleFilterChagne("department", value)
+                    }
+                  >
                     <Option value="">Department</Option>
-                    <Option value="sf">Sales</Option>
-                    <Option value="mv">Engineering</Option>
-                    <Option value="sj">Human Resource</Option>
+                    <Option value="Business">Business</Option>
+                    <Option value="Engineering">Engineering</Option>
+                    <Option value="Finance">Finance</Option>
+                    <Option value="Marketing">Marketing</Option>
+                    <Option value="Legal">Legal</Option>
                   </Select>
-                  <Select defaultValue="">
+                  <Select
+                    defaultValue=""
+                    onChange={value => this.handleFilterChagne("type", value)}
+                  >
                     <Option value="">Type</Option>
                     <Option value="sf">Full Time</Option>
                     <Option value="mv">Part Time</Option>
@@ -352,8 +473,11 @@ class Positions extends Component {
                         onChange={value => this.setState({ department: value })}
                       >
                         <Option value="">Department</Option>
-                        <Option value="Engineering">Engineering</Option>
                         <Option value="Business">Business</Option>
+                        <Option value="Engineering">Engineering</Option>
+                        <Option value="Finance">Finance</Option>
+                        <Option value="Marketing">Marketing</Option>
+                        <Option value="Legal">Legal</Option>
                       </Select>
                     </div>
                     <div class="form-group">
@@ -393,37 +517,70 @@ class Positions extends Component {
                         }
                       />
                     </div>
-                    <div class="form-group">
-                      <Input
-                        style={{
-                          width: inputWidth
-                        }}
-                        placeholder="City"
-                        value={this.state.city}
-                        onChange={event =>
-                          this.setState({ city: event.target.value })
-                        }
-                      />
-                    </div>
-                    <div class="form-group">
-                      <Select
-                        value={this.state.state_id}
-                        onChange={value => this.setState({ state_id: value })}
+                    <div>
+                      <Dropdown
+                        overlay={menu(
+                          "country",
+                          "country_id",
+                          this.state.countryList
+                        )}
+                        placement="bottomCenter"
                       >
-                        <Option value="">State</Option>
-                        <Option value="1">CA, USA</Option>
-                        <Option value="2">TX, USA</Option>
-                      </Select>
-                    </div>
-                    <div class="form-group">
-                      <Select
-                        value={this.state.country_id}
-                        onChange={value => this.setState({ country_id: value })}
-                      >
-                        <Option value="">Country</Option>
-                        <Option value="1">USA</Option>
-                        <Option value="2">Australia</Option>
-                      </Select>
+                        <a
+                          className="ant-dropdown-link"
+                          style={{ color: "rgba(100, 100, 100, 0.9)" }}
+                          onMouseEnter={() =>
+                            this.state.countryList.length == 0 &&
+                            this.handleAutoCompleteSearch(null, "countries")
+                          }
+                        >
+                          {this.state.country != "" || null
+                            ? this.state.country
+                            : "Please Select a Country"}{" "}
+                          <Icon type="down" />
+                        </a>
+                      </Dropdown>
+                      {this.state.country_id != "" && (
+                        <div>
+                          <Dropdown
+                            overlay={menu(
+                              "stateOrProvince",
+                              "state_id",
+                              this.state.stateOrProvinceList
+                            )}
+                            placement="bottomCenter"
+                          >
+                            <a
+                              className="ant-dropdown-link"
+                              style={{
+                                color: "rgba(100, 100, 100, 0.9)",
+                                margin: "0 0 8px 0"
+                              }}
+                            >
+                              {this.state.stateOrProvince != "" || null
+                                ? this.state.stateOrProvince
+                                : "Select a State/Province"}{" "}
+                              <Icon type="down" />
+                            </a>
+                          </Dropdown>
+                        </div>
+                      )}
+                      {this.state.state_id !== "" && (
+                        <div>
+                          <div class="form-group">
+                            <Input
+                              style={{
+                                width: inputWidth
+                              }}
+                              placeholder="City"
+                              value={this.state.city}
+                              onChange={event =>
+                                this.setState({ city: event.target.value })
+                              }
+                            />
+                          </div>
+                        </div>
+                      )}
                     </div>
                   </Modal>
                 </div>
