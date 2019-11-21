@@ -57,7 +57,8 @@ class PositionCards extends Component {
         <div className="position-card-detail">
           <h3>{position.job.job_title}</h3>
           <div className="small-text all-caps">
-            {position.city} - {position.department} - {position.job_type}
+            {position.city}, {position.state.name}, {position.country.name} -{" "}
+            {position.department} - {position.job_type}
           </div>
           <div className="small-text">
             Posted at: {this.formateDate(position.created_date)}
@@ -93,7 +94,8 @@ class PositionCards extends Component {
           onCancel={this.handleCancel}
         >
           <p className="small-text all-caps">
-            {position.city} - {position.department} - {position.job_type}
+            {position.city}, {position.state.name}, {position.country.name} -{" "}
+            {position.department} - {position.job_type}
             <br />
             Posted at: {this.formateDate(position.created_date)}
           </p>
