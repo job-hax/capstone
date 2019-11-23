@@ -4,9 +4,11 @@ import { AutoComplete, Input, Select, Icon, Menu, Button } from "antd";
 
 import { IS_CONSOLE_LOG_OPEN } from "../../../utils/constants/constants";
 import { axiosCaptcha } from "../../../utils/api/fetch_api";
-import { AUTOCOMPLETE } from "../../../utils/constants/endpoints";
+import { GET_COMPANY_POSITIONS } from "../../../utils/constants/endpoints";
 
 import "./style.scss";
+
+const { Option } = AutoComplete;
 
 class JobInput extends PureComponent {
   constructor(props) {
@@ -14,13 +16,16 @@ class JobInput extends PureComponent {
     this.state = {
       first_name: "",
       last_name: "",
-      jobTitle: "",
+      job_title: "",
+      position_id: "",
       autoCompletePositionsData: []
     };
     this.handlePositionsSearch = this.handlePositionsSearch.bind(this);
     this.handleAddNewApplication = this.handleAddNewApplication.bind(this);
     this.cancelJobInputEdit = this.cancelJobInputEdit.bind(this);
     this.handleInputChange = this.handleInputChange.bind(this);
+    this.handlePositionSelect = this.handlePositionSelect.bind(this);
+    this.renderOption = this.renderOption.bind(this);
   }
 
   handleInputChange(event, type) {
@@ -33,18 +38,23 @@ class JobInput extends PureComponent {
     }
   }
 
+  handlePositionSelect(value, option) {
+    this.setState({ job_title: option.props.text, position_id: value });
+  }
+
   async handlePositionsSearch(value) {
-    this.setState({ jobTitle: value });
+    this.setState({ job_title: value });
     await this.props.handleTokenExpiration("jobInput handlePositionsSearch");
     let config = { method: "GET" };
-    let newUrl = AUTOCOMPLETE("positions") + "?q=" + value + "&count=5";
+    let newUrl =
+      GET_COMPANY_POSITIONS(this.props.company.id) + "&q=" + value + "&count=5";
     axiosCaptcha(newUrl, config).then(response => {
       if (response.statusText === "OK") {
         if (response.data.success) {
           IS_CONSOLE_LOG_OPEN && console.log(response.data);
           let bufferPositionsList = [];
           response.data.data.forEach(position =>
-            bufferPositionsList.push(position.job_title)
+            bufferPositionsList.push(position)
           );
           this.setState({
             autoCompletePositionsData: bufferPositionsList
@@ -62,14 +72,16 @@ class JobInput extends PureComponent {
         columnName,
         first_name: this.state.first_name,
         last_name: this.state.last_name,
-        title: this.state.jobTitle
+        job_title: this.state.job_title,
+        position_id: this.state.position_id
       })
-      .then(({ ok }) => {
-        if (ok) {
+      .then(({ success }) => {
+        if (success) {
           this.setState({
             first_name: "",
             last_name: "",
-            jobTitle: ""
+            job_title: "",
+            position_id: ""
           });
         }
       });
@@ -80,13 +92,27 @@ class JobInput extends PureComponent {
     this.setState({
       first_name: "",
       last_name: "",
-      jobTitle: ""
+      job_title: "",
+      position_id: ""
     });
+  }
+
+  renderOption(position) {
+    return (
+      <Option key={position.id} text={position.job.job_title}>
+        <div className="global-search-item">
+          <span className="global-search-item-count">id: {position.id} </span>
+          <span className="global-search-item-desc">
+            {position.job.job_title}
+          </span>
+        </div>
+      </Option>
+    );
   }
 
   render() {
     const { showInput, toggleJobInput } = this.props;
-    const { first_name, last_name, jobTitle } = this.state;
+    const { first_name, last_name, job_title } = this.state;
     return (
       <div>
         <form
@@ -104,13 +130,15 @@ class JobInput extends PureComponent {
             onChange={event => this.handleInputChange(event, "last_name")}
           />
           <AutoComplete
-            dataSource={this.state.autoCompletePositionsData}
+            dataSource={this.state.autoCompletePositionsData.map(
+              this.renderOption
+            )}
             style={{ marginTop: "4px" }}
             className="input-addJob"
+            value={job_title}
             onSearch={this.handlePositionsSearch}
-            placeholder="Job Title"
-            value={jobTitle}
-            onSelect={value => this.setState({ jobTitle: value })}
+            placeholder="Position"
+            onSelect={this.handlePositionSelect}
           />
           <div className="column-addJob-form-buttons-container">
             <button
@@ -125,11 +153,11 @@ class JobInput extends PureComponent {
               disabled={
                 first_name.trim().length < 1 ||
                 last_name.trim().length < 1 ||
-                jobTitle.trim().length < 1
+                job_title.trim().length < 1
               }
               onClick={this.handleAddNewApplication}
             >
-              Add Job
+              Add Candidate
             </Button>
           </div>
         </form>

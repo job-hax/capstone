@@ -41,7 +41,7 @@ class Dashboard extends Component {
         this.props.cookie("get", "is_demo_user") != ("" || null)
           ? this.props.cookie("get", "is_demo_user")
           : false,
-      user_company: "",
+      company: "",
       allApplications: [],
       toApply: [],
       applied: [],
@@ -121,7 +121,7 @@ class Dashboard extends Component {
           if (response.data.success) {
             this.data = response.data.data;
             this.setState({
-              user_company: this.data.company.company
+              company: this.data.company
             });
           }
         }
@@ -372,7 +372,13 @@ class Dashboard extends Component {
     });
   }
 
-  async addNewApplication({ first_name, last_name, title, columnName }) {
+  async addNewApplication({
+    first_name,
+    last_name,
+    position_id,
+    job_title,
+    columnName
+  }) {
     const statuses = {
       applied: {
         id: 1,
@@ -398,11 +404,11 @@ class Dashboard extends Component {
     await this.props.handleTokenExpiration("dashboard addNewApplication");
     let config = { method: "POST" };
     config.body = {
-      job_title: title,
+      position_id: position_id,
       status_id: statuses[columnName].id,
       first_name: first_name,
       last_name: last_name,
-      company: this.state.user_company,
+      company: this.state.company.company,
       application_date: generateCurrentDate(),
       source: "N/A"
     };
@@ -413,7 +419,7 @@ class Dashboard extends Component {
       application_status: { id: statuses[columnName].id },
       company_object: { company: name },
       is_rejected: false,
-      position: { job_title: title },
+      position: { job_title: job_title },
       is_changed: "added"
     };
     let insertedItemColumn = this.state[columnName].slice();
@@ -987,6 +993,7 @@ class Dashboard extends Component {
             addToSelectedJobApplicationsList={
               this.addToSelectedJobApplicationsList
             }
+            company={this.state.company}
           />
           <Column
             name="applied"

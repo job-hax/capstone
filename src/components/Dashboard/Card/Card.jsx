@@ -210,7 +210,7 @@ class Card extends PureComponent {
           </div>
           {position && (
             <div id="jobTitle" className="card-job-position">
-              {position.job_title}
+              {position.job.job_title}
             </div>
           )}
         </div>

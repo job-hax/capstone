@@ -25,7 +25,8 @@ class JobDetails extends React.Component {
       companyName:
         this.props.card.company_object &&
         this.props.card.company_object.company,
-      jobTitle: this.props.card.position && this.props.card.position.job_title,
+      jobTitle:
+        this.props.card.position && this.props.card.position.job.job_title,
       apply_date: makeTimeBeautiful(this.props.card.apply_date, "date"),
       autoCompleteCompanyData: [],
       autoCompletePositionsData: []
@@ -314,28 +315,10 @@ class JobDetails extends React.Component {
           <div>Detail</div>
         </label>
         <div className="text">
-          <ul style={{ paddingLeft: "16px" }}>
-            <li>
-              BS degree in Computer Science, similar technical field of study or
-              equivalent practical experience.
-            </li>
-            <li>
-              Software development experience in one or more general purpose
-              programming languages.
-            </li>
-            <li>
-              Experience working with two or more from the following: web
-              application development, Unix/Linux environments, mobile
-              application development, distributed and parallel systems, machine
-              learning, information retrieval, natural language processing,
-              networking, developing large software systems, and/or security
-              software development.
-            </li>
-            <li>
-              Working proficiency and communication skills in verbal and written
-              English.
-            </li>
-          </ul>
+          <h4>RESPONSIBILITEIS:</h4>
+          <p>{this.props.card.position.responsibilities}</p>
+          <h4>REQUIREMENTS:</h4>
+          <p>{this.props.card.position.requirements}</p>
         </div>
       </div>
     );

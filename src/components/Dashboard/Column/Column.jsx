@@ -178,6 +178,7 @@ class Column extends Component {
         </div>
         {showJobInput && (
           <JobInput
+            company={this.props.company}
             addNewApplication={addNewApplication}
             showInput={showJobInput}
             toggleJobInput={this.toggleJobInput}

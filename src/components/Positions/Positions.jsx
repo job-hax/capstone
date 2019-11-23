@@ -439,9 +439,9 @@ class Positions extends Component {
                     onChange={value => this.handleFilterChagne("type", value)}
                   >
                     <Option value="">Type</Option>
-                    <Option value="sf">Full Time</Option>
-                    <Option value="mv">Part Time</Option>
-                    <Option value="sj">Contractor</Option>
+                    <Option value="Full Time">Full Time</Option>
+                    <Option value="Part Time">Part Time</Option>
+                    <Option value="Contractor">Contractor</Option>
                   </Select>
 
                   <button
