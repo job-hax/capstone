@@ -419,7 +419,7 @@ class Dashboard extends Component {
       application_status: { id: statuses[columnName].id },
       company_object: { company: name },
       is_rejected: false,
-      position: { job_title: job_title },
+      position: { job: { job_title } },
       is_changed: "added"
     };
     let insertedItemColumn = this.state[columnName].slice();
@@ -1015,6 +1015,7 @@ class Dashboard extends Component {
             addToSelectedJobApplicationsList={
               this.addToSelectedJobApplicationsList
             }
+            company={this.state.company}
           />
           <Column
             name="phoneScreen"
@@ -1037,6 +1038,7 @@ class Dashboard extends Component {
             addToSelectedJobApplicationsList={
               this.addToSelectedJobApplicationsList
             }
+            company={this.state.company}
           />
           <Column
             name="onsiteInterview"
@@ -1059,6 +1061,7 @@ class Dashboard extends Component {
             addToSelectedJobApplicationsList={
               this.addToSelectedJobApplicationsList
             }
+            company={this.state.company}
           />
           <Column
             name="offer"
@@ -1081,6 +1084,7 @@ class Dashboard extends Component {
             addToSelectedJobApplicationsList={
               this.addToSelectedJobApplicationsList
             }
+            company={this.state.company}
           />
         </div>
       </div>
