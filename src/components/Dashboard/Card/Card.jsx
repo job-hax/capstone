@@ -194,13 +194,12 @@ class Card extends PureComponent {
           />
         )}
         <div className="card-company-icon">
-          {company_object.cb_company_logo === null ||
-          this.state.companyLogoError ? (
-            <img src={company_object.company_logo || defaultLogo} />
+          {company_object.logo === null || this.state.companyLogoError ? (
+            <img src={defaultLogo} />
           ) : (
             <img
               onError={() => this.setState({ companyLogoError: true })}
-              src={company_object.cb_company_logo}
+              src={company_object.logo}
             />
           )}
         </div>

@@ -420,33 +420,35 @@ class Positions extends Component {
                   enterButton
                 />
                 <div className="positions-filter">
-                  <div>Filter by:</div>
-                  <Select
-                    defaultValue=""
-                    onChange={value =>
-                      this.handleFilterChagne("department", value)
-                    }
-                  >
-                    <Option value="">Department</Option>
-                    <Option value="Business">Business</Option>
-                    <Option value="Engineering">Engineering</Option>
-                    <Option value="Finance">Finance</Option>
-                    <Option value="Marketing">Marketing</Option>
-                    <Option value="Legal">Legal</Option>
-                  </Select>
-                  <Select
-                    defaultValue=""
-                    onChange={value => this.handleFilterChagne("type", value)}
-                  >
-                    <Option value="">Type</Option>
-                    <Option value="Full Time">Full Time</Option>
-                    <Option value="Part Time">Part Time</Option>
-                    <Option value="Contractor">Contractor</Option>
-                  </Select>
+                  <div className="positions-filter-options">
+                    Filter by:
+                    <Select
+                      defaultValue=""
+                      onChange={value =>
+                        this.handleFilterChagne("department", value)
+                      }
+                    >
+                      <Option value="">Department</Option>
+                      <Option value="Business">Business</Option>
+                      <Option value="Engineering">Engineering</Option>
+                      <Option value="Finance">Finance</Option>
+                      <Option value="Marketing">Marketing</Option>
+                      <Option value="Legal">Legal</Option>
+                    </Select>
+                    <Select
+                      defaultValue=""
+                      onChange={value => this.handleFilterChagne("type", value)}
+                    >
+                      <Option value="">Type</Option>
+                      <Option value="Full Time">Full Time</Option>
+                      <Option value="Part Time">Part Time</Option>
+                      <Option value="Contractor">Contractor</Option>
+                    </Select>
+                  </div>
 
                   <button
                     type="submit"
-                    class="ant-btn ant-btn-primary"
+                    class="ant-btn ant-btn-primary positions-filter-button"
                     onClick={this.showModal}
                   >
                     Create Position
