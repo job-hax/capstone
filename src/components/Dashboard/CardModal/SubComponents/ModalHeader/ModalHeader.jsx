@@ -48,7 +48,7 @@ class ModalHeader extends React.Component {
               {card.position && (
                 <div className="header-text job-title">
                   {
-                    card.position.job_title
+                    card.position.job.job_title
                       .split(",")[0]
                       .split("-")[0]
                       .split("(")[0]
