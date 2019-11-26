@@ -208,7 +208,13 @@ class Notes extends React.Component {
       console.log("notecontainergenerator currentNote?", this.currentNote);
     if (this.state.notes.length == 0) {
       return (
-        <p style={{ color: "rgba(32,32,32,0.6)", marginTop: "16px" }}>
+        <p
+          style={{
+            color: "rgba(32,32,32,0.6)",
+            marginTop: "16px",
+            textAlign: "center"
+          }}
+        >
           You don't have any notes at the moment.
         </p>
       );

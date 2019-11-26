@@ -3,21 +3,24 @@ export const apiRoot = "https://jobposting-be.jobhax.com"; //"https://backend.jo
 //USER REQUESTS//
 export const USERS = type => `${apiRoot}/api/users/${type}/`;
 
-//JOB_APPS REQUESTS//
+//POS_APPS REQUESTS//
 export const JOB_APPS = `${apiRoot}/api/positionapps/`;
 
 export const GET_SOURCES = `${apiRoot}/api/positionapps/sources/`;
 
 export const GET_STATUSES = `${apiRoot}/api/positionapps/statuses/`;
 
-export const CONTACTS = jobappId =>
-  `${apiRoot}/api/positionapps/${jobappId}/contacts/`;
+export const CONTACTS = posappId =>
+  `${apiRoot}/api/positionapps/${posappId}/contacts/`;
 
 export const GET_NEW_JOBAPPS = timestamp =>
   `${apiRoot}/api/positionapps/?timestamp=${timestamp}`;
 
-export const NOTES = jobappId =>
-  `${apiRoot}/api/positionapps/${jobappId}/notes/`;
+export const NOTES = posappId =>
+  `${apiRoot}/api/positionapps/${posappId}/notes/`;
+
+export const POS_FEEDBACKS = posappId =>
+  `${apiRoot}/api/positionapps/${posappId}/feedbacks/`;
 
 //METRICS REQUESTS//
 export const METRICS = type => `${apiRoot}/api/metrics/${type}`;
