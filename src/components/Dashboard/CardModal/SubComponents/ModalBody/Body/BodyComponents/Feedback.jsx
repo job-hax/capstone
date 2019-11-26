@@ -15,10 +15,10 @@ class Feedback extends React.Component {
       isAlreadySubmittedReview: false,
       isReviewsDisplaying: false,
       isUpdated: false,
-      isReviewChanged: false,
+      isFeedbackChanged: false,
       company: {},
       feedbacksList: [],
-      review: {
+      feedback: {
         id: -1
       }
     };
@@ -45,19 +45,19 @@ class Feedback extends React.Component {
   }
 
   async componentDidUpdate() {
-    if (this.state.isReviewChanged === true) {
+    if (this.state.isFeedbackChanged === true) {
       IS_CONSOLE_LOG_OPEN && console.log("reviews componentDidUpdate");
       this.getPositionsReviews();
-      this.setState({ isReviewChanged: false });
+      this.setState({ isFeedbackChanged: false });
     }
   }
 
   requestUpdate() {
-    this.setState({ isReviewChanged: true });
+    this.setState({ isFeedbackChanged: true });
   }
 
-  setReview(review) {
-    this.setState({ review: review });
+  setReview(feedback) {
+    this.setState({ feedback: feedback });
   }
 
   getPositionsReviews() {
@@ -129,10 +129,9 @@ class Feedback extends React.Component {
                 <FeedbackInput
                   toggleReview={this.toggleReviewEdit}
                   card={this.props.card}
-                  setCompany={this.props.setCompany}
                   setReview={this.setReview}
                   renewReviews={this.requestUpdate}
-                  oldReview={this.state.review}
+                  oldFeedback={this.state.feedback}
                   alert={this.props.alert}
                   handleTokenExpiration={this.props.handleTokenExpiration}
                 />

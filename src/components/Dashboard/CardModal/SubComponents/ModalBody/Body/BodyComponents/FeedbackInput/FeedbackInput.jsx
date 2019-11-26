@@ -1,9 +1,11 @@
 import React from "react";
-import { Rate, Input, Button, DatePicker } from "antd";
+import { Rate, Input, Button, DatePicker, Select } from "antd";
 
 import { axiosCaptcha } from "../../../../../../../../utils/api/fetch_api.js";
 import { IS_CONSOLE_LOG_OPEN } from "../../../../../../../../utils/constants/constants.js";
-import { REVIEWS } from "../../../../../../../../utils/constants/endpoints.js";
+import { POS_FEEDBACKS } from "../../../../../../../../utils/constants/endpoints.js";
+
+const { Option } = Select;
 
 import "./style.scss";
 
@@ -21,8 +23,9 @@ class FeedbackInput extends React.Component {
 
     this.state = {
       interviewer: "",
-      interview_notes: "",
-      interview_rating: null,
+      interview_round: "",
+      description: "",
+      rate: null,
       interview_date: null
     };
 
@@ -40,17 +43,18 @@ class FeedbackInput extends React.Component {
 
   async componentDidMount() {
     await this.props.handleTokenExpiration("feedbackInput componentDidMount");
-    IS_CONSOLE_LOG_OPEN && console.log("old feeback is", this.props.oldReview);
-    if (this.props.oldReview.id != -1) {
-      this.body["review_id"] = this.props.oldReview.id;
-      if (this.props.oldReview.interview_notes != null) {
+    IS_CONSOLE_LOG_OPEN &&
+      console.log("old feeback is", this.props.oldFeedback);
+    if (this.props.oldFeedback.id != -1) {
+      this.body["feedback_id"] = this.props.oldFeedback.id;
+      if (this.props.oldFeedback.description != null) {
         this.setState({
-          interview_notes: this.props.oldReview.interview_notes
+          description: this.props.oldFeedback.description
         });
       }
-      if (this.props.oldReview.interview_rating != null) {
+      if (this.props.oldFeedback.rate != null) {
         this.setState({
-          interview_rating: this.props.oldReview.interview_rating
+          rate: this.props.oldFeedback.rate
         });
       }
     }
@@ -58,24 +62,21 @@ class FeedbackInput extends React.Component {
 
   async handleSubmit(event) {
     event.preventDefault();
-    await this.props.handleTokenExpiration("reviewInput handleSubmit");
+    await this.props.handleTokenExpiration("feedbackInput handleSubmit");
     this.props.toggleReview();
-    let config = this.props.card.company_object.review_id
-      ? { method: "PUT" }
-      : { method: "POST" };
+    let config = { method: "POST" };
     config.body = this.body;
-    axiosCaptcha(REVIEWS, config, "review").then(response => {
+    axiosCaptcha(POS_FEEDBACKS(this.props.card.id), config).then(response => {
       if (response.statusText === "OK") {
         if (response.data.success === true) {
           IS_CONSOLE_LOG_OPEN &&
             console.log("review Submit Request response", response.data.data);
-          this.props.setCompany(response.data.data.company);
           this.props.setReview(response.data.data.review);
           this.props.renewReviews();
           this.props.alert(
             5000,
             "success",
-            "Your review has saved successfully!"
+            "Your feedback has saved successfully!"
           );
         } else {
           this.setState({ isUpdating: false });
@@ -100,12 +101,8 @@ class FeedbackInput extends React.Component {
     const newValue = event.target.value;
     const name = event.target.name;
     if (event.target.type === "dropdown") {
-      const object = { id: event.target.id, value: event.target.textContent };
-      const optionName = event.target.title;
-      this.body[optionName + "_id"] = event.target.id;
-      this.setState({
-        [optionName]: object
-      });
+      this.body["interview_round"] = event.target.textContent;
+      this.setState({ interview_round: event.target.textContent });
     } else {
       this.body[name] = newValue;
       this.setState({ [name]: newValue });
@@ -113,8 +110,8 @@ class FeedbackInput extends React.Component {
   }
 
   handleInterviewRatingChange(value) {
-    this.body["interview_rating"] = value;
-    this.setState({ interview_rating: value });
+    this.body["rate"] = value;
+    this.setState({ rate: value });
   }
 
   handleInterviewDateChange(date, dateString) {
@@ -130,17 +127,54 @@ class FeedbackInput extends React.Component {
         <div>
           <div className="label">Interviewer:</div>
           <Input
+            name="interviewer"
             value={this.state.interviewer}
-            onChange={event =>
-              this.setState({ interviewer: event.target.value })
-            }
+            onChange={this.handleInputChange}
           />
         </div>
+        <div>
+          <div className="label">Interview Round</div>
+          <Select
+            name="interview_round"
+            value={this.state.interview_round}
+            onChange={() => this.handleInputChange(event)}
+            style={{ width: 212, position: "relative" }}
+          >
+            <Option
+              id="1"
+              title="interview_round"
+              type="dropdown"
+              key="1"
+              value="HR"
+            >
+              HR
+            </Option>
+            <Option
+              id="2"
+              title="interview_round"
+              type="dropdown"
+              key="2"
+              value="Phone"
+            >
+              Phone
+            </Option>
+            <Option
+              id="3"
+              title="interview_round"
+              type="dropdown"
+              key="3"
+              value="Onsite"
+            >
+              Onsite
+            </Option>
+          </Select>
+        </div>
+
         <div style={interviewRatingStyle} className="question">
           <div className="label">Overall Rating:</div>
           <Rate
-            name="interview_rate"
-            value={this.state.interview_rating}
+            name="rate"
+            value={this.state.rate}
             onChange={this.handleInterviewRatingChange}
             tooltips={descRating}
           />
@@ -149,11 +183,11 @@ class FeedbackInput extends React.Component {
           <div className="label">Interview experience:</div>
           <textarea
             id="interview-experience-text"
-            name="interview_notes"
+            name="description"
             type="text"
             className="text-box interview-experience"
             placeholder="+tell about your interview experience"
-            value={this.state.interview_notes}
+            value={this.state.description}
             onChange={this.handleInputChange}
           />
         </div>
