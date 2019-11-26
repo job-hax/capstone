@@ -3,7 +3,7 @@ import React from "react";
 import JobDetails from "./BodyComponents/JobDetails.jsx";
 import Contacts from "./BodyComponents/Contacts.jsx";
 import Notes from "./BodyComponents/Notes.jsx";
-import JobReviews from "./BodyComponents/JobReviews.jsx";
+import Feedback from "./BodyComponents/Feedback.jsx";
 
 class BodyComponents extends React.Component {
   constructor(props) {
@@ -31,7 +31,7 @@ class BodyComponents extends React.Component {
         );
       case "Feedbacks":
         return (
-          <JobReviews
+          <Feedback
             card={this.props.card}
             handleTokenExpiration={this.props.handleTokenExpiration}
             alert={this.props.alert}

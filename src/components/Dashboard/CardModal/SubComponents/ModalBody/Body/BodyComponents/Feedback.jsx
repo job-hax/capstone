@@ -1,13 +1,13 @@
 import React from "react";
 
 import { IS_CONSOLE_LOG_OPEN } from "../../../../../../../utils/constants/constants.js";
-import Reviews from "../../../../../../Applicants/Reviews/Reviews.jsx";
-import ReviewInput from "./ReviewInput/ReviewInput.jsx";
+import Feedbacks from "./Feedbacks/Feedbacks.jsx";
+import FeedbackInput from "./FeedbackInput/FeedbackInput.jsx";
 import { axiosCaptcha } from "../../../../../../../utils/api/fetch_api.js";
-import { REVIEWS } from "../../../../../../../utils/constants/endpoints.js";
+import { POS_FEEDBACKS } from "../../../../../../../utils/constants/endpoints.js";
 import { Button, Icon } from "antd";
 
-class JobReviews extends React.Component {
+class Feedback extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -15,10 +15,10 @@ class JobReviews extends React.Component {
       isAlreadySubmittedReview: false,
       isReviewsDisplaying: false,
       isUpdated: false,
-      isReviewChanged: false,
+      isFeedbackChanged: false,
       company: {},
-      reviewsList: [],
-      review: {
+      feedbacksList: [],
+      feedback: {
         id: -1
       }
     };
@@ -34,9 +34,7 @@ class JobReviews extends React.Component {
     if (this.props.card.company_object.review_id) {
       //await this.props.handleTokenExpiration("cardModal componentDidMount"); //I am not checking if token expired here because getNotes from Notes.jsx is already checking right before this one is executed!!!
       let config = { method: "GET" };
-      let newReviewsUrl =
-        REVIEWS + "?review_id=" + this.props.card.company_object.review_id;
-      axiosCaptcha(newReviewsUrl, config).then(response => {
+      axiosCaptcha(POS_FEEDBACKS(this.props.card.id), config).then(response => {
         if (response.statusText === "OK") {
           this.setState({ review: response.data.data });
           IS_CONSOLE_LOG_OPEN &&
@@ -47,35 +45,28 @@ class JobReviews extends React.Component {
   }
 
   async componentDidUpdate() {
-    if (this.state.isReviewChanged === true) {
+    if (this.state.isFeedbackChanged === true) {
       IS_CONSOLE_LOG_OPEN && console.log("reviews componentDidUpdate");
       this.getPositionsReviews();
-      this.setState({ isReviewChanged: false });
+      this.setState({ isFeedbackChanged: false });
     }
   }
 
   requestUpdate() {
-    this.setState({ isReviewChanged: true });
+    this.setState({ isFeedbackChanged: true });
   }
 
-  setReview(review) {
-    this.setState({ review: review });
+  setReview(feedback) {
+    this.setState({ feedback: feedback });
   }
 
   getPositionsReviews() {
     let config = { method: "GET" };
-    let reviewsUrl =
-      REVIEWS +
-      "?company_id=" +
-      this.props.card.company_object.id +
-      "&position_id=" +
-      this.props.card.position.id +
-      "&all_reviews=true";
-    axiosCaptcha(reviewsUrl, config).then(response => {
+    axiosCaptcha(POS_FEEDBACKS(this.props.card.id), config).then(response => {
       if (response.statusText === "OK") {
         if (response.data.success) {
           this.setState({
-            reviewsList: response.data.data,
+            feedbacksList: response.data.data,
             isReviewsDisplaying: true
           });
         }
@@ -92,7 +83,7 @@ class JobReviews extends React.Component {
 
   render() {
     IS_CONSOLE_LOG_OPEN &&
-      console.log("jobreviews render", this.state.reviewsList);
+      console.log("feedback render", this.state.feedbacksList);
     const { card } = this.props;
     const buttonText = this.props.card.company_object.review_id
       ? "Update Your Feedback"
@@ -100,28 +91,31 @@ class JobReviews extends React.Component {
     const iconType = this.props.card.company_object.review_id ? "edit" : "plus";
     return (
       <div style={{ height: "510px", overflow: "hidden" }}>
-        <div className="modal-review-big-container">
+        <div className="modal-feedback-big-container">
           {!this.state.isEnteringReview && (
-            <div className="review-entry-container">
-              <div className="review-button">
+            <div className="feedback-entry-container">
+              <div className="feedback-button">
                 <Button type="primary" onClick={this.toggleReviewEdit}>
                   <Icon type={iconType} />
                   {buttonText}
                 </Button>
               </div>
               <div>
-                {this.state.reviewsList.length == 0 && (
-                  <div className="no-data" style={{ paddingTop: 80 }}>
+                {this.state.feedbacksList.length == 0 && (
+                  <div
+                    className="no-data"
+                    style={{ paddingTop: 80, textAlign: "center" }}
+                  >
                     No feedbacks entered for {card.position.job_title} position
                     at {card.company_object.company}
                   </div>
                 )}
                 {this.state.isReviewsDisplaying === true && (
                   <div style={{ paddingTop: 40 }}>
-                    <Reviews
-                      reviewsList={this.state.reviewsList}
+                    <Feedbacks
+                      feedbacksList={this.state.feedbacksList}
                       positionsList={[]}
-                      company_id={this.props.card.company_object.id}
+                      post_app_id={this.props.card.id}
                       filterDisplay={false}
                     />
                   </div>
@@ -130,15 +124,14 @@ class JobReviews extends React.Component {
             </div>
           )}
           {this.state.isEnteringReview && (
-            <div className="review-entry-container">
-              <div className="modal-reviews-container">
-                <ReviewInput
+            <div className="feedback-entry-container">
+              <div className="modal-feedbacks-container">
+                <FeedbackInput
                   toggleReview={this.toggleReviewEdit}
                   card={this.props.card}
-                  setCompany={this.props.setCompany}
                   setReview={this.setReview}
                   renewReviews={this.requestUpdate}
-                  oldReview={this.state.review}
+                  oldFeedback={this.state.feedback}
                   alert={this.props.alert}
                   handleTokenExpiration={this.props.handleTokenExpiration}
                 />
@@ -151,4 +144,4 @@ class JobReviews extends React.Component {
   }
 }
 
-export default JobReviews;
+export default Feedback;

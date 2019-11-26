@@ -18,13 +18,13 @@
     left: 50%;
     transform: translate(-50%, -50%);
     border-radius: 16px;
-    box-shadow: 1px 1px 20px 4px opacify(rgba(83, 83, 83, 0.4), 0.00);
+    box-shadow: 1px 1px 20px 4px opacify(rgba(83, 83, 83, 0.4), 0);
 
-    @media only screen and (max-device-width : 360px) and (-webkit-min-device-pixel-ratio : 2) {
+    @media only screen and (max-device-width: 360px) and (-webkit-min-device-pixel-ratio: 2) {
       transform: translate(-50%, -50%) scale(0.4) !important;
     }
 
-    @media only screen and (max-device-width : 750px) and (-webkit-min-device-pixel-ratio : 2) {
+    @media only screen and (max-device-width: 750px) and (-webkit-min-device-pixel-ratio: 2) {
       transform: translate(-50%, -50%) scale(0.5);
       top: 50%;
       left: 50%;
@@ -32,7 +32,6 @@
   }
 
   .modal-header-container {
-
     .modal-header {
       border-bottom: 1px solid $line_color;
       padding: 0px 24px;
@@ -85,7 +84,6 @@
           }
         }
       }
-
 
       &.options {
         font-size: 90%;
@@ -234,7 +232,6 @@
             }
           }
 
-
           .unable {
             color: rgba(32, 32, 32, 0.6);
             height: 32px;
@@ -257,7 +254,6 @@
             height: 26px;
             border-bottom: 0.5px solid $line_color;
             font-weight: 500;
-
           }
         }
       }
@@ -318,7 +314,6 @@
         display: table;
         text-align: start;
 
-
         .data {
           display: flex;
           justify-content: space-between;
@@ -354,22 +349,21 @@
               cursor: text;
             }
           }
-
         }
 
-        .modal-review-big-container {
+        .modal-feedback-big-container {
           width: 105%;
           max-width: 600px;
           overflow-x: hidden;
           height: 510px;
 
-          .review-entry-container {
+          .feedback-entry-container {
             margin-left: 0px;
             width: 530px;
             min-width: 530px;
             height: 100%;
 
-            .review-button {
+            .feedback-button {
               width: 76%;
               min-width: 76%;
               display: flex;
@@ -397,8 +391,7 @@
               }
             }
 
-
-            .modal-reviews-container {
+            .modal-feedbacks-container {
               max-height: 60vh;
               padding: 0px 0px 0px 0px;
               display: block;
@@ -409,7 +402,6 @@
             }
           }
         }
-
 
         .notes {
           width: 520px;
@@ -499,7 +491,6 @@
               border-radius: 4px;
               padding: 4px 4px 2px 8px;
 
-
               &.--height-min {
                 height: 28px;
                 min-height: 28px;
@@ -544,7 +535,6 @@
             }
           }
         }
-
       }
     }
   }
