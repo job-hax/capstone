@@ -6,40 +6,25 @@ import "./style.scss";
 
 const columns = [
   {
-    title: 'Name',
+    title: 'Full Name',
     dataIndex: 'name',
     key: 'name',
     render: text => <a>{text}</a>,
   },
   {
-    title: 'Age',
-    dataIndex: 'age',
-    key: 'age',
+    title: 'Role',
+    dataIndex: 'role',
+    key: 'role',
   },
   {
-    title: 'Address',
-    dataIndex: 'address',
-    key: 'address',
+    title: 'Years Of Experience',
+    dataIndex: 'yearsofexperience',
+    key: 'yearsofexperience',
   },
   {
-    title: 'Tags',
-    key: 'tags',
-    dataIndex: 'tags',
-    render: tags => (
-      <span>
-        {tags.map(tag => {
-          let color = tag.length > 5 ? 'geekblue' : 'green';
-          if (tag === 'loser') {
-            color = 'volcano';
-          }
-          return (
-            <Tag color={color} key={tag}>
-              {tag.toUpperCase()}
-            </Tag>
-          );
-        })}
-      </span>
-    ),
+    title: 'Expected Salary',
+    dataIndex: 'expectedsalary',
+    key: 'expectedsalary',
   },
   {
     title: 'Action',
@@ -58,23 +43,23 @@ const data = [
   {
     key: '1',
     name: 'John Brown',
-    age: 32,
-    address: 'New York No. 1 Lake Park',
-    tags: ['nice', 'developer'],
+    yearsofexperience: 7,
+    role: 'Software Engineer',
+    expectedsalary: '120,000'
   },
   {
     key: '2',
-    name: 'Jim Green',
-    age: 42,
-    address: 'London No. 1 Lake Park',
-    tags: ['loser'],
+    name: 'Scott Davidson Brown',
+    yearsofexperience: 8,
+    role: 'DevOps Engineer',
+    expectedsalary: '110,000'
   },
   {
     key: '3',
-    name: 'Joe Black',
-    age: 32,
-    address: 'Sidney No. 1 Lake Park',
-    tags: ['cool', 'teacher'],
+    name: 'Thomos Joyner',
+    yearsofexperience: 6,
+    role: 'Test Engineer',
+    expectedsalary: '90,000'
   },
 ];
 
