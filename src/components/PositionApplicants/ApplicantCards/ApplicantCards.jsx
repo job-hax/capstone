@@ -1,7 +1,82 @@
 import React, { Component } from "react";
 import { Modal, Select } from "antd";
+import { Table, Divider, Tag } from 'antd'
 
 import "./style.scss";
+
+const columns = [
+  {
+    title: 'Name',
+    dataIndex: 'name',
+    key: 'name',
+    render: text => <a>{text}</a>,
+  },
+  {
+    title: 'Age',
+    dataIndex: 'age',
+    key: 'age',
+  },
+  {
+    title: 'Address',
+    dataIndex: 'address',
+    key: 'address',
+  },
+  {
+    title: 'Tags',
+    key: 'tags',
+    dataIndex: 'tags',
+    render: tags => (
+      <span>
+        {tags.map(tag => {
+          let color = tag.length > 5 ? 'geekblue' : 'green';
+          if (tag === 'loser') {
+            color = 'volcano';
+          }
+          return (
+            <Tag color={color} key={tag}>
+              {tag.toUpperCase()}
+            </Tag>
+          );
+        })}
+      </span>
+    ),
+  },
+  {
+    title: 'Action',
+    key: 'action',
+    render: (text, record) => (
+      <span>
+        <a>Invite {record.name}</a>
+        <Divider type="vertical" />
+        <a>Delete</a>
+      </span>
+    ),
+  },
+];
+
+const data = [
+  {
+    key: '1',
+    name: 'John Brown',
+    age: 32,
+    address: 'New York No. 1 Lake Park',
+    tags: ['nice', 'developer'],
+  },
+  {
+    key: '2',
+    name: 'Jim Green',
+    age: 42,
+    address: 'London No. 1 Lake Park',
+    tags: ['loser'],
+  },
+  {
+    key: '3',
+    name: 'Joe Black',
+    age: 32,
+    address: 'Sidney No. 1 Lake Park',
+    tags: ['cool', 'teacher'],
+  },
+];
 
 class ApplicantCards extends Component {
   constructor(props) {
@@ -31,7 +106,13 @@ class ApplicantCards extends Component {
   render() {
     const { applicant } = this.props;
     return (
-      <div className="applicant-card">
+
+      <Table columns={columns} dataSource={data} />
+      // <div>
+      // <>
+      //     <td>Column1</td><td>Column2</td><td>Column3</td><td>Column4</td><td>Column5</td><td>Column6</td>
+      //     </>
+      /* <div className="applicant-card">
         <div className="applicant-card-img">
           <img src="https://randomuser.me/api/portraits/women/87.jpg"></img>
         </div>
@@ -43,15 +124,6 @@ class ApplicantCards extends Component {
           <div className="small-text">Posted at: {applicant.date}</div>
         </div>
         <div className="applicant-card-button">
-          {/* <Button type="primary" onClick={this.showModal} className="btn-view-edit">
-            LEARN MORE
-          </Button>
-          <Button type="primary" className="btn-view-edit">
-            EDIT
-          </Button>
-          <Button type="primary" className="btn-delete">
-            DELETE
-          </Button> */}
           <Select defaultValue="">
                   <Option value="">Action</Option>
                   <Option value="sf">Edit</Option>
@@ -91,7 +163,8 @@ class ApplicantCards extends Component {
             </li>
           </ul>
         </Modal>
-      </div>
+      </div> */
+      // </div>
     );
   }
 }
