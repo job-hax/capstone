@@ -36,30 +36,6 @@ class Applicant extends Component {
           department: "Engineering",
           type: "Full Time",
           date: "10/01/2019"
-        },
-        {
-          company: "google",
-          name: "John Lunsford",
-          location: "Sunnyvale, CA, USA",
-          department: "Engineering",
-          type: "Part Time",
-          date: "10/01/2019"
-        },
-        {
-          company: "google",
-          name: "Jason McDonald",
-          location: "Sunnyvale, CA, USA",
-          department: "Engineering",
-          type: "Part Time",
-          date: "10/01/2019"
-        },
-        {
-          company: "google",
-          name: "Don Taylor",
-          location: "Sunnyvale, CA, USA",
-          department: "Engineering",
-          type: "Full Time",
-          date: "10/01/2019"
         }
       ],
       pageNo: 1,
@@ -72,12 +48,12 @@ class Applicant extends Component {
 
   generateApplicants() {
     return this.state.applicants.map(applicant => (
-      <div key={applicant.id}>
+      // <div key={applicant.id}>
         <ApplicantCards
           applicant={applicant}
           handleTokenExpiration={this.props.handleTokenExpiration}
         />
-      </div>
+      // </div>
     ));
   }
 
@@ -182,7 +158,7 @@ class Applicant extends Component {
                           <button type="submit" class="vbtn">Delete</button> */}
                 </Modal>
               </div>
-              {this.generateApplicants()}
+              <div>{this.generateApplicants()}</div>
             </div>
           </div>
         </div>
