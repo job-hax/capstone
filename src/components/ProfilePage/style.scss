@@ -62,10 +62,6 @@
               text-align: center;
             }
 
-            .professional-info-container {
-              display: none;
-            }
-
             .employment-status-big-container {
               margin-top: 40px;
               width: 280px;
@@ -195,10 +191,6 @@
                 }
               }
             }
-          }
-
-          .badges-container {
-            display: none;
           }
 
           .settings-container {
@@ -439,18 +431,15 @@
 }
 
 * {
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
-    "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji",
-    "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif,
+    "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
 }
 body {
   background-color: #f9f9fc !important;
 }
 .header-big-container {
-  box-shadow: 0 0.36875rem 1.1875rem rgba(13, 16, 45, 0.01),
-    0 0.6375rem 1.00625rem rgba(13, 16, 45, 0.01),
-    0 0.15rem 0.33125rem rgba(13, 16, 45, 0.03),
-    0 0.085rem 0.0875rem rgba(13, 16, 45, 0.02);
+  box-shadow: 0 0.36875rem 1.1875rem rgba(13, 16, 45, 0.01), 0 0.6375rem 1.00625rem rgba(13, 16, 45, 0.01),
+    0 0.15rem 0.33125rem rgba(13, 16, 45, 0.03), 0 0.085rem 0.0875rem rgba(13, 16, 45, 0.02);
 }
 
 .profile-page-medium-container {
@@ -466,8 +455,8 @@ body {
   margin-right: auto !important;
   margin-top: 4%;
   border-radius: 5px;
-  box-shadow: 0 2px 0 rgba(90, 97, 105, 0.11), 0 4px 8px rgba(90, 97, 105, 0.12),
-    0 10px 10px rgba(90, 97, 105, 0.06), 0 7px 70px rgba(90, 97, 105, 0.1);
+  box-shadow: 0 2px 0 rgba(90, 97, 105, 0.11), 0 4px 8px rgba(90, 97, 105, 0.12), 0 10px 10px rgba(90, 97, 105, 0.06),
+    0 7px 70px rgba(90, 97, 105, 0.1);
 }
 
 .ant-tabs-tab {
@@ -493,8 +482,7 @@ body {
 
 .ant-tabs-left-bar {
   height: 727px !important;
-  box-shadow: 0 16px 1px -12px rgba(0, 0, 0, 0.56),
-    0 4px 25px 0 rgba(0, 0, 0, 0.12), 0 8px 10px -5px rgba(0, 0, 0, 0.2) !important;
+  box-shadow: 0 16px 1px -12px rgba(0, 0, 0, 0.56), 0 4px 25px 0 rgba(0, 0, 0, 0.12), 0 8px 10px -5px rgba(0, 0, 0, 0.2) !important;
 }
 
 .profile-page-container {
@@ -518,10 +506,6 @@ body {
 .profile-page-main {
   width: 500px !important;
   // margin-top: 90px !important;
-}
-
-.profile-page-right {
-  display: none !important;
 }
 
 .save-button-container {
