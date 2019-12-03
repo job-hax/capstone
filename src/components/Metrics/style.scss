@@ -1,5 +1,36 @@
 @import "../App/style.scss";
 
+.cdiv{    
+    display: inline-block;
+    border: 1px solid silver;
+    margin: 11px;
+    width: 428px;
+    height: 378px;
+    background-color: white;
+}
+.colorcode{
+    background-color: blue;
+    width: 10px;
+    height: 10px;
+}
+
+.ant-table table{
+    padding: 5% !important;
+}
+
+.ant-table-thead>tr>th{
+    background-color: #333333;
+    color: #ffffff;
+    border-radius: 0px !important;
+}
+.ant-table-thead>tr:first-child>th:first-child {
+    border-top-left-radius: 0px !important;
+}
+
+.ant-table-tbody>tr>td, .ant-table-thead>tr>th {
+    padding: 8px !important;
+}
+
 .metrics_feature_area {
     background-color: white;
     color: $text_color;

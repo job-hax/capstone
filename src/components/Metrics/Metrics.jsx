@@ -1,6 +1,8 @@
 import React, { PureComponent } from "react";
-
+import CompanyGraphCard from "./CompanyGraphCard/CompanyGraphCard.jsx";
 import Footer from "../Partials/Footer/Footer.jsx";
+import { Table, Divider, Tag } from 'antd';
+
 import { axiosCaptcha } from "../../utils/api/fetch_api";
 import { USERS } from "../../utils/constants/endpoints.js";
 import {
@@ -14,97 +16,117 @@ import UniversityMetrics from "./SubComponents/UniversityMetrics/UniversityMetri
 
 import "./style.scss";
 
+// start of positions
+const positionscolumns = [
+  {
+    title: '',
+    dataIndex: 'color',
+    key: 'color',
+    render: text => <div className="colorcode"></div>,
+  },
+  {
+    title: 'Value',
+    dataIndex: 'value',
+    key: 'value',
+  },
+  {
+    title: '%',
+    dataIndex: 'percentage',
+    key: 'percentage',
+  },
+  {
+    title: 'Count',
+    dataIndex: 'count',
+    key: 'count',
+  },
+];
+
+const positionsdata = [
+  {
+    key: '1',
+    value: 'DevOps',
+    percentage: '17.00%',
+    count: '12'
+  },
+  {
+    key: '2',
+    value: 'Software Engineering',
+    percentage: '15.00%',
+    count: '10'
+  },
+  {
+    key: '3',
+    value: 'Azure Architect',
+    percentage: '12.00%',
+    count: '5'
+  },
+];
+
+const schoolsdata = [
+  {
+    key: '1',
+    value: 'ITU',
+    percentage: '17.00%',
+    count: '18'
+  },
+  {
+    key: '2',
+    value: 'San Jose State University',
+    percentage: '15.00%',
+    count: '12'
+  },
+  {
+    key: '3',
+    value: 'UC Berkely',
+    percentage: '12.00%',
+    count: '10'
+  },
+];
+
+// end of positions
+
 class Metrics extends PureComponent {
+  
   constructor(props) {
     super(props);
-
-    this.state = {
-      user_type: this.props.cookie("get", "user_type")
-    };
   }
 
-  async componentDidMount() {
-    if (this.props.cookie("get", "jobhax_access_token") != ("" || null)) {
-      await this.props.handleTokenExpiration("metrics componentDidMount");
-      let config = { method: "POST" };
-      axiosCaptcha(USERS("verifyRecaptcha"), config, "metrics").then(
-        response => {
-          if (response.statusText === "OK") {
-            if (response.data.success != true) {
-              this.setState({ isUpdating: false });
-              IS_CONSOLE_LOG_OPEN &&
-                console.log(response, response.data.error_message);
-              this.props.alert(
-                5000,
-                "error",
-                "Error: " + response.data.error_message
-              );
-            }
-          }
-        }
-      );
-    }
+  generateCompanyGraphCard() {
+    return
+    <div>
+      <CompanyGraphCard
+      />
+    </div>
   }
 
   render() {
-    const exclusiveName = this.state.user_type.college_specific_metrics_enabled
-      ? USER_TYPE_NAMES[this.state.user_type.id]["header"] + " Job Metrics"
-      : "";
-
+    const { state } = this;
     return (
       <div>
-        <div style={{ margin: "0 0 0px 0", height: 400 }}>
-          <Map
-            defaultCenter={{ lat: 37.3729, lng: -121.856 }}
-            positions={[
-              { lat: 37.3729, lng: -121.856 },
-              { lat: 37.4174343, lng: -122.0874049 },
-              { lat: 37.4850753, lng: -122.1496129 },
-              { lat: 37.3317042, lng: -122.0325086 }
-            ]}
-          />
-        </div>
-        <div className="metrics-big-group-container">
-          <div>
-            <div className="metric-big-group">
-              <div className="university-metrics-header-container">
-                <div className="header-line" />
-                <div className="university-metrics-header">
-                  Individual Metrics
-                </div>
-                <div className="header-line" />
-              </div>
-              <IndividualMetrics cookie={this.props.cookie} />
-            </div>
-            {exclusiveName !== "" && (
-              <div className="metric-big-group">
-                <div className="university-metrics-header-container">
-                  <div className="header-line" />
-                  <div className="university-metrics-header">
-                    {exclusiveName}
-                  </div>
-                  <div className="header-line" />
-                </div>
-                <div>
-                  <UniversityMetrics
-                    cookie={this.props.cookie}
-                    isPublic={false}
-                  />
-                </div>
-              </div>
-            )}
-            <div className="metric-big-group">
-              <div className="university-metrics-header-container">
-                <div className="header-line" />
-                <div className="university-metrics-header">
-                  Jobhax Aggregated Metrics
-                </div>
-                <div className="header-line" />
-              </div>
-              <div>
-                <UniversityMetrics cookie={this.props.cookie} isPublic={true} />
-              </div>
-            </div>
+        <div className="title"><h2>Metrics</h2>
+          <div className="cdiv"><h3>Company</h3>
+            {this.generateCompanyGraphCard()}
+          </div>
+          <div className="cdiv"><h3>Positions</h3>
+            <Table columns={positionscolumns} dataSource={positionsdata} pagination={false} />
+          </div>
+          <div className="cdiv"><h3>Schools</h3>
+          <Table columns={positionscolumns} dataSource={schoolsdata} pagination={false}/>
+          </div>
+          <div className="cdiv"><h3>Degree</h3>
+          <Table columns={positionscolumns} dataSource={positionsdata} pagination={false}/>
+          </div>
+          <div className="cdiv"><h3>Skills</h3>
+          <Table columns={positionscolumns} dataSource={positionsdata} pagination={false}/>
+          </div>
+          <div className="cdiv"><h3>Certificates</h3>
+          <Table columns={positionscolumns} dataSource={positionsdata} pagination={false}/>
+          </div>
+          <div className="cdiv"><h3>Spoken Languages</h3>
+          <Table columns={positionscolumns} dataSource={positionsdata} pagination={false}/>
+          </div>
+          <div className="cdiv"><h3>Summary</h3>
+          <Table columns={positionscolumns} dataSource={positionsdata} pagination={false}/>
           </div>
         </div>
         <div>
