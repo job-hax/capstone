@@ -1,287 +1,168 @@
-import React from "react";
-import { Pagination, Input, Switch, Icon, Checkbox } from "antd";
-
-import Spinner from "../Partials/Spinner/Spinner.jsx";
-import CompanyCards from "./CompanyCards/CompanyCards.jsx";
-import { axiosCaptcha } from "../../utils/api/fetch_api";
-import { USERS, COMPANIES } from "../../utils/constants/endpoints.js";
-import { IS_CONSOLE_LOG_OPEN } from "../../utils/constants/constants.js";
+import React, { Component } from "react";
+import { Pagination, Input, Switch, Icon, Select, Modal } from "antd";
+import ApplicantTable from "./ApplicantTable/ApplicantTable.jsx";
 import Footer from "../Partials/Footer/Footer.jsx";
 
 import "./style.scss";
 
-const Search = Input.Search;
+const { Search } = Input;
+const { Option } = Select;
+const { TextArea } = Input;
+const inputWidth = window.screen.availWidth < 350 ? window.screen.availWidth - 182 : 168;
 
-class Applicants extends React.Component {
+class Applicant extends Component {
   constructor(props) {
     super(props);
+
+    this.state = {
+      modalVisible: false
+    };
+
+    this.showModal = this.showModal.bind(this);
+    this.handleOk = this.handleOk.bind(this);
+    this.handleCancel = this.handleCancel.bind(this);
 
     this.state = {
       isWaitingResponse: false,
       isInitialRequest: "beforeRequest",
       isNewPageRequested: false,
       isDetailsRequested: false,
-      companies: {},
+      applicants: [
+        {
+          company: "google",
+          name: "John RObhin",
+          location: "Sunnyvale, CA, USA",
+          department: "Engineering",
+          type: "Full Time",
+          date: "10/01/2019"
+        }
+      ],
       pageNo: 1,
       pageSize: 10,
       q: "",
-      hasReview: false,
       mine: true,
       searchClicked: false
     };
-
-    this.handlePageChange = this.handlePageChange.bind(this);
-    this.urlBuilder = this.urlBuilder.bind(this);
-    this.setWrapperRef = this.setWrapperRef.bind(this);
-    this.handleClickOutside = this.handleClickOutside.bind(this);
   }
 
-  async componentDidMount() {
-    if (this.props.cookie("get", "jobhax_access_token") != ("" || null)) {
-      this.setState({ isInitialRequest: true });
-      await this.getData("initialRequest");
-      let config = { method: "POST" };
-      axiosCaptcha(USERS("verifyRecaptcha"), config, "companies").then(
-        response => {
-          if (response.statusText === "OK") {
-            if (response.data.success != true) {
-              this.setState({ isUpdating: false });
-              IS_CONSOLE_LOG_OPEN &&
-                console.log(response, response.data.error_message);
-              this.props.alert(
-                5000,
-                "error",
-                "Error: " + response.data.error_message
-              );
-            }
-          }
-        }
-      );
-    }
-  }
-
-  componentDidUpdate() {
-    if (this.props.cookie("get", "jobhax_access_token") != ("" || null)) {
-      if (this.state.isNewPageRequested === true) {
-        this.getData("newPageRequest");
-        this.setState({ isNewPageRequested: false });
-      }
-      if (this.state.isQueryRequested === true) {
-        this.getData("queryRequest");
-        this.setState({ isQueryRequested: false });
-      }
-    }
-  }
-
-  componentWillMount() {
-    document.addEventListener("mousedown", this.handleClickOutside, false);
-  }
-
-  componentWillUnmount() {
-    document.addEventListener("mousedown", this.handleClickOutside, false);
-  }
-
-  setWrapperRef(node) {
-    this.wrapperRef = node;
-  }
-
-  handleClickOutside(event) {
-    if (this.wrapperRef && !this.wrapperRef.contains(event.target)) {
-      if (this.state.q == ("" || null || false)) {
-        this.setState({ searchClicked: false });
-      }
-    }
-  }
-
-  urlBuilder(list) {
-    let parameterList = [];
-    for (let i = 0; i <= list.length - 1; i++) {
-      if (
-        this.state[list[i]] != "" &&
-        this.state[list[i]] != null &&
-        this.state[list[i]] != false
-      ) {
-        parameterList.push({
-          name: list[i],
-          value: this.state[list[i]]
-        });
-      }
-    }
-    return parameterList;
-  }
-
-  async getData(requestType) {
-    this.setState({ isWaitingResponse: true });
-    const parameters = this.urlBuilder(["q", "hasReview", "mine"]);
-    let config = { method: "GET" };
-    let newUrl =
-      COMPANIES +
-      "?page=" +
-      this.state.pageNo +
-      "&page_size=" +
-      this.state.pageSize;
-    parameters.forEach(
-      parameter =>
-        (newUrl = newUrl + "&" + parameter.name + "=" + parameter.value)
-    );
-    await this.props.handleTokenExpiration("companies getData");
-    axiosCaptcha(newUrl, config).then(response => {
-      if (response.statusText === "OK") {
-        if (requestType === "initialRequest") {
-          this.setState({
-            companies: response.data,
-            isWaitingResponse: false,
-            isInitialRequest: false
-          });
-        } else if (requestType === "newPageRequest") {
-          this.setState({
-            companies: response.data,
-            isWaitingResponse: false,
-            isNewPageRequested: false
-          });
-        } else if (requestType === "queryRequest") {
-          this.setState({
-            companies: response.data,
-            isWaitingResponse: false,
-            isQueryRequested: false
-          });
-        }
-
-        IS_CONSOLE_LOG_OPEN &&
-          console.log("companies response.data data", response.data);
-      }
-    });
-  }
-
-  handlePageChange(page) {
-    this.setState({ pageNo: page, isNewPageRequested: true });
-  }
-
-  generateFeatureArea() {
-    return (
-      <div id="feature">
-        <div className="title">
-          <h2>Applicants</h2>
-        </div>
-      </div>
-    );
-  }
-
-  generateCompanyCards() {
-    return this.state.companies.data.map(company => (
-      <div key={company.id}>
-        <CompanyCards
-          company={company}
-          handleTokenExpiration={this.props.handleTokenExpiration}
-        />
-      </div>
+  generateApplicants() {
+    return this.state.applicants.map(applicant => (
+      <ApplicantTable applicant={applicant} handleTokenExpiration={this.props.handleTokenExpiration} />
     ));
   }
 
+  showModal() {
+    this.setState({ ...this.state, modalVisible: true });
+  }
+
+  handleOk() {
+    this.setState({ ...this.state, modalVisible: false });
+  }
+
+  handleCancel() {
+    this.setState({ ...this.state, modalVisible: false });
+  }
+
   render() {
-    if (this.state.isInitialRequest === "beforeRequest")
-      return <Spinner message="Reaching your account..." />;
-    else if (this.state.isInitialRequest === true)
-      return <Spinner message="Preparing companies..." />;
-    if (this.state.isNewPageRequested === true)
-      return <Spinner message={"Preparing page " + this.state.pageNo} />;
-    if (this.state.isInitialRequest === false) {
-      return (
-        <div>
-          <div className="companies-big-container">
-            <div className="companies-container">
-              {this.generateFeatureArea()}
-              <div className="company-cards-container">
-                {!this.state.searchClicked ? (
-                  <div
-                    className="companies-search-before-click"
-                    onClick={() => this.setState({ searchClicked: true })}
-                  >
-                    <Search placeholder="search" />
+    return (
+      <div>
+        <div className="applicants-big-container">
+          <div className="applicants-container">
+            <div className="title">
+              <h2>Applicants</h2>
+            </div>
+
+            <div className="applicants-card-container">
+              <Search placeholder="search" />
+              <div className="applicants-filter">
+                <div>Filter by:</div>
+                <Select defaultValue="">
+                  <Option value="">Location</Option>
+                  <Option value="sf">San Francisco</Option>
+                  <Option value="mv">Mountain View</Option>
+                  <Option value="sj">San Jose</Option>
+                </Select>
+                <Select defaultValue="">
+                  <Option value="">Department</Option>
+                  <Option value="sf">Sales</Option>
+                  <Option value="mv">Engineering</Option>
+                  <Option value="sj">Human Resource</Option>
+                </Select>
+                <Select defaultValue="">
+                  <Option value="">Type</Option>
+                  <Option value="sf">Full Time</Option>
+                  <Option value="mv">Part Time</Option>
+                  <Option value="sj">Contractor</Option>
+                </Select>
+
+                <Modal
+                  title="Create Position"
+                  visible={this.state.modalVisible}
+                  onOk={this.handleOk}
+                  onCancel={this.handleCancel}
+                >
+                  <div class="form-group">
+                    <div className="info-content-body-item-label">Position Title</div>
+                    <Input placeholder="Enter Position Title" />
                   </div>
-                ) : (
-                  <div className="companies-search" ref={this.setWrapperRef}>
-                    <Search
-                      placeholder="search"
-                      onChange={event =>
-                        this.setState({ q: event.target.value })
-                      }
-                      onSearch={value =>
-                        this.setState({
-                          q: value,
-                          isQueryRequested: true,
-                          pageNo: 1
-                        })
-                      }
+                  <div class="form-group">
+                    <div className="info-content-body-item-label">Category</div>
+                    <Select defaultValue="">
+                      <Option value="">Category</Option>
+                      <Option value="eng">Engineering</Option>
+                      <Option value="dops">Dev Ops</Option>
+                    </Select>
+                  </div>
+                  <div class="form-group">
+                    <div className="info-content-body-item-label">Status</div>
+                    <Select defaultValue="">
+                      <Option value="">Position Status</Option>
+                      <Option value="o">Open</Option>
+                      <Option value="h">Hold</Option>
+                      <Option value="c">Closed</Option>
+                    </Select>
+                  </div>
+                  <div class="form-group">
+                    <div className="info-content-body-item-label">Job Description</div>
+                    <TextArea rows={4} />
+                  </div>
+                  <div class="form-group">
+                    <div className="info-content-body-item-label">City</div>
+                    <Input
+                      style={{
+                        width: inputWidth
+                      }}
+                      placeholder="City"
                     />
                   </div>
-                )}
-                <div className="checkbox-container">
-                  <div style={{ marginRight: 25 }}>
-                    <Checkbox
-                      defaultChecked={this.state.mine}
-                      onChange={event =>
-                        this.setState({
-                          mine: event.target.checked,
-                          isQueryRequested: true,
-                          pageNo: 1
-                        })
-                      }
-                    />
-                    My applications only
+                  <div class="form-group">
+                    <div className="info-content-body-item-label">State</div>
+                    <Select defaultValue="">
+                      <Option value="">State</Option>
+                      <Option value="o">CA, USA</Option>
+                      <Option value="h">TX, USA</Option>
+                    </Select>
                   </div>
-                  <div>
-                    <Checkbox
-                      defaultChecked={this.state.hasReview}
-                      onChange={event =>
-                        this.setState({
-                          hasReview: event.target.checked,
-                          isQueryRequested: true,
-                          pageNo: 1
-                        })
-                      }
-                    />
-                    With reviews only
+                  <div class="form-group">
+                    <div className="info-content-body-item-label">Country</div>
+                    <Select defaultValue="">
+                      <Option value="">Country</Option>
+                      <Option value="o">USA</Option>
+                      <Option value="h">Australia</Option>
+                    </Select>
                   </div>
-                </div>
-                <div>
-                  {this.state.companies.pagination.total_count == 0 ? (
-                    <div
-                      className="no-data"
-                      style={{ textAlign: "center", margin: "24px 0 24px 0" }}
-                    >
-                      No companies found based on your criteria!
-                    </div>
-                  ) : (
-                    this.generateCompanyCards()
-                  )}
-                  <div className="pagination-container">
-                    <Pagination
-                      onChange={this.handlePageChange}
-                      defaultCurrent={
-                        this.state.companies.pagination.current_page
-                      }
-                      current={this.state.companies.pagination.current_page}
-                      total={this.state.companies.pagination.total_count}
-                    />
-                  </div>
-                </div>
+                </Modal>
               </div>
+              <div>{this.generateApplicants()}</div>
             </div>
           </div>
-          <div
-            className={
-              this.state.companies.pagination.total_count < 2
-                ? "bottom-fixed-footer"
-                : ""
-            }
-          >
-            <Footer />
-          </div>
         </div>
-      );
-    }
+        <div className="bottom-fixed-footer">
+          <Footer />
+        </div>
+      </div>
+    );
   }
 }
 
-export default Applicants;
+export default Applicant;

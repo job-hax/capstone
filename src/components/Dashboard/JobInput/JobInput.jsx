@@ -73,16 +73,12 @@ class JobInput extends PureComponent {
         position_id: this.state.position_id
       })
       .then(response => {
-        if (response.statusText === "OK") {
-          if (response.data.success) {
-            this.setState({
-              first_name: "",
-              last_name: "",
-              job_title: "",
-              position_id: ""
-            });
-          }
-        }
+        this.setState({
+          first_name: "",
+          last_name: "",
+          job_title: "",
+          position_id: ""
+        });
       });
   }
 

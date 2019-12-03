@@ -6,10 +6,7 @@ import { axiosCaptcha } from "../../../utils/api/fetch_api";
 import { USERS } from "../../../utils/constants/endpoints";
 import NotificationsBox from "../NotificationsBox/NotificationsBox.jsx";
 import "./style.scss";
-import {
-  USER_TYPES,
-  USER_TYPE_NAMES
-} from "../../../utils/constants/constants";
+import { USER_TYPES, USER_TYPE_NAMES } from "../../../utils/constants/constants";
 
 const { SubMenu } = Menu;
 
@@ -19,9 +16,7 @@ class Header extends Component {
     this.state = {
       user_type: this.props.cookie("get", "user_type"),
       is_demo_user:
-        this.props.cookie("get", "is_demo_user") != ("" || null)
-          ? this.props.cookie("get", "is_demo_user")
-          : false,
+        this.props.cookie("get", "is_demo_user") != ("" || null) ? this.props.cookie("get", "is_demo_user") : false,
       current:
         window.location.pathname != "/blogs"
           ? window.location.pathname
@@ -48,8 +43,7 @@ class Header extends Component {
     }
     if (
       (this.state.current === window.location.pathname ||
-        this.state.current ===
-          window.location.pathname + window.location.search) &&
+        this.state.current === window.location.pathname + window.location.search) &&
       this.state.redirect
     ) {
       this.setState({ redirect: false });
@@ -83,9 +77,7 @@ class Header extends Component {
   }
 
   async handleSyncUserEmail() {
-    if (
-      this.props.cookie("get", "google_access_token_expiration") == ("" || null)
-    ) {
+    if (this.props.cookie("get", "google_access_token_expiration") == ("" || null)) {
       this.props.alert(
         5000,
         "info",
@@ -97,10 +89,7 @@ class Header extends Component {
       axiosCaptcha(USERS("syncUserEmails"), config).then(response => {
         if (response.statusText === "OK") {
           if (response.data.success) {
-            this.props.passStatesToApp(
-              "syncResponseTimestamp",
-              new Date().getTime()
-            );
+            this.props.passStatesToApp("syncResponseTimestamp", new Date().getTime());
             this.props.passStatesToApp("isSynchingGmail", true);
           }
         }
@@ -132,31 +121,20 @@ class Header extends Component {
 
   generateLoggedInHeader() {
     const exclusiveHeaderName =
-      this.state.user_type.name === "Student" ||
-      this.state.user_type.name === "Alumni"
+      this.state.user_type.name === "Student" || this.state.user_type.name === "Alumni"
         ? USER_TYPE_NAMES[this.state.user_type.id]["header"] + " "
         : "";
-    const isDashboardOpenedByDefault =
-      window.location.pathname == "/" ? "/dashboard" : "";
+    const isDashboardOpenedByDefault = window.location.pathname == "/" ? "/dashboard" : "";
     const profilePhotoUrl = this.props.profilePhotoUrl
       ? this.props.profilePhotoUrl
       : "../../../src/assets/icons/SeyfoIcon@3x.png";
-    const style = this.state.is_demo_user
-      ? { height: "11Ox" }
-      : { height: "60x" };
-    const spinIcon = (
-      <Icon type="loading" style={{ fontSize: 24, color: "black" }} spin />
-    );
+    const style = this.state.is_demo_user ? { height: "11Ox" } : { height: "60x" };
+    const spinIcon = <Icon type="loading" style={{ fontSize: 24, color: "black" }} spin />;
     return (
       <div className="header-container" style={style}>
         <div className="left-container">
           <div className="jobhax-logo-container">
-            <div
-              className="jobhax-logo"
-              onClick={() =>
-                this.setState({ current: "/dashboard", request: true })
-              }
-            />
+            <div className="jobhax-logo" onClick={() => this.setState({ current: "/dashboard", request: true })} />
           </div>
         </div>
         <div className="right-container">
@@ -191,31 +169,12 @@ class Header extends Component {
             >
               <Menu.Item key="/dashboard">Dashboard</Menu.Item>
               <Menu.Item key="/metrics">Metrics</Menu.Item>
-              {/* <Menu.Item key="/applicants">Applicants</Menu.Item> */}
               <Menu.Item key="/positions">Positions</Menu.Item>
-              <Menu.Item key="/applicant">Applicants</Menu.Item>
+              <Menu.Item key="/applicants">Applicants</Menu.Item>
             </SubMenu>
-            {/* <SubMenu
-              title={
-                <div className="header-icon menu-icon">
-                  <img src="../../../src/assets/icons/SchoolIcon.png" />
-                </div>
-              }
-            >
-              {this.state.user_type.alumni_listing_enabled && (
-                <Menu.Item key="/alumni-search">Alumni Search</Menu.Item>
-              )}
-              <Menu.Item key="/blogs">{exclusiveHeaderName + "Blog"}</Menu.Item>
-              <Menu.Item key="/events">
-                {exclusiveHeaderName + "Events"}
-              </Menu.Item>
-            </SubMenu> */}
           </Menu>
           {!this.props.isNotificationsShowing ? (
-            <div
-              className="header-icon general"
-              onClick={() => this.handleNotifications()}
-            >
+            <div className="header-icon general" onClick={() => this.handleNotifications()}>
               <Tooltip placement="bottom" title="notifications">
                 <img
                   src="../../../src/assets/icons/beta_flag_2.png"
@@ -234,9 +193,7 @@ class Header extends Component {
                 src="../../../src/assets/icons/NotifIcon@3x.png"
                 onClick={() => this.props.toggleNotifications(false)}
               />
-              <NotificationsBox
-                notificationsList={this.props.notificationsList}
-              />
+              <NotificationsBox notificationsList={this.props.notificationsList} />
             </div>
           )}
           <Menu
@@ -265,39 +222,26 @@ class Header extends Component {
   }
 
   generateNonLoggedInHeader() {
-    let signupRedirect =
-      this.state.current === "/alumni" ? "/alumni-signup" : "/signup";
-    let functional = !(
-      this.props.cookie("get", "signup_flow_completed") === "false"
-    );
+    let signupRedirect = this.state.current === "/alumni" ? "/alumni-signup" : "/signup";
+    let functional = !(this.props.cookie("get", "signup_flow_completed") === "false");
     return (
       <div className="header-container">
         <div className="left-container">
           <div className="jobhax-logo-container">
             <div
               className="jobhax-logo"
-              onClick={() =>
-                functional && this.setState({ current: "/home", request: true })
-              }
+              onClick={() => functional && this.setState({ current: "/home", request: true })}
             />
           </div>
         </div>
         <div className="right-container out">
-          <div
-            className="option"
-            onClick={() =>
-              functional && this.setState({ current: "/signin", request: true })
-            }
-          >
+          <div className="option" onClick={() => functional && this.setState({ current: "/signin", request: true })}>
             Log in
           </div>
           <div>/</div>
           <div
             className="option"
-            onClick={() =>
-              functional &&
-              this.setState({ current: signupRedirect, request: true })
-            }
+            onClick={() => functional && this.setState({ current: signupRedirect, request: true })}
           >
             Sign up
           </div>
@@ -311,13 +255,8 @@ class Header extends Component {
       <div className="demo-banner">
         Demo mode
         <div className="buttons-container">
-          <Button onClick={() => this.handleMenuClick({ key: "/logout" })}>
-            Exit demo
-          </Button>
-          <Button
-            type="primary"
-            onClick={() => this.handleMenuClick({ key: "/demoToSignup" })}
-          >
+          <Button onClick={() => this.handleMenuClick({ key: "/logout" })}>Exit demo</Button>
+          <Button type="primary" onClick={() => this.handleMenuClick({ key: "/demoToSignup" })}>
             Sign up
           </Button>
         </div>
@@ -328,9 +267,7 @@ class Header extends Component {
 
   render() {
     let header = "";
-    const headerHeight = this.state.is_demo_user
-      ? { height: 110 }
-      : { height: 60 };
+    const headerHeight = this.state.is_demo_user ? { height: 110 } : { height: 60 };
     if (this.state.redirect) {
       return <Redirect to={this.state.current} />;
     }
