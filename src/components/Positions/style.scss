@@ -107,6 +107,11 @@
           color: $gray_text_color;
         }
       }
+      .pagination-container {
+        display: flex;
+        justify-content: center;
+        margin: 16px 0px 100px 0px;
+      }
     }
   }
 }

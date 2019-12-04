@@ -46,16 +46,13 @@ class JobInput extends PureComponent {
     this.setState({ job_title: value });
     await this.props.handleTokenExpiration("jobInput handlePositionsSearch");
     let config = { method: "GET" };
-    let newUrl =
-      GET_COMPANY_POSITIONS(this.props.company.id) + "&q=" + value + "&count=5";
+    let newUrl = GET_COMPANY_POSITIONS(this.props.company.id) + "&q=" + value + "&count=5";
     axiosCaptcha(newUrl, config).then(response => {
       if (response.statusText === "OK") {
         if (response.data.success) {
           IS_CONSOLE_LOG_OPEN && console.log(response.data);
           let bufferPositionsList = [];
-          response.data.data.forEach(position =>
-            bufferPositionsList.push(position)
-          );
+          response.data.data.forEach(position => bufferPositionsList.push(position));
           this.setState({
             autoCompletePositionsData: bufferPositionsList
           });
@@ -76,16 +73,12 @@ class JobInput extends PureComponent {
         position_id: this.state.position_id
       })
       .then(response => {
-        if (response.statusText === "OK") {
-          if (response.data.success) {
-            this.setState({
-              first_name: "",
-              last_name: "",
-              job_title: "",
-              position_id: ""
-            });
-          }
-        }
+        this.setState({
+          first_name: "",
+          last_name: "",
+          job_title: "",
+          position_id: ""
+        });
       });
   }
 
@@ -104,9 +97,7 @@ class JobInput extends PureComponent {
       <Option key={position.id} text={position.job.job_title}>
         <div className="global-search-item">
           <span className="global-search-item-count">id: {position.id} </span>
-          <span className="global-search-item-desc">
-            {position.job.job_title}
-          </span>
+          <span className="global-search-item-desc">{position.job.job_title}</span>
         </div>
       </Option>
     );
@@ -117,10 +108,7 @@ class JobInput extends PureComponent {
     const { first_name, last_name, job_title } = this.state;
     return (
       <div>
-        <form
-          className="column-addJob-form"
-          onSubmit={this.handleAddNewApplication}
-        >
+        <form className="column-addJob-form" onSubmit={this.handleAddNewApplication}>
           <Input
             placeholder="First Name"
             value={this.state.first_name}
@@ -132,9 +120,7 @@ class JobInput extends PureComponent {
             onChange={event => this.handleInputChange(event, "last_name")}
           />
           <AutoComplete
-            dataSource={this.state.autoCompletePositionsData.map(
-              this.renderOption
-            )}
+            dataSource={this.state.autoCompletePositionsData.map(this.renderOption)}
             style={{ marginTop: "4px" }}
             className="input-addJob"
             value={job_title}
@@ -143,20 +129,12 @@ class JobInput extends PureComponent {
             onSelect={this.handlePositionSelect}
           />
           <div className="column-addJob-form-buttons-container">
-            <button
-              className="column-addJob-form-button"
-              type="reset"
-              onClick={this.cancelJobInputEdit}
-            >
+            <button className="column-addJob-form-button" type="reset" onClick={this.cancelJobInputEdit}>
               Cancel
             </button>
             <Button
               type="primary"
-              disabled={
-                first_name.trim().length < 1 ||
-                last_name.trim().length < 1 ||
-                job_title.trim().length < 1
-              }
+              disabled={first_name.trim().length < 1 || last_name.trim().length < 1 || job_title.trim().length < 1}
               onClick={this.handleAddNewApplication}
             >
               Add Candidate

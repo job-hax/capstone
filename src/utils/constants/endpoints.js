@@ -1,4 +1,4 @@
-export const apiRoot = "https://jobposting-be.jobhax.com"; //"https://backend.jobhax.com"; //"http://10.0.0.75:8000"; //"http://0.0.0.0:8000";
+export const apiRoot = "http://0.0.0.0:8001"; //"https://backend.jobhax.com"; //"http://10.0.0.75:8000"; //"http://0.0.0.0:8000";
 
 //USER REQUESTS//
 export const USERS = type => `${apiRoot}/api/users/${type}/`;
@@ -10,17 +10,13 @@ export const GET_SOURCES = `${apiRoot}/api/positionapps/sources/`;
 
 export const GET_STATUSES = `${apiRoot}/api/positionapps/statuses/`;
 
-export const CONTACTS = posappId =>
-  `${apiRoot}/api/positionapps/${posappId}/contacts/`;
+export const CONTACTS = posappId => `${apiRoot}/api/positionapps/${posappId}/contacts/`;
 
-export const GET_NEW_JOBAPPS = timestamp =>
-  `${apiRoot}/api/positionapps/?timestamp=${timestamp}`;
+export const GET_NEW_JOBAPPS = timestamp => `${apiRoot}/api/positionapps/?timestamp=${timestamp}`;
 
-export const NOTES = posappId =>
-  `${apiRoot}/api/positionapps/${posappId}/notes/`;
+export const NOTES = posappId => `${apiRoot}/api/positionapps/${posappId}/notes/`;
 
-export const POS_FEEDBACKS = posappId =>
-  `${apiRoot}/api/positionapps/${posappId}/feedbacks/`;
+export const POS_FEEDBACKS = posappId => `${apiRoot}/api/positionapps/${posappId}/feedbacks/`;
 
 //METRICS REQUESTS//
 export const METRICS = type => `${apiRoot}/api/metrics/${type}`;
@@ -50,6 +46,9 @@ export const FAQS = `${apiRoot}/api/faqs/`;
 export const AGREEMENTS = `${apiRoot}/api/agreements/`;
 
 export const FEEDBACKS = `${apiRoot}/api/feedbacks/`;
+
+// COMPANY //
+export const COMPANY = id => `${apiRoot}/api/companies/${id}`;
 
 // COMPANY POSITIONS //
 export const COMPANY_POSITIONS = `${apiRoot}/api/positions/company`;
