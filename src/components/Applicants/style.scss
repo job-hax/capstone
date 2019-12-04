@@ -6,15 +6,16 @@
   display: flex;
   justify-content: center;
   padding-top: 60px;
+  background-color: #f9f9fc;
 
   @media only screen and (max-device-width: 800px) and (-webkit-min-device-pixel-ratio: 2) {
     padding-top: 20px;
   }
 
   .applicants-container {
-    width: 37.5%;
+    width: 70%;
     min-width: 576px;
-    max-width: 37.5%;
+    max-width: 70%;
 
     @media only screen and (max-device-width: 800px) and (-webkit-min-device-pixel-ratio: 2) {
       min-width: 90vw;
@@ -104,6 +105,11 @@
         .ant-input::placeholder {
           color: $gray_text_color;
         }
+      }
+      .ant-table-pagination {
+        display: flex;
+        justify-content: center;
+        margin: 16px 0px 100px 0px;
       }
     }
   }

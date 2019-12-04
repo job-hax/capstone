@@ -1,96 +1,141 @@
 import React, { Component } from "react";
-import { Modal, Select } from "antd";
-import { Table, Divider, Tag } from "antd";
+import { Table, Input, Button, Icon, message } from "antd";
+import Highlighter from "react-highlight-words";
+import { JOB_APPS } from "../../../utils/constants/endpoints.js";
+import { axiosCaptcha } from "../../../utils/api/fetch_api";
 
 import "./style.scss";
-
-const columns = [
-  {
-    title: "Full Name",
-    dataIndex: "name",
-    key: "name",
-    render: text => <a>{text}</a>
-  },
-  {
-    title: "Role",
-    dataIndex: "role",
-    key: "role"
-  },
-  {
-    title: "Years Of Experience",
-    dataIndex: "yearsofexperience",
-    key: "yearsofexperience"
-  },
-  {
-    title: "Expected Salary",
-    dataIndex: "expectedsalary",
-    key: "expectedsalary"
-  },
-  {
-    title: "Action",
-    key: "action",
-    render: (text, record) => (
-      <span>
-        <a>Invite {record.name}</a>
-        <Divider type="vertical" />
-        <a>Delete</a>
-      </span>
-    )
-  }
-];
-
-const data = [
-  {
-    key: "1",
-    name: "John Brown",
-    yearsofexperience: 7,
-    role: "Software Engineer",
-    expectedsalary: "120,000"
-  },
-  {
-    key: "2",
-    name: "Scott Davidson Brown",
-    yearsofexperience: 8,
-    role: "DevOps Engineer",
-    expectedsalary: "110,000"
-  },
-  {
-    key: "3",
-    name: "Thomos Joyner",
-    yearsofexperience: 6,
-    role: "Test Engineer",
-    expectedsalary: "90,000"
-  }
-];
 
 class ApplicantTable extends Component {
   constructor(props) {
     super(props);
 
     this.state = {
-      modalVisible: false
+      modalVisible: false,
+      searchText: "",
+      searchedColumn: ""
     };
 
-    this.showModal = this.showModal.bind(this);
-    this.handleOk = this.handleOk.bind(this);
-    this.handleCancel = this.handleCancel.bind(this);
+    this.handleDelete = this.handleDelete.bind(this);
   }
 
-  showModal() {
-    this.setState({ ...this.state, modalVisible: true });
+  getColumnSearchProps(dataIndex) {
+    return {
+      filterDropdown: ({ setSelectedKeys, selectedKeys, confirm, clearFilters }) => (
+        <div style={{ padding: 8 }}>
+          <Input
+            ref={node => {
+              this.searchInput = node;
+            }}
+            placeholder={`Search ${dataIndex}`}
+            value={selectedKeys[0]}
+            onChange={e => setSelectedKeys(e.target.value ? [e.target.value] : [])}
+            onPressEnter={() => this.handleSearch(selectedKeys, confirm, dataIndex)}
+            style={{ width: 188, marginBottom: 8, display: "block" }}
+          />
+          <Button
+            type="primary"
+            onClick={() => this.handleSearch(selectedKeys, confirm, dataIndex)}
+            icon="search"
+            size="small"
+            style={{ width: 90, marginRight: 8 }}
+          >
+            Search
+          </Button>
+          <Button onClick={() => this.handleReset(clearFilters)} size="small" style={{ width: 90 }}>
+            Reset
+          </Button>
+        </div>
+      ),
+      filterIcon: filtered => <Icon type="search" style={{ color: filtered ? "#1890ff" : undefined }} />,
+      onFilter: (value, record) =>
+        record[dataIndex]
+          .toString()
+          .toLowerCase()
+          .includes(value.toLowerCase()),
+      onFilterDropdownVisibleChange: visible => {
+        if (visible) {
+          setTimeout(() => this.searchInput.select());
+        }
+      },
+      render: text =>
+        this.state.searchedColumn === dataIndex ? (
+          <Highlighter
+            highlightStyle={{ backgroundColor: "#ffc069", padding: 0 }}
+            searchWords={[this.state.searchText]}
+            autoEscape
+            textToHighlight={text.toString()}
+          />
+        ) : (
+          text
+        )
+    };
   }
 
-  handleOk() {
-    this.setState({ ...this.state, modalVisible: false });
+  handleSearch(selectedKeys, confirm, dataIndex) {
+    confirm();
+    this.setState({
+      searchText: selectedKeys[0],
+      searchedColumn: dataIndex
+    });
   }
 
-  handleCancel() {
-    this.setState({ ...this.state, modalVisible: false });
+  handleReset(clearFilters) {
+    clearFilters();
+    this.setState({ searchText: "" });
+  }
+
+  handleDelete(id) {
+    const body = {
+      jobapp_ids: [id]
+    };
+    let config = { method: "DELETE" };
+    config.body = body;
+    axiosCaptcha(JOB_APPS, config).then(response => {
+      if (response.data.success == true) {
+        message.info("The application has been deleted!");
+        this.props.getData();
+      } else {
+        message.info(response.data.error_message);
+        window.location.reload(true);
+      }
+    });
   }
 
   render() {
-    const { applicant } = this.props;
-    return <Table columns={columns} dataSource={data} />;
+    const columns = [
+      {
+        title: "Full Name",
+        dataIndex: "full_name",
+        key: "full_name",
+        ...this.getColumnSearchProps("full_name")
+      },
+      {
+        title: "Position",
+        dataIndex: "job_title",
+        key: "job_title",
+        ...this.getColumnSearchProps("job_title")
+      },
+      {
+        title: "Applied On",
+        dataIndex: "apply_date",
+        key: "apply_date"
+      },
+      {
+        title: "Status",
+        dataIndex: "application_status",
+        key: "application_status",
+        ...this.getColumnSearchProps("application_status")
+      },
+      {
+        title: "Action",
+        key: "action",
+        render: (text, record) => <Icon type="delete" onClick={() => this.handleDelete(record.id)} />
+      }
+    ];
+
+    const { applicants } = this.props;
+    return <Table columns={columns} dataSource={applicants} />;
   }
 }
 
