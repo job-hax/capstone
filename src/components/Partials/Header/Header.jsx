@@ -163,29 +163,19 @@ class Header extends Component {
             <SubMenu
               title={
                 <div className="header-icon menu-icon">
-                  <img src="../../../src/assets/icons/BusinessIcon.png" />
+                  <Icon type="appstore" />
                 </div>
               }
             >
-              <Menu.Item key="/dashboard">Dashboard</Menu.Item>
-              <Menu.Item key="/metrics">Metrics</Menu.Item>
-              <Menu.Item key="/positions">Positions</Menu.Item>
-              <Menu.Item key="/applicants">Applicants</Menu.Item>
+              <Menu.Item key="/dashboard"><Icon type="dashboard" />Dashboard</Menu.Item>
+              <Menu.Item key="/metrics"><Icon type="bar-chart" />Metrics</Menu.Item>
+              <Menu.Item key="/positions"><Icon type="table" />Positions</Menu.Item>
+              <Menu.Item key="/applicants"><Icon type="team" />Applicants</Menu.Item>
             </SubMenu>
           </Menu>
-          {!this.props.isNotificationsShowing ? (
+          {/* {!this.props.isNotificationsShowing ? (
             <div className="header-icon general" onClick={() => this.handleNotifications()}>
-              <Tooltip placement="bottom" title="notifications">
-                <img
-                  src="../../../src/assets/icons/beta_flag_2.png"
-                  style={{
-                    position: "absolute",
-                    height: "24px",
-                    margin: "0px 0px 0 -2px"
-                  }}
-                />
-                <img src="../../../src/assets/icons/NotifIcon@3x.png" />
-              </Tooltip>
+              <Icon type="notification" />
             </div>
           ) : (
             <div className="header-icon general" ref={this.setWrapperRef}>
@@ -195,7 +185,7 @@ class Header extends Component {
               />
               <NotificationsBox notificationsList={this.props.notificationsList} />
             </div>
-          )}
+          )} */}
           <Menu
             onClick={event => this.handleMenuClick(event)}
             selectedKeys={[this.state.current]}
@@ -205,11 +195,12 @@ class Header extends Component {
             <SubMenu
               title={
                 <div className="header-icon user-icon">
-                  <img src={profilePhotoUrl} />
+                  {/* <img src={profilePhotoUrl} />*/}
+                  <Icon type="user" /> 
                 </div>
               }
             >
-              <Menu.Item key="/profile">Profile</Menu.Item>
+              <Menu.Item key="/profile"><Icon type="solution" />Profile</Menu.Item>
               <Menu.Item key="/logout">
                 <Icon type="logout" />
                 Logout
