@@ -4,6 +4,7 @@ import JobDetails from "./BodyComponents/JobDetails.jsx";
 import Contacts from "./BodyComponents/Contacts.jsx";
 import Notes from "./BodyComponents/Notes.jsx";
 import Feedback from "./BodyComponents/Feedback.jsx";
+import Resume from "./BodyComponents/Resume/Resume.jsx";
 
 class BodyComponents extends React.Component {
   constructor(props) {
@@ -23,7 +24,7 @@ class BodyComponents extends React.Component {
         );
       case "Resume":
         return (
-          <Contacts
+          <Resume
             card={this.props.card}
             handleTokenExpiration={this.props.handleTokenExpiration}
             alert={this.props.alert}
@@ -41,10 +42,7 @@ class BodyComponents extends React.Component {
       case "Notes":
         return (
           <div className="notes">
-            <Notes
-              card={this.props.card}
-              handleTokenExpiration={this.props.handleTokenExpiration}
-            />
+            <Notes card={this.props.card} handleTokenExpiration={this.props.handleTokenExpiration} />
           </div>
         );
     }
