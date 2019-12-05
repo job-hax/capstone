@@ -18,14 +18,15 @@ $addJobButtonAnimationZoomInScale: 1.03;
   max-width: $column_max_width;
   min-width: $column_min_width;
   margin: 4px 8px 4px 0;
-  border-radius: 12px;
+  border-radius: 5px;
   overflow: hidden;
   display: flex;
   flex-direction: column;
 
   .column-ongoings-container {
-    background-color: rgb(238, 238, 238);
-    border-radius: 12px;
+    // background-color: rgb(238, 238, 238);
+    background-color: #dee2e6;
+    border-radius: 5px;
     width: 100%;
     position: relative;
     display: flex;

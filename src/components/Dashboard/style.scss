@@ -6,9 +6,10 @@ $multipleContainerAnimationFromZeroScale: 1.6;
 .dashboard-container {
   height: calc(100%);
   width: 100%;
-  padding-left: 8px;
+  padding: 4%;
   display: flex;
   overflow-y: hidden;
+  justify-content: center;
 
   &.--demo-height {
     height: calc(100%);
