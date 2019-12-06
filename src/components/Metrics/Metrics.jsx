@@ -72,7 +72,6 @@ class Metrics extends PureComponent {
             languages: this.processResponse("languages", data),
             certifications: this.processResponse("certifications", data)
           });
-          console.log(this.processResponse("company", data));
         }
       }
     });
@@ -80,18 +79,22 @@ class Metrics extends PureComponent {
 
   processResponse(attr, data) {
     let res = [];
-    const keys = Object.keys(data[attr]);
-    for (const key of keys) {
-      const item = {
-        ...data[attr][key],
-        value: key,
-        percentage: Number(data[attr][key]["percentage"]).toLocaleString(undefined, {
-          style: "percent",
-          minimumFractionDigits: 2
-        })
-      };
-      res.push(item);
+
+    if (attr in data) {
+      const keys = Object.keys(data[attr]);
+      for (const key of keys) {
+        const item = {
+          ...data[attr][key],
+          value: key,
+          percentage: Number(data[attr][key]["percentage"]).toLocaleString(undefined, {
+            style: "percent",
+            minimumFractionDigits: 2
+          })
+        };
+        res.push(item);
+      }
     }
+
     return res;
   }
 
@@ -107,34 +110,38 @@ class Metrics extends PureComponent {
     return (
       <div>
         <div className="metrics-big-group-container">
-          <div className="cdiv">
-            <h3>Company</h3>
-            {/* {this.generateCompanyGraphCard()} */}
-            <Table columns={positionscolumns} dataSource={this.state.school} pagination={false} />
+          <div className="metrics-table">
+            <div className="cdiv">
+              <h3>Company</h3>
+              {/* {this.generateCompanyGraphCard()} */}
+              <Table columns={positionscolumns} dataSource={this.state.company} pagination={false} />
+            </div>
+            <div className="cdiv">
+              <h3>Positions</h3>
+              <Table columns={positionscolumns} dataSource={this.state.position} pagination={false} />
+            </div>
+            <div className="cdiv">
+              <h3>Schools</h3>
+              <Table columns={positionscolumns} dataSource={this.state.school} pagination={false} />
+            </div>
+            <div className="cdiv">
+              <h3>Degree</h3>
+              <Table columns={positionscolumns} dataSource={this.state.degree} pagination={false} />
+            </div>
           </div>
-          <div className="cdiv">
-            <h3>Positions</h3>
-            <Table columns={positionscolumns} dataSource={this.state.position} pagination={false} />
-          </div>
-          <div className="cdiv">
-            <h3>Schools</h3>
-            <Table columns={positionscolumns} dataSource={this.state.school} pagination={false} />
-          </div>
-          <div className="cdiv">
-            <h3>Degree</h3>
-            <Table columns={positionscolumns} dataSource={this.state.degree} pagination={false} />
-          </div>
-          <div className="cdiv">
-            <h3>Skills</h3>
-            <Table columns={positionscolumns} dataSource={this.state.skills} pagination={false} />
-          </div>
-          <div className="cdiv">
-            <h3>Certificates</h3>
-            <Table columns={positionscolumns} dataSource={this.state.certifications} pagination={false} />
-          </div>
-          <div className="cdiv">
-            <h3>Spoken Languages</h3>
-            <Table columns={positionscolumns} dataSource={this.state.languages} pagination={false} />
+          <div className="metrics-table">
+            <div className="cdiv">
+              <h3>Skills</h3>
+              <Table columns={positionscolumns} dataSource={this.state.skills} pagination={false} />
+            </div>
+            <div className="cdiv">
+              <h3>Certificates</h3>
+              <Table columns={positionscolumns} dataSource={this.state.certifications} pagination={false} />
+            </div>
+            <div className="cdiv">
+              <h3>Spoken Languages</h3>
+              <Table columns={positionscolumns} dataSource={this.state.languages} pagination={false} />
+            </div>
           </div>
         </div>
         <div className="bottom-fixed-footer">
