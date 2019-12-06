@@ -72,7 +72,6 @@ class Metrics extends PureComponent {
             languages: this.processResponse("languages", data),
             certifications: this.processResponse("certifications", data)
           });
-          console.log(this.processResponse("company", data));
         }
       }
     });
@@ -80,18 +79,22 @@ class Metrics extends PureComponent {
 
   processResponse(attr, data) {
     let res = [];
-    const keys = Object.keys(data[attr]);
-    for (const key of keys) {
-      const item = {
-        ...data[attr][key],
-        value: key,
-        percentage: Number(data[attr][key]["percentage"]).toLocaleString(undefined, {
-          style: "percent",
-          minimumFractionDigits: 2
-        })
-      };
-      res.push(item);
+
+    if (attr in data) {
+      const keys = Object.keys(data[attr]);
+      for (const key of keys) {
+        const item = {
+          ...data[attr][key],
+          value: key,
+          percentage: Number(data[attr][key]["percentage"]).toLocaleString(undefined, {
+            style: "percent",
+            minimumFractionDigits: 2
+          })
+        };
+        res.push(item);
+      }
     }
+
     return res;
   }
 
