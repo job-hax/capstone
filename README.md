@@ -4,6 +4,8 @@
 ![GitHub commit activity](https://img.shields.io/github/commit-activity/w/job-hax/capstone?style=plastic)
 ![GitHub contributors](https://img.shields.io/github/contributors/job-hax/capstone.svg)
 ![GitHub repo size](https://img.shields.io/github/repo-size/job-hax/capstone.svg)
+![GitHub languages](https://img.shields.io/github/languages/count/job-hax/capstone)
+
 
 ## Prerequisites
 
