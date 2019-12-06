@@ -1,4 +1,4 @@
-export const apiRoot = "https://jobposting-be.jobhax.com"; //"https://backend.jobhax.com"; //"http://10.0.0.75:8000"; //"http://0.0.0.0:8000";
+export const apiRoot = "http://0.0.0.0:8001"; //"https://backend.jobhax.com"; //"http://10.0.0.75:8000"; //"http://0.0.0.0:8000";
 
 //USER REQUESTS//
 export const USERS = type => `${apiRoot}/api/users/${type}/`;
@@ -56,3 +56,4 @@ export const GET_COMPANY_POSITIONS = id => `${COMPANY_POSITIONS}?id=${id}`;
 
 // RESUME PARSER //
 export const RESUME_PARSER = id => (id ? `${apiRoot}/api/parser/?id=${id}` : `${apiRoot}/api/parser/`);
+export const RESUME_PARSER_METRICS = `${apiRoot}/api/parser/metrics`;
