@@ -130,7 +130,7 @@ class ApplicantTable extends Component {
       {
         title: "Action",
         key: "action",
-        render: (text, record) => <Icon type="delete" onClick={() => this.handleDelete(record.id)} />
+        render: (text, record) => <Icon type="delete"  style={{ fontSize: 22 }} onClick={() => this.handleDelete(record.id)} />
       }
     ];
 

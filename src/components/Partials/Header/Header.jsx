@@ -163,14 +163,14 @@ class Header extends Component {
             <SubMenu
               title={
                 <div className="header-icon menu-icon">
-                  <Icon type="appstore" />
+                  <Icon type="appstore" style={{ fontSize: 22 }} />
                 </div>
               }
             >
-              <Menu.Item key="/dashboard"><Icon type="dashboard" />Dashboard</Menu.Item>
-              <Menu.Item key="/metrics"><Icon type="bar-chart" />Metrics</Menu.Item>
-              <Menu.Item key="/positions"><Icon type="table" />Positions</Menu.Item>
-              <Menu.Item key="/applicants"><Icon type="team" />Applicants</Menu.Item>
+              <Menu.Item key="/dashboard"><Icon type="dashboard" style={{ fontSize: 22 }} />Dashboard</Menu.Item>
+              <Menu.Item key="/metrics"><Icon type="bar-chart" style={{ fontSize: 22 }}/>Metrics</Menu.Item>
+              <Menu.Item key="/positions"><Icon type="table" style={{ fontSize: 22 }}/>Positions</Menu.Item>
+              <Menu.Item key="/applicants"><Icon type="team" style={{ fontSize: 22 }}/>Applicants</Menu.Item>
             </SubMenu>
           </Menu>
           {/* {!this.props.isNotificationsShowing ? (
@@ -196,13 +196,13 @@ class Header extends Component {
               title={
                 <div className="header-icon user-icon">
                   {/* <img src={profilePhotoUrl} />*/}
-                  <Icon type="user" /> 
+                  <Icon type="user" style={{ fontSize: 22 }} /> 
                 </div>
               }
             >
-              <Menu.Item key="/profile"><Icon type="solution" />Profile</Menu.Item>
+              <Menu.Item key="/profile"><Icon type="solution" style={{ fontSize: 22 }} />Profile</Menu.Item>
               <Menu.Item key="/logout">
-                <Icon type="logout" />
+                <Icon type="logout" style={{ fontSize: 22 }}/>
                 Logout
               </Menu.Item>
             </SubMenu>
