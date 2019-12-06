@@ -1,7 +1,7 @@
 @import "../../App/style.scss";
 
-.anticon{
-  font-size:12px;
+.anticon {
+  font-size: 12px;
   color: black;
 }
 
@@ -209,33 +209,32 @@
   }
 }
 
-
-.ant-menu-horizontal>.ant-menu-submenu-selected {
-  border-bottom: 0px solid $base_color;
-}
-
-.ant-menu-horizontal>.ant-menu-submenu:hover {
-  border-bottom: 0px solid $base_color;
-=======
 .ant-menu-horizontal > .ant-menu-submenu-selected {
-  border-bottom: 2px solid $base_color;
+  border-bottom: 0px solid $base_color;
 }
 
 .ant-menu-horizontal > .ant-menu-submenu:hover {
-  border-bottom: 2px solid $base_color;
+  border-bottom: 0px solid $base_color;
 
-}
+  .ant-menu-horizontal > .ant-menu-submenu-selected {
+    border-bottom: 2px solid $base_color;
+  }
 
-.ant-menu-horizontal > .ant-menu-submenu {
-  vertical-align: top;
-  max-height: 52px;
-}
+  .ant-menu-horizontal > .ant-menu-submenu:hover {
+    border-bottom: 2px solid $base_color;
+  }
 
-.ant-menu-horizontal > .ant-menu-submenu-selected {
-  max-height: 52px;
-}
+  .ant-menu-horizontal > .ant-menu-submenu {
+    vertical-align: top;
+    max-height: 52px;
+  }
 
-.ant-menu-item,
-.ant-menu-submenu-title {
-  padding: 0px 10px !important;
+  .ant-menu-horizontal > .ant-menu-submenu-selected {
+    max-height: 52px;
+  }
+
+  .ant-menu-item,
+  .ant-menu-submenu-title {
+    padding: 0px 10px !important;
+  }
 }
