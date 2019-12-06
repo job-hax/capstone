@@ -1,13 +1,25 @@
 @import "../App/style.scss";
 
-$multipleContainerAnimationTransitionDuration: .5s;
+$multipleContainerAnimationTransitionDuration: 0.5s;
 $multipleContainerAnimationFromZeroScale: 1.6;
 
-.modal .modal-main{
+.job-input-button {
+  background-image: linear-gradient(rgb(123, 22, 255), rgb(113, 20, 234)) !important;
+  min-height: 50px !important;
+  max-height: none !important;
+}
+
+.button-inside {
+  color: white !important;
+  font-size: 40px !important;
+  font-weight: bold !important;
+}
+
+.modal .modal-main {
   border-radius: 5px !important;
 }
 
-.main-container .main{
+.main-container .main {
   margin-left: 12px !important;
 }
 

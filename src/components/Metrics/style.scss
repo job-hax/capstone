@@ -1,5 +1,9 @@
 @import "../App/style.scss";
 
+.ant-table-thead > tr > th{
+    height: 45px !important;
+}
+
 .cdiv{    
     display: inline-block;
     /* border: 1px solid silver; */
