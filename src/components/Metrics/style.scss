@@ -67,8 +67,14 @@
     height: 45px !important;
   }
 
+  .metrics-table {
+    display: table;
+    margin: 24px auto;
+    border-spacing: 10px 0px;
+  }
+
   .cdiv {
-    display: inline-block;
+    display: table-cell;
     /* border: 1px solid silver; */
     margin: 11px;
     width: 428px;
@@ -77,6 +83,10 @@
     box-shadow: 0 0.46875rem 2.1875rem rgba(4, 9, 20, 0.03), 0 0.9375rem 1.40625rem rgba(4, 9, 20, 0.03),
       0 0.25rem 0.53125rem rgba(4, 9, 20, 0.05), 0 0.125rem 0.1875rem rgba(4, 9, 20, 0.03);
     border-radius: 5px;
+
+    h3 {
+      margin: 10px 20px 0;
+    }
   }
   .colorcode {
     background-color: blue;

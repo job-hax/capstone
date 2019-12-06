@@ -110,34 +110,38 @@ class Metrics extends PureComponent {
     return (
       <div>
         <div className="metrics-big-group-container">
-          <div className="cdiv">
-            <h3>Company</h3>
-            {/* {this.generateCompanyGraphCard()} */}
-            <Table columns={positionscolumns} dataSource={this.state.school} pagination={false} />
+          <div className="metrics-table">
+            <div className="cdiv">
+              <h3>Company</h3>
+              {/* {this.generateCompanyGraphCard()} */}
+              <Table columns={positionscolumns} dataSource={this.state.company} pagination={false} />
+            </div>
+            <div className="cdiv">
+              <h3>Positions</h3>
+              <Table columns={positionscolumns} dataSource={this.state.position} pagination={false} />
+            </div>
+            <div className="cdiv">
+              <h3>Schools</h3>
+              <Table columns={positionscolumns} dataSource={this.state.school} pagination={false} />
+            </div>
+            <div className="cdiv">
+              <h3>Degree</h3>
+              <Table columns={positionscolumns} dataSource={this.state.degree} pagination={false} />
+            </div>
           </div>
-          <div className="cdiv">
-            <h3>Positions</h3>
-            <Table columns={positionscolumns} dataSource={this.state.position} pagination={false} />
-          </div>
-          <div className="cdiv">
-            <h3>Schools</h3>
-            <Table columns={positionscolumns} dataSource={this.state.school} pagination={false} />
-          </div>
-          <div className="cdiv">
-            <h3>Degree</h3>
-            <Table columns={positionscolumns} dataSource={this.state.degree} pagination={false} />
-          </div>
-          <div className="cdiv">
-            <h3>Skills</h3>
-            <Table columns={positionscolumns} dataSource={this.state.skills} pagination={false} />
-          </div>
-          <div className="cdiv">
-            <h3>Certificates</h3>
-            <Table columns={positionscolumns} dataSource={this.state.certifications} pagination={false} />
-          </div>
-          <div className="cdiv">
-            <h3>Spoken Languages</h3>
-            <Table columns={positionscolumns} dataSource={this.state.languages} pagination={false} />
+          <div className="metrics-table">
+            <div className="cdiv">
+              <h3>Skills</h3>
+              <Table columns={positionscolumns} dataSource={this.state.skills} pagination={false} />
+            </div>
+            <div className="cdiv">
+              <h3>Certificates</h3>
+              <Table columns={positionscolumns} dataSource={this.state.certifications} pagination={false} />
+            </div>
+            <div className="cdiv">
+              <h3>Spoken Languages</h3>
+              <Table columns={positionscolumns} dataSource={this.state.languages} pagination={false} />
+            </div>
           </div>
         </div>
         <div className="bottom-fixed-footer">
