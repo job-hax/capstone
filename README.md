@@ -1,7 +1,6 @@
 # JobHax Frontend application
 
-![sako](https://img.shields.io/website?url=https%3A%2F%2Fjobposting.jobhax.com)
-
+![JobHax Website](https://img.shields.io/website?label=JobHax&up_message=Up%20and%20Running&url=https%3A%2F%2Fjobposting.jobhax.com)
 ![Alt text](https://img.shields.io/github/issues-raw/job-hax/capstone.svg)
 ![GitHub commit activity](https://img.shields.io/github/commit-activity/w/job-hax/capstone?style=plastic)
 ![GitHub contributors](https://img.shields.io/github/contributors/job-hax/capstone.svg)
