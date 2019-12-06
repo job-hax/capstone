@@ -1,5 +1,10 @@
 @import "../../App/style.scss";
 
+.anticon{
+  font-size:12px;
+  color: black;
+}
+
 .header-big-container {
   position: fixed;
   display: flex;
@@ -204,12 +209,21 @@
   }
 }
 
+
+.ant-menu-horizontal>.ant-menu-submenu-selected {
+  border-bottom: 0px solid $base_color;
+}
+
+.ant-menu-horizontal>.ant-menu-submenu:hover {
+  border-bottom: 0px solid $base_color;
+=======
 .ant-menu-horizontal > .ant-menu-submenu-selected {
   border-bottom: 2px solid $base_color;
 }
 
 .ant-menu-horizontal > .ant-menu-submenu:hover {
   border-bottom: 2px solid $base_color;
+
 }
 
 .ant-menu-horizontal > .ant-menu-submenu {
