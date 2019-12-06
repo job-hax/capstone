@@ -1,8 +1,4 @@
 @import "../../App/style.scss";
-.anticon{
-  font-size:22px !important;
-  color: black;
-}
 
 .header-big-container {
   position: fixed;
@@ -12,6 +8,11 @@
   background-color: white;
   z-index: 21;
 
+  .anticon {
+    font-size: 22px !important;
+    color: black;
+  }
+
   .demo-banner {
     position: relative;
     width: 100%;
@@ -19,8 +20,8 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    background-color: #B6D2FF;
-    color: #0B6AFF;
+    background-color: #b6d2ff;
+    color: #0b6aff;
     font-size: 18px;
 
     .demo-banner-height {
@@ -36,7 +37,7 @@
       justify-content: space-between;
 
       .ant-btn {
-        background-color: #B6D2FF;
+        background-color: #b6d2ff;
         height: 40px !important;
         min-height: 40px !important;
         width: 140px !important;
@@ -48,7 +49,6 @@
         color: white !important;
         border-color: white !important;
       }
-
 
       .ant-btn-primary {
         color: #fff !important;
@@ -80,19 +80,18 @@
         font-size: 18px;
         font-weight: lighter;
 
-        @media only screen and (max-device-width : 800px) and (-webkit-min-device-pixel-ratio : 2) {
+        @media only screen and (max-device-width: 800px) and (-webkit-min-device-pixel-ratio: 2) {
           margin: 20px;
         }
       }
 
       .option {
         cursor: pointer;
-        transition: color .3s;
-        -webkit-transition: color .3s;
-        -moz-transition: color .3s;
-        -o-transition: color .3s;
-        -ms-transition: color .3s;
-
+        transition: color 0.3s;
+        -webkit-transition: color 0.3s;
+        -moz-transition: color 0.3s;
+        -o-transition: color 0.3s;
+        -ms-transition: color 0.3s;
       }
 
       .option:hover {
@@ -137,7 +136,6 @@
         overflow: hidden;
         position: relative;
 
-
         img {
           position: absolute;
           margin: auto;
@@ -152,7 +150,7 @@
           border-radius: 18px;
         }
 
-        @media only screen and (max-device-width : 800px) and (-webkit-min-device-pixel-ratio : 2) {
+        @media only screen and (max-device-width: 800px) and (-webkit-min-device-pixel-ratio: 2) {
           margin-right: 20px;
         }
       }
@@ -162,7 +160,7 @@
         width: auto;
       }
 
-      @media only screen and (max-device-width : 400px) and (-webkit-min-device-pixel-ratio : 2) {
+      @media only screen and (max-device-width: 400px) and (-webkit-min-device-pixel-ratio: 2) {
         width: 20px;
 
         img {
@@ -175,7 +173,6 @@
       }
     }
 
-
     .jobhax-logo-container {
       margin-top: 10px;
       margin-right: 20px;
@@ -185,14 +182,14 @@
         width: 40px;
         height: 40px;
         cursor: pointer;
-        background-image: url('../../../assets/icons/JobHax-logo-black.svg');
+        background-image: url("../../../assets/icons/JobHax-logo-black.svg");
         background-size: 100%;
         background-repeat: no-repeat;
-        transition: transform .3s;
-        -webkit-transition: transform .3s;
-        -moz-transition: transform .3s;
-        -o-transition: transform .3s;
-        -ms-transition: transform .3s;
+        transition: transform 0.3s;
+        -webkit-transition: transform 0.3s;
+        -moz-transition: transform 0.3s;
+        -o-transition: transform 0.3s;
+        -ms-transition: transform 0.3s;
       }
 
       .jobhax-logo:hover {
@@ -207,20 +204,20 @@
   }
 }
 
-.ant-menu-horizontal>.ant-menu-submenu-selected {
+.ant-menu-horizontal > .ant-menu-submenu-selected {
   border-bottom: 2px solid $base_color;
 }
 
-.ant-menu-horizontal>.ant-menu-submenu:hover {
+.ant-menu-horizontal > .ant-menu-submenu:hover {
   border-bottom: 2px solid $base_color;
 }
 
-.ant-menu-horizontal>.ant-menu-submenu {
+.ant-menu-horizontal > .ant-menu-submenu {
   vertical-align: top;
   max-height: 52px;
 }
 
-.ant-menu-horizontal>.ant-menu-submenu-selected {
+.ant-menu-horizontal > .ant-menu-submenu-selected {
   max-height: 52px;
 }
 

@@ -2,16 +2,9 @@ import React from "react";
 import { AutoComplete, DatePicker, Select, Timeline } from "antd";
 import moment from "moment";
 
-import {
-  makeTimeBeautiful,
-  IS_CONSOLE_LOG_OPEN
-} from "../../../../../../../utils/constants/constants.js";
+import { makeTimeBeautiful, IS_CONSOLE_LOG_OPEN } from "../../../../../../../utils/constants/constants.js";
 import { axiosCaptcha } from "../../../../../../../utils/api/fetch_api.js";
-import {
-  JOB_APPS,
-  GET_SOURCES,
-  AUTOCOMPLETE
-} from "../../../../../../../utils/constants/endpoints.js";
+import { JOB_APPS, GET_SOURCES, AUTOCOMPLETE } from "../../../../../../../utils/constants/endpoints.js";
 import CompanyStats from "../../../../../../Partials/CompanyStats/CompanyStats.jsx";
 
 class JobDetails extends React.Component {
@@ -22,11 +15,8 @@ class JobDetails extends React.Component {
       isCompanyEditing: false,
       isPositionsEditing: false,
       isApplyDateEditing: false,
-      companyName:
-        this.props.card.company_object &&
-        this.props.card.company_object.company,
-      jobTitle:
-        this.props.card.position && this.props.card.position.job.job_title,
+      companyName: this.props.card.company_object && this.props.card.company_object.company,
+      jobTitle: this.props.card.position && this.props.card.position.job.job_title,
       apply_date: makeTimeBeautiful(this.props.card.apply_date, "date"),
       autoCompleteCompanyData: [],
       autoCompletePositionsData: []
@@ -84,13 +74,8 @@ class JobDetails extends React.Component {
         );
         this.props.updateHeader();
       } else {
-        IS_CONSOLE_LOG_OPEN &&
-          console.log(response, response.data.error_message);
-        this.props.alert(
-          5000,
-          "error",
-          "Error: " + response.data.error_message
-        );
+        IS_CONSOLE_LOG_OPEN && console.log(response, response.data.error_message);
+        this.props.alert(5000, "error", "Error: " + response.data.error_message);
       }
     } else {
       this.props.alert(5000, "error", "Something went wrong!");
@@ -144,8 +129,7 @@ class JobDetails extends React.Component {
 
   handleCompanySearch(value) {
     this.setState({ companyName: value });
-    let url =
-      "https://autocomplete.clearbit.com/v1/companies/suggest?query=" + value;
+    let url = "https://autocomplete.clearbit.com/v1/companies/suggest?query=" + value;
     let config = {
       method: "GET",
       mode: "cors",
@@ -167,24 +151,19 @@ class JobDetails extends React.Component {
   }
 
   generateCompanyInfo() {
-    const {
-      companyName,
-      autoCompleteCompanyData,
-      isCompanyEditing
-    } = this.state;
-    const infoClass =
-      this.props.card.editable == true ? "text-editable" : "text";
+    const { companyName, autoCompleteCompanyData, isCompanyEditing } = this.state;
+    const infoClass = this.props.card.editable == true ? "text-editable" : "text";
     return (
       <div className="info">
         <label>
-          <div>{"Applicant"}</div>
+          <div>{"Company"}</div>
         </label>
         {isCompanyEditing == true ? (
           <AutoComplete
             dataSource={autoCompleteCompanyData}
             style={this.inputStyle}
             onSearch={this.handleCompanySearch}
-            placeholder="Applicant Name"
+            placeholder="Company Name"
             value={companyName && companyName}
             onSelect={value => this.setState({ companyName: value })}
           />
@@ -217,9 +196,7 @@ class JobDetails extends React.Component {
         if (response.data.success) {
           IS_CONSOLE_LOG_OPEN && console.log(response.data);
           let bufferPositionsList = [];
-          response.data.data.forEach(position =>
-            bufferPositionsList.push(position.job_title)
-          );
+          response.data.data.forEach(position => bufferPositionsList.push(position.job_title));
           this.setState({
             autoCompletePositionsData: bufferPositionsList
           });
@@ -229,13 +206,8 @@ class JobDetails extends React.Component {
   }
 
   generatePositionsInfo() {
-    const {
-      jobTitle,
-      autoCompletePositionsData,
-      isPositionsEditing
-    } = this.state;
-    const infoClass =
-      this.props.card.editable == true ? "text-editable" : "text";
+    const { jobTitle, autoCompletePositionsData, isPositionsEditing } = this.state;
+    const infoClass = this.props.card.editable == true ? "text-editable" : "text";
     return (
       <div className="info">
         <label>
@@ -280,8 +252,7 @@ class JobDetails extends React.Component {
     IS_CONSOLE_LOG_OPEN && console.log("date", this.props.card.apply_date);
     const dateFormat = "MM.DD.YYYY";
     const { apply_date, isApplyDateEditing } = this.state;
-    const infoClass =
-      this.props.card.editable == true ? "text-editable" : "text";
+    const infoClass = this.props.card.editable == true ? "text-editable" : "text";
     return (
       <div className="info">
         <label>
@@ -290,10 +261,7 @@ class JobDetails extends React.Component {
         {isApplyDateEditing == true ? (
           <DatePicker
             onChange={this.handleApplyDate}
-            defaultValue={moment(
-              new Date(this.props.card.apply_date.split("T")[0] + "T06:00:00"),
-              dateFormat
-            )}
+            defaultValue={moment(new Date(this.props.card.apply_date.split("T")[0] + "T06:00:00"), dateFormat)}
             format={dateFormat}
             style={this.inputStyle}
           />
