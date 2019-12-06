@@ -3,6 +3,14 @@
 $multipleContainerAnimationTransitionDuration: .5s;
 $multipleContainerAnimationFromZeroScale: 1.6;
 
+.modal .modal-main{
+  border-radius: 5px !important;
+}
+
+.main-container .main{
+  margin-left: 12px !important;
+}
+
 .dashboard-container {
   height: calc(100%);
   width: 100%;
