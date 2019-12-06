@@ -1,7 +1,7 @@
 # JobHax Frontend application
 
 ![Alt text](https://img.shields.io/github/issues-raw/job-hax/capstone.svg)
-![GitHub commit activity](https://img.shields.io/github/commit-activity/w/job-hax/capstone.svg?style=plastic)
+![GitHub commit activity](https://img.shields.io/github/commit-activity/w/job-hax/capstone?style=plastic)
 ![GitHub contributors](https://img.shields.io/github/contributors/job-hax/capstone.svg)
 ![GitHub repo size](https://img.shields.io/github/repo-size/job-hax/capstone.svg)
 
