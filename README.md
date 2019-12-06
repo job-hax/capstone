@@ -1,9 +1,12 @@
 # JobHax Frontend application
 
-![Alt text](https://img.shields.io/github/issues-raw/job-hax/frontend.svg)
-![GitHub commit activity](https://img.shields.io/github/commit-activity/w/job-hax/frontend.svg?style=plastic)
-![GitHub contributors](https://img.shields.io/github/contributors/job-hax/frontend.svg)
-![GitHub repo size](https://img.shields.io/github/repo-size/job-hax/frontend.svg)
+![JobHax Website](https://img.shields.io/website?label=jobposting.jobhax.com&up_message=Up%20and%20Running&url=https%3A%2F%2Fjobposting.jobhax.com)
+![Alt text](https://img.shields.io/github/issues-raw/job-hax/capstone.svg)
+![GitHub commit activity](https://img.shields.io/github/commit-activity/w/job-hax/capstone?style=plastic)
+![GitHub contributors](https://img.shields.io/github/contributors/job-hax/capstone.svg)
+![GitHub repo size](https://img.shields.io/github/repo-size/job-hax/capstone.svg)
+![GitHub languages](https://img.shields.io/github/languages/count/job-hax/capstone)
+
 
 ## Prerequisites
 

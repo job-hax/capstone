@@ -56,3 +56,4 @@ export const GET_COMPANY_POSITIONS = id => `${COMPANY_POSITIONS}?id=${id}`;
 
 // RESUME PARSER //
 export const RESUME_PARSER = id => (id ? `${apiRoot}/api/parser/?id=${id}` : `${apiRoot}/api/parser/`);
+export const RESUME_PARSER_METRICS = `${apiRoot}/api/parser/metrics`;
