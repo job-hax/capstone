@@ -163,14 +163,14 @@ class Header extends Component {
             <SubMenu
               title={
                 <div className="header-icon menu-icon">
-                  <Icon type="appstore" style={{ fontSize: 22 }} />
+                  <Icon type="appstore" style={{ fontSize: 22, color: "black"  }} />
                 </div>
               }
             >
-              <Menu.Item key="/dashboard"><Icon type="dashboard" style={{ fontSize: 22 }} />Dashboard</Menu.Item>
-              <Menu.Item key="/metrics"><Icon type="bar-chart" style={{ fontSize: 22 }}/>Metrics</Menu.Item>
-              <Menu.Item key="/positions"><Icon type="table" style={{ fontSize: 22 }}/>Positions</Menu.Item>
-              <Menu.Item key="/applicants"><Icon type="team" style={{ fontSize: 22 }}/>Applicants</Menu.Item>
+              <Menu.Item key="/dashboard" style={{ color: "black" }}><Icon type="dashboard" style={{ fontSize: 22, color: "black" }} />Dashboard</Menu.Item>
+              <Menu.Item key="/metrics" style={{ color: "black" }}><Icon type="bar-chart" style={{ fontSize: 22, color: "black" }}/>Metrics</Menu.Item>
+              <Menu.Item key="/positions" style={{ color: "black" }}><Icon type="table" style={{ fontSize: 22, color: "black"  }}/>Positions</Menu.Item>
+              <Menu.Item key="/applicants" style={{ color: "black" }}><Icon type="team" style={{ fontSize: 22, color: "black"  }}/>Applicants</Menu.Item>
             </SubMenu>
           </Menu>
           {/* {!this.props.isNotificationsShowing ? (
@@ -195,14 +195,14 @@ class Header extends Component {
             <SubMenu
               title={
                 <div className="header-icon user-icon">
-                  {/* <img src={profilePhotoUrl} />*/}
-                  <Icon type="user" style={{ fontSize: 22 }} /> 
+                  <img src={profilePhotoUrl} />
+                  {/* <Icon type="user" style={{ fontSize: 22 }} />  */}
                 </div>
               }
             >
-              <Menu.Item key="/profile"><Icon type="solution" style={{ fontSize: 22 }} />Profile</Menu.Item>
-              <Menu.Item key="/logout">
-                <Icon type="logout" style={{ fontSize: 22 }}/>
+              <Menu.Item key="/profile" style={{ color: "black" }}><Icon type="solution" style={{ fontSize: 22 }} />Profile</Menu.Item>
+              <Menu.Item key="/logout" style={{ color: "black" }}>
+                <Icon type="logout" style={{ fontSize: 22, color: "black"  }}/>
                 Logout
               </Menu.Item>
             </SubMenu>
