@@ -110,7 +110,7 @@ class Metrics extends PureComponent {
     return (
       <div>
         <div className="metrics-big-group-container">
-          <div class="title" style={{ textAlign: "center" }}><h1>Metrics</h1></div>
+          <div class="title" style={{ textAlign: "center" }}><h2>Metrics</h2></div>
           <div className="metrics-table">
             <div className="cdiv">
               <h3>Company</h3>
