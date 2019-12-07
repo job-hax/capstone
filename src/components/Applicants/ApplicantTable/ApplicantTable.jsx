@@ -135,7 +135,7 @@ class ApplicantTable extends Component {
     ];
 
     const { applicants } = this.props;
-    return <Table columns={columns} dataSource={applicants} pagination={{ pageSize: 7 }} />;
+    return <Table columns={columns} dataSource={applicants} pagination={{ pageSize: 20 }} />;
   }
 }
 

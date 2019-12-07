@@ -1,7 +1,13 @@
 @import "../../App/style.scss";
 
+.ant-table-body {
+  // max-height: 355px !important;
+  // min-height: 335px !important;
+  background-color: white !important;
+}
+
 .ant-table-thead > tr > th{
-  background-color: #212a39 !important;
+  background-color: #0b6aff !important;
     color: #ffffff;
     border-radius: 0px !important;
     height: 45px !important;
@@ -11,12 +17,6 @@
   padding: 15px !important;
 }
 
-.ant-table-body {
-  background-color: white !important;
-  // padding: 3% !important;
-  // box-shadow: 0 0.46875rem 2.1875rem rgba(4, 9, 20, 0.03), 0 0.9375rem 1.40625rem rgba(4, 9, 20, 0.03),
-  //   0 0.25rem 0.53125rem rgba(4, 9, 20, 0.05), 0 0.125rem 0.1875rem rgba(4, 9, 20, 0.03);
-}
 .ant-table-footer {
   box-shadow: 0 0.46875rem 2.1875rem rgba(4, 9, 20, 0.03), 0 0.9375rem 1.40625rem rgba(4, 9, 20, 0.03),
     0 0.25rem 0.53125rem rgba(4, 9, 20, 0.05), 0 0.125rem 0.1875rem rgba(4, 9, 20, 0.03);

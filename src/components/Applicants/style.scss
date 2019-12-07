@@ -1,5 +1,10 @@
 @import "../App/style.scss";
 
+.ant-table-body{
+  max-height: 500px !important;
+  min-height: 400px !important;
+}
+
 .applicants-big-container {
   color: $text_color;
   height: 100%;
