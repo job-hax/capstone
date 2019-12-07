@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Modal, Button } from "antd";
+import { Modal, Button, Icon } from "antd";
 
 import "./style.scss";
 
@@ -66,25 +66,23 @@ class PositionCards extends Component {
         </div>
         <div className="position-card-button">
           <Button
-            type="primary"
+            style={{borderColor: "green"}}
             onClick={this.showModal}
-            className="btn-view-edit"
+            // className="btn-view-edit"
           >
             LEARN MORE
           </Button>
           <Button
-            type="primary"
             className="btn-view-edit"
             onClick={this.handleEditPosition}
           >
-            EDIT
+            <Icon type="edit" style={{fontSize: 22, color: "steelblue"}} />
           </Button>
           <Button
-            type="primary"
             className="btn-delete"
             onClick={this.handleDeletePosition}
           >
-            DELETE
+            <Icon type="delete" style={{fontSize: 22, color: "red"}} />
           </Button>
         </div>
         <Modal
