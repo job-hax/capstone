@@ -195,8 +195,8 @@ class Header extends Component {
             <SubMenu
               title={
                 <div className="header-icon user-icon">
-                  {/* <img src={profilePhotoUrl} />*/}
-                  <Icon type="user" style={{ fontSize: 22 }} /> 
+                  <img src={profilePhotoUrl} />
+                  {/* <Icon type="user" style={{ fontSize: 22 }} />  */}
                 </div>
               }
             >

@@ -113,11 +113,11 @@ class AboutUs extends Component {
             </div>
             <div className="person-container">
               <div className="person-photo">
-                <img src="https://media.licdn.com/dms/image/C5603AQFZixtJAnWaKw/profile-displayphoto-shrink_200_200/0?e=1580947200&v=beta&t=OLwcN4Z9CSeNPinpjnW9YFYFdHc36r5nVzDcxtzujcU"></img>
+                <img src="src\components\StaticPages\AboutUs\joon.png" style={{ height: 270 }}></img>
               </div>
               <div className="person-name">Joon Yi Koh</div>
               <div className="person-title">Backend Enginner</div>
-              <div className="person-desc"></div>
+              <div className="person-desc">Learning Django Web Framework and hopefully be able to apply in the real world!</div>
             </div>
             <div className="person-container">
               <div className="person-photo">
@@ -132,7 +132,6 @@ class AboutUs extends Component {
             </div>
           </div>
         </div>
-
         <div
           className="videos-area"
           style={{
@@ -143,88 +142,15 @@ class AboutUs extends Component {
             width: 100
           }}
         >
-          <div className="video-container" style={{ padding: "0px 80px 0px 0px" }}>
-            <div>
+          <div className="video-container" style={{ padding: 50, boxShadow: "0 0.46875rem 2.1875rem rgba(4, 9, 20, 0.03), 0 0.9375rem 1.40625rem rgba(4, 9, 20, 0.03), 0 0.25rem 0.53125rem rgba(4, 9, 20, 0.05), 0 0.125rem 0.1875rem rgba(4, 9, 20, 0.03)" }}>
+            <div style={{border: "1px solid grey"}}>
               {" "}
-              <iframe
-                width="560"
-                height="315"
-                src="https://www.youtube.com/embed/Ufir7EU27E0"
-                frameborder="0"
-                allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
-                allowfullscreen=""
-              ></iframe>
+              <iframe width="800" height="415" src="https://www.youtube.com/embed/videoseries?list=PLR_cX7dHBN__F8q4WyicwStYxuFppwts3" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
             </div>
-            <div className="video-title" style={{ fontsize: "18px", fontweight: "bold" }}>
-              0-to-jobhax Job Posting
+            <div className="video-title" style={{ fontSize: 25, fontWeight: "bold", borderTop: "1px solid grey !important", paddingTop: 15 }}>
+              JobHax Capstone Meeting Recording Playlist
             </div>
-            <div>Job Posting Presentation at ITU</div>
-          </div>
-          <div className="video-container" style={{ padding: "0px 80px 0px 0px" }}>
-            <div>
-              {" "}
-              <iframe
-                width="560"
-                height="315"
-                src="https://www.youtube.com/embed/aFXZu-wopnw"
-                frameborder="0"
-                allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
-                allowfullscreen=""
-              ></iframe>
-            </div>
-            <div className="video-title" style={{ fontsize: "18px", fontweight: "bold" }}>
-              0-to-jobhax / Session01 US
-            </div>
-            <div>Alumni Bridge for Requirement Elicitation class. Helping ITU to engage Alumni network</div>
-          </div>
-          <div className="video-container">
-            <div>
-              {" "}
-              <iframe
-                width="560"
-                height="315"
-                src="https://www.youtube.com/embed/QgZp2inTBig"
-                frameborder="0"
-                allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
-                allowfullscreen=""
-              ></iframe>
-            </div>
-            <div className="video-title">0-to-jobhax / Session04 US</div>
-            <div>The early journey of JobHax platform in ITU Presents</div>
-          </div>
-          <div className="video-container" style={{ padding: "0px 80px 0px 0px" }}>
-            <div>
-              {" "}
-              <iframe
-                width="560"
-                height="315"
-                src="https://www.youtube.com/embed/LrMZbT8hA-Q"
-                frameborder="0"
-                allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
-                allowfullscreen=""
-              ></iframe>
-            </div>
-            <div className="video-title" style={{ fontsize: "18", fontweight: "bold" }}>
-              0-to-jobhax / Session03 US
-            </div>
-            <div>Spring 2019 ITU</div>
-          </div>
-          <div className="video-container" style={{ padding: "0px 80px 0px 0px" }}>
-            <div>
-              {" "}
-              <iframe
-                width="560"
-                height="315"
-                src="https://www.youtube.com/embed/hb_Xjxp7qjQ"
-                frameborder="0"
-                allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
-                allowfullscreen=""
-              ></iframe>
-            </div>
-            <div className="video-title" style={{ fontsize: "18px", fontweight: "bold" }}>
-              0-to-jobhax / Session02 US
-            </div>
-            <div>ITU Career Fair</div>
+            {/* <div>Job Posting Presentation at ITU</div> */}
           </div>
         </div>
         <div style={{ marginTop: 100 }}>
