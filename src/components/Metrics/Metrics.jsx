@@ -66,7 +66,7 @@ class Metrics extends PureComponent {
           this.setState({
             company: this.processResponse("company", data),
             skills: this.processResponse("skills", data),
-            position: this.processResponse("languages", data),
+            position: this.processResponse("position", data),
             school: this.processResponse("school", data),
             degree: this.processResponse("degree", data),
             languages: this.processResponse("languages", data),
