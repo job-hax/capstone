@@ -1,9 +1,6 @@
 @import "../App/style.scss";
 
-.ant-table-body{
-  max-height: 500px !important;
-  min-height: 400px !important;
-}
+
 
 .applicants-big-container {
   color: $text_color;
@@ -15,6 +12,8 @@
 
   @media only screen and (max-device-width: 800px) and (-webkit-min-device-pixel-ratio: 2) {
     padding-top: 20px;
+
+    
   }
 
   .applicants-container {
@@ -27,6 +26,11 @@
 
     @media only screen and (max-device-width: 800px) and (-webkit-min-device-pixel-ratio: 2) {
       min-width: 90vw;
+
+      .ant-table-body{
+        max-height: auto !important;
+        min-height: 500px !important;
+      }
     }
 
     .title {
