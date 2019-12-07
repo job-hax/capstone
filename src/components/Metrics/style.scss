@@ -1,9 +1,6 @@
 @import "../App/style.scss";
 
-.ant-table-content {
-  max-height: 328px;
-  overflow-x: auto;
-}
+
 
 .ant-table-body {
   background-color: white !important;
@@ -105,6 +102,11 @@
       font-size: 36px;
       margin-bottom: 0;
       font-weight: bold;
+    }
+
+    .ant-table-content {
+      max-height: 328px;
+      overflow-x: auto;
     }
   }
 
