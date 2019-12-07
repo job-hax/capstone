@@ -110,7 +110,7 @@ class Metrics extends PureComponent {
     return (
       <div>
         <div className="metrics-big-group-container">
-        <div class="title" style={{textAlign: "center"}}><h1>Metrics</h1></div>
+          <div class="title" style={{ textAlign: "center" }}><h1>Metrics</h1></div>
           <div className="metrics-table">
             <div className="cdiv">
               <h3>Company</h3>
@@ -125,12 +125,13 @@ class Metrics extends PureComponent {
               <h3>Schools</h3>
               <Table columns={positionscolumns} dataSource={this.state.school} pagination={false} />
             </div>
+
+          </div>
+          <div className="metrics-table">
             <div className="cdiv">
               <h3>Degree</h3>
               <Table columns={positionscolumns} dataSource={this.state.degree} pagination={false} />
             </div>
-          </div>
-          <div className="metrics-table">
             <div className="cdiv">
               <h3>Skills</h3>
               <Table columns={positionscolumns} dataSource={this.state.skills} pagination={false} />
@@ -139,6 +140,9 @@ class Metrics extends PureComponent {
               <h3>Certificates</h3>
               <Table columns={positionscolumns} dataSource={this.state.certifications} pagination={false} />
             </div>
+
+          </div>
+          <div className="metrics-table">
             <div className="cdiv">
               <h3>Spoken Languages</h3>
               <Table columns={positionscolumns} dataSource={this.state.languages} pagination={false} />

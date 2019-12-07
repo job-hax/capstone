@@ -1,12 +1,11 @@
 @import "../App/style.scss";
 
-.ant-table-content{
+.ant-table-content {
   max-height: 328px;
-    overflow-x: auto;
-
+  overflow-x: auto;
 }
 
-.ant-table-body{
+.ant-table-body {
   background-color: white !important;
   // overflow-y: auto !important;
   // max-height: 288px !important;
@@ -20,19 +19,19 @@
 
 /* Track */
 ::-webkit-scrollbar-track {
-  box-shadow: inset 0 0 5px grey; 
+  box-shadow: inset 0 0 5px grey;
   border-radius: 10px;
 }
- 
+
 /* Handle */
 ::-webkit-scrollbar-thumb {
-  background: darkgrey; 
+  background: darkgrey;
   border-radius: 10px;
 }
 
 /* Handle on hover */
 ::-webkit-scrollbar-thumb:hover {
-  background: #b30000; 
+  background: #b30000;
 }
 
 .metrics_feature_area {
@@ -103,7 +102,7 @@
   }
 
   .metrics-table {
-    display: table;
+    // display: table;
     margin: 24px auto;
     border-spacing: 10px 0px;
   }
@@ -112,7 +111,7 @@
     display: table-cell;
     /* border: 1px solid silver; */
     margin: 11px;
-    width: 428px;
+    width: 590px;
     max-height: 355px;
     background-color: white;
     box-shadow: 0 0.46875rem 2.1875rem rgba(4, 9, 20, 0.03), 0 0.9375rem 1.40625rem rgba(4, 9, 20, 0.03),
